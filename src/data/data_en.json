@@ -1,0 +1,359 @@
+{
+  "firstName": "Ehsan",
+  "lastName": "Molaei",
+  "applicationAs": "Frontend Developer",
+  "imagesSrc": "/avatar.jpg",
+  "city": "Tehran",
+  "country": "Iran",
+  "birthday": "15.03.1998",
+  "bornIn": "Qom",
+  "companyName": "Die Firma GmbH",
+  "currentData": "29.03.2024",
+  "companyLocation": "Berlin",
+  "contacts": [
+    {
+      "id": "MOBILE",
+      "title": "Tell",
+      "value": "+989376594526",
+      "link": "tell:+989376594526"
+    },
+    {
+      "id": "MAIL",
+      "title": "Mail",
+      "value": "ehsanmolaeiinbox@gmail.com",
+      "link": "mailto:ehsanmolaeiinbox@gmail.com"
+    },
+    {
+      "id": "GITHUB",
+      "title": "Github",
+      "value": "github.com/ehsanmolaei991",
+      "link": "https://github.com/ehsanmolaei991"
+    },
+    {
+      "id": "LINKEDIN",
+      "title": "Linkedin",
+      "value": "linkedin.com/in/ehsanmolaei991",
+      "link": "https://www.linkedin.com/in/ehsanmolaei991"
+    },
+    {
+      "id": "WEBSITE",
+      "title": "Website",
+      "value": "ehsanmolaei.com",
+      "link": "https://www.ehsanmolaei.com"
+    }
+  ],
+  "experiences": [
+    {
+      "startDate": "05/2023",
+      "endDate": "",
+      "company": {
+        "name": "Tafarda Studio",
+        "href": "https://tafarda.studio"
+      },
+      "position": "Senior Frontend Developer",
+      "achievements": [
+        {
+          "value": "Led the design and development of a web application as Mdotcar an Online Car Rescuer Platform with distinct sections for clients, expert tow services.",
+          "options": [
+            {
+              "type": "link",
+              "search": "Mdotcar",
+              "href": "https://app.mdotcar.com"
+            }
+          ]
+        },
+        {
+          "value": "Optimized the joint authentication system application (iAuth) at Tafarda Studio, achieving a 20% efficiency boost and reducing response time by 25% by refactoring with NextJS.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "iAuth"
+            },
+            {
+              "type": "bold",
+              "search": "NextJS"
+            }
+          ]
+        },
+        {
+          "value": "Collaborated as a key developer in implementing the Rsoon Platform, this platform is helping people as an investment analyst assistant."
+        }
+      ]
+    },
+    {
+      "startDate": "01/2023",
+      "endDate": "05/2023",
+      "company": {
+        "name": "Quera",
+        "href": "https://quera.org"
+      },
+      "position": "Frontend Mentor",
+      "achievements": [
+        {
+          "value": "Guided students in basic web development skills, covering HTML, CSS, JavaScript, and React.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "HTML"
+            },
+            {
+              "type": "bold",
+              "search": "CSS"
+            },
+            {
+              "type": "bold",
+              "search": "JavaScript"
+            },
+            {
+              "type": "bold",
+              "search": "React"
+            }
+          ]
+        },
+        {
+          "value": "Successfully mentored and taught +15 students throughout the 6-month bootcamp.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "+15 students"
+            }
+          ]
+        },
+        {
+          "value": "Managed and planned the implementation of final projects for each group, providing guidance and feedback."
+        },
+        {
+          "value": "Evaluated and rated final projects, ensuring quality and assessing student performance."
+        }
+      ]
+    },
+    {
+      "startDate": "03/2021",
+      "endDate": "12/2022",
+      "company": {
+        "name": "Rah Agency",
+        "href": ""
+      },
+      "position": "Frontend Developer",
+      "achievements": [
+        {
+          "value": "Revamped the Rah Agency site, achieving a 15% increase in page loading speed by implementing a clean and customized user interface with efficient page caching.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "Rah"
+            }
+          ]
+        },
+        {
+          "value": "Implemented the Madomotor web application as a fully responsive site and store., resulting in a 12% increase in online sales and boosting the Mado brand's online presence.",
+          "options": [
+            {
+              "type": "link",
+              "search": "Madomotor",
+              "href": "http://madomotor.ir"
+            }
+          ]
+        },
+        {
+          "value": "Led the full development and implementation of the Retone web application, achieving improved user engagement through a customized design and GSAP library animations.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "Retone"
+            },
+            {
+              "type": "bold",
+              "search": "GSAP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "startDate": "05/2019",
+      "endDate": "12/2021",
+      "company": {
+        "name": "Dijlah",
+        "href": ""
+      },
+      "position": "Frontend Developer",
+      "achievements": [
+        {
+          "value": "Successfully redesigned and deployed a new management dashboard, reducing support and training tickets by approximately 50%."
+        },
+        {
+          "value": "Conducted research and development to transition from B4A to ReactNative for mobile applications, reducing development time by an impressive 40% and ensuring cross-platform compatibility.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "B4A"
+            },
+            {
+              "type": "bold",
+              "search": "ReactNative"
+            }
+          ]
+        },
+        {
+          "value": "Mentored and trained two interns, fostering collaboration within the frontend team for Dijlah's product."
+        },
+        {
+          "value": "Implemented over 6 cross-platform (Android, IOS) apps for multi-language projects with ReactNative, earning +500 positive reviews on the Apple Store and Google App.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "Android"
+            },
+            {
+              "type": "bold",
+              "search": "IOS"
+            },
+            {
+              "type": "bold",
+              "search": "ReactNative"
+            },
+            {
+              "type": "link",
+              "search": "Apple Store",
+              "href": "https://apps.apple.com/us/developer/ali-al-saedi/id1453676827"
+            },
+            {
+              "type": "link",
+              "search": "Google App",
+              "href": "https://play.google.com/store/apps/developer?id=Dijlah+it"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "startDate": "06/2016",
+      "endDate": "02/2019",
+      "company": {
+        "name": "Unierr Agency",
+        "href": "http://www.unierr.ir"
+      },
+      "position": "Frontend Developer",
+      "achievements": [
+        {
+          "value": "Contributed to the virtual tour project at Mazandaran University in partnership with Unitour, helping students and visitors experience the environment of the University of Mazandaran closely.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "Mazandaran University"
+            },
+            {
+              "type": "link",
+              "search": "Unitour",
+              "href": "https://tour.unierr.ir"
+            }
+          ]
+        },
+        {
+          "value": "Developed the Verna application, an online game with +1K clients, showcasing proficiency in ReactNative for Android and IOS applications.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "Verna"
+            },
+            {
+              "type": "bold",
+              "search": "ReactNative"
+            },
+            {
+              "type": "bold",
+              "search": "Android"
+            },
+            {
+              "type": "bold",
+              "search": "IOS"
+            }
+          ]
+        },
+        {
+          "value": "Collaboration on the Penside project, which is a web application powered by the React library. It aims to create a place to write the content and knowledge of Unierr team and others, similar to the Medium site.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "Penside"
+            },
+            {
+              "type": "bold",
+              "search": "React"
+            },
+            {
+              "type": "bold",
+              "search": "Unierr"
+            },
+            {
+              "type": "bold",
+              "search": "Medium"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "skills": {
+    "main": [
+      "JavaScript",
+      "Typescript",
+      "GIT",
+      "Github",
+      "Gitlab",
+      "Jira",
+      "Docker",
+      "Unit Testing",
+      "E2E Testing",
+      "Web Development",
+      "Mobile Development"
+    ],
+    "frontend": [
+      "React.js",
+      "Next.js",
+      "ReactNative",
+      "Redux, Zustand",
+      "RTKQuery",
+      "ReactQuery",
+      "JQuery",
+      "MaterialDesign (MUI)",
+      "Tailwindcss",
+      "Bootstrap",
+      "CSS, Sass, GSAP",
+      "Html",
+      "Jest",
+      "Playwright",
+      "Storybook"
+    ],
+    "backend": ["Node.js", "Prisma", "Express", "MongoDB", "Docker"],
+    "general_skills": ["Scrum", "Agile", "Teamwork", "Jira", "Confluence", "Trello"]
+  },
+  "educations": [
+    {
+      "startDate": "09/2016",
+      "endDate": "06/2021",
+      "degree": "Bachelor of Computer Science",
+      "location": "Mazandaran University"
+    }
+  ],
+  "knowledgeAndIntrest": [
+    {
+      "id": "LANG",
+      "title": "Languages",
+      "list": [
+        { "title": "Persian", "level": "Native" },
+        { "title": "English", "level": "Upper Intermediate" },
+        { "title": "Deutsch", "level": "A2" }
+      ]
+    },
+    {
+      "id": "HOBBY",
+      "title": "Hobbies",
+      "list": [
+        { "title": "Youtube" },
+        { "title": "Sport (Football und Jogging)" }
+      ]
+    }
+  ]
+}
