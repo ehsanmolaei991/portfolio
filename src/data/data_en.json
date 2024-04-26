@@ -42,6 +42,39 @@
       "link": "https://www.ehsanmolaei.com"
     }
   ],
+  "summary": {
+    "value": "This is Ehsan Molaei, a graduate student of Computer Science with 6+ years of experience in web and mobile application development using React, NextJS, and React Native technologies. I've been known as a extroverted, responsible, passionate and committed person. Furthermore, I enjoy challenging myself and developing my skills. One of my most interesting hobbies is searching and learning new technologies also i enjoy sharing my knowledge and helping others, and that’s what makes me happy. I'm enthusiastic about implementing details like micro-animations and smooth UI. In addition, I'm always trying to improve the performance of my code and follow a clean code structure. Finally, I look forward to gaining new experiences as a Frontend Developer on your team.",
+    "options": [
+      {
+        "type": "bold",
+        "search": "Ehsan Molaei"
+      },
+      {
+        "type": "bold",
+        "search": "Computer Science"
+      },
+      {
+        "type": "bold",
+        "search": "React"
+      },
+      {
+        "type": "bold",
+        "search": "NextJS"
+      },
+      {
+        "type": "bold",
+        "search": "React Native"
+      },
+      {
+        "type": "bold",
+        "search": "teamwork"
+      },
+      {
+        "type": "bold",
+        "search": "Agile"
+      }
+    ]
+  },
   "experiences": [
     {
       "startDate": "05/2023",
@@ -321,9 +354,7 @@
       "Tailwindcss",
       "Bootstrap",
       "CSS, Sass, GSAP",
-      "Html",
-      "Jest",
-      "Playwright",
+      "Jest, Playwright",
       "Storybook"
     ],
     "backend": ["Node.js", "Prisma", "Express", "MongoDB", "Docker"],

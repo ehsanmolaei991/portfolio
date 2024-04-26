@@ -10,6 +10,7 @@ import {
   MapPin,
   Phone,
   SquareArrowOutUpRight,
+  User,
 } from "lucide-react";
 import data from "@data/data_en.json";
 // import deutsch from "@data/deutsch.json";
@@ -294,6 +295,46 @@ export default function App() {
           <section className="space-y-3">
             <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
               <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
+                <User className="text-white size-5" />
+              </div>
+              <h1 className="font-bold text-xl text-slate-700">
+                {lang?.summary}
+              </h1>
+            </div>
+            <p className="text-sm text-slate-700">
+              <Highlighter
+                searchWords={(data?.summary?.options || [])
+                  ?.map((e) => e.search)
+                  .filter((e) => e)}
+                autoEscape={true}
+                textToHighlight={data?.summary?.value}
+                highlightTag={(word: any) => {
+                  const option: any = data?.summary?.options?.find(
+                    (e) => e?.search === word?.children
+                  );
+
+                  if (option?.type === "link")
+                    return (
+                      <a
+                        className="underline font-bold text-slate-700 hover:text-slate-900"
+                        href={option?.href}
+                      >
+                        {option?.search}
+                      </a>
+                    );
+
+                  return (
+                    <span className="font-bold text-slate-800">
+                      {option?.search}
+                    </span>
+                  );
+                }}
+              />
+            </p>
+          </section>
+          <section className="space-y-3">
+            <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
+              <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
                 <BriefcaseBusiness className="text-white size-5" />
               </div>
               <h1 className="font-bold text-xl text-slate-700">
@@ -302,7 +343,7 @@ export default function App() {
             </div>
 
             <ul className="space-y-6">
-              {data?.experiences?.slice(0, 3)?.map((item, i) => (
+              {data?.experiences?.slice(0, 2)?.map((item, i) => (
                 <li
                   key={`experiences-${item?.company?.name}-${i}`}
                   className="grid grid-cols-4"
@@ -382,8 +423,8 @@ export default function App() {
       {/* Lebenslauf - (Experiences, Skills) */}
       <div id="Lebenslauf" className="page relative overflow-hidden">
         <span className="block triangle-bottom absolute top-0 right-0 size-full bg-gray-500/5" />
-        <div className="flex flex-col h-full gap-6">
-          <section className="space-y-3">
+        <div className="flex flex-col h-full gap-2">
+          <section className="space-y-2">
             <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
               <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
                 <BriefcaseBusiness className="text-white size-5" />
@@ -393,8 +434,8 @@ export default function App() {
               </h1>
             </div>
 
-            <ul className="space-y-6">
-              {data?.experiences?.slice(3)?.map((item, i) => (
+            <ul className="space-y-4">
+              {data?.experiences?.slice(2)?.map((item, i) => (
                 <li
                   key={`experiences-${item?.company?.name}-${i}`}
                   className="grid grid-cols-4"

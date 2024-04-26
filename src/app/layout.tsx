@@ -10,7 +10,7 @@ const quicksand = Quicksand({
 
 export const metadata: Metadata = {
   title: "EhsanMolaei",
-  description: "Just a Portfolio | ehsanmolaei991",
+  description: "CV | ehsanmolaei991",
 };
 
 export default function RootLayout({
