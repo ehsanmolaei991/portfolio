@@ -16,7 +16,6 @@ import data from "@data/data_en.json";
 import english from "@data/english.json";
 import classNames from "classnames";
 import Highlighter from "react-highlight-words";
-import { useState } from "react";
 
 const currentLang = "en";
 const lang = english;
@@ -24,7 +23,7 @@ const lang = english;
 export default function App() {
   // const [lang, setLang] = useState(deutsch);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <main className="flex min-h-screen flex-col">
       {/* Main Info */}
       {/* <div className="page relative overflow-hidden">
         <span className="shape block absolute top-0 right-0 size-full bg-gray-500/5" />
