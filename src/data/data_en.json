@@ -80,36 +80,42 @@
       "startDate": "05/2023",
       "endDate": "",
       "company": {
-        "name": "Tafarda Studio",
-        "href": "https://tafarda.studio"
+        "name": "Balinex",
+        "href": "https://balinex.com/"
       },
       "position": "Senior Frontend Developer",
       "achievements": [
         {
-          "value": "Led the design and development of a web application as Mdotcar an Online Car Rescuer Platform with distinct sections for clients, expert tow services.",
+          "value": "Led the redesign and optimization of the user interface for Balinex's trading platform, resulting in a 30% increase in user engagement.",
           "options": [
             {
               "type": "link",
-              "search": "Mdotcar",
-              "href": "https://app.mdotcar.com"
-            }
-          ]
-        },
-        {
-          "value": "Optimized the joint authentication system application (iAuth) at Tafarda Studio, achieving a 20% efficiency boost and reducing response time by 25% by refactoring with NextJS.",
-          "options": [
-            {
-              "type": "bold",
-              "search": "iAuth"
+              "search": "Balinex's trading platform",
+              "href": "https://app.balinex.com/"
             },
             {
               "type": "bold",
-              "search": "NextJS"
+              "search": "30%"
             }
           ]
         },
         {
-          "value": "Collaborated as a key developer in implementing the Rsoon Platform, this platform is helping people as an investment analyst assistant."
+          "value": "Collaborated with backend engineers to integrate WebSocket technology, resulting in a 40% reduction in data fetching times and significantly improved overall application responsiveness.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "WebSocket"
+            }
+          ]
+        },
+        {
+          "value": "Enhanced the video recording functionality with real-time guidance and quality checks, ensuring clear and usable video submissions for identity verification.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "video submissions"
+            }
+          ]
         }
       ]
     },
