@@ -12,17 +12,21 @@ import {
   SquareArrowOutUpRight,
   User,
 } from "lucide-react";
-import data from "@data/data_en.json";
-// import deutsch from "@data/deutsch.json";
+import data_en from "@data/data_en.json";
+import data_de from "@data/data_de.json";
+import deutsch from "@data/deutsch.json";
 import english from "@data/english.json";
 import classNames from "classnames";
 import Highlighter from "react-highlight-words";
+import { useState } from "react";
 
-const currentLang = "en";
-const lang = english;
+// const currentLang = "en";
+// const lang = deutsch;
 
 export default function App() {
-  // const [lang, setLang] = useState(deutsch);
+  const [lang, setLang] = useState(english);
+  const [currentLang, setCurrentLang] = useState<"en" | "de">("en");
+  const [data, setData] = useState(data_en);
   return (
     <main className="flex min-h-screen flex-col">
       {/* Main Info */}
@@ -647,15 +651,25 @@ export default function App() {
       </div>
 
       {/* Select Lang */}
-      {/* <button
+      <button
         onClick={() => {
-          setCurrentLang(currentLang === "en" ? "de" : "en");
-          setLang(currentLang === "en" ? deutsch : english);
+          setCurrentLang((prevLang) => {
+            console.log("prevLang", prevLang);
+            if (prevLang === "de") {
+              setData(data_en);
+              setLang(english);
+              return "en";
+            } else {
+              setData(data_de);
+              setLang(deutsch);
+              return "de";
+            }
+          });
         }}
         className="print:hidden border-slate-700 hover:bg-slate-700 hover:text-white rounded-full uppercase border p-4 aspect-square fixed bottom-4 left-4"
       >
         {currentLang}
-      </button> */}
+      </button>
     </main>
   );
 }

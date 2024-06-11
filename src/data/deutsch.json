@@ -1,4 +1,5 @@
 {
+  "summary": "Summary",
   "experience": "Berufserfahrung",
   "applicationAs": "BEWERBUNG ALS",
   "contact": "Kontaktdaten",
@@ -7,7 +8,7 @@
   "cv": "Lebenslauf",
   "cover_letter": "Anschreiben",
   "hierarchy": "Anlagen",
-  "skills": "Skills",
+  "skills": "Fertigkeiten",
   "main": "Main",
   "frontend": "Frontend",
   "backend": "Backend",
