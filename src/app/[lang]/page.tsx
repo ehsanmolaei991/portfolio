@@ -12,24 +12,36 @@ import {
   SquareArrowOutUpRight,
   User,
 } from "lucide-react";
-import data from "@data/data_en.json";
-// import data_de from "@data/data_de.json";
-// import deutsch from "@data/deutsch.json";
+import data_en from "@data/data_en.json";
+import data_de from "@data/data_de.json";
+import deutsch from "@data/deutsch.json";
 import english from "@data/english.json";
 import classNames from "classnames";
 import Highlighter from "react-highlight-words";
-import { useState } from "react";
-import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const currentLang = "en";
 const lang = english;
 
-export default function App() {
-  redirect("/en");
+export async function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "de" }];
+}
 
-  // const [lang, setLang] = useState(english);
-  // const [currentLang, setCurrentLang] = useState<"en" | "de">("en");
-  // const [data, setData] = useState(data_en);
+export async function getData(language: "en" | "de") {
+  if (language === "en") {
+    return { data: data_en, lang: english };
+  } else {
+    return { data: data_de, lang: deutsch };
+  }
+}
+
+interface AppProps {
+  params: { lang: "en" | "de" };
+}
+
+export default async function Resume({ params }: AppProps) {
+  const { data, lang }: any = await getData(params?.lang || "en");
+
   return (
     <main className="flex min-h-screen flex-col">
       {/* Main Info */}
@@ -352,7 +364,7 @@ export default function App() {
             <ul className="space-y-6">
               {data?.experiences?.slice(0, 2)?.map((item, i) => (
                 <li
-                  key={`experiences-${item?.company?.name}-${i}`}
+                  key={`experiences992-${item?.company?.name}-${i}`}
                   className="grid grid-cols-4"
                 >
                   <span className="col-span-1 pt-1 text-sm text-slate-600">
@@ -384,7 +396,7 @@ export default function App() {
                     <ul className="list-disc pl-3 mt-4 space-y-1">
                       {item?.achievements?.map((achieve, i) => (
                         <li
-                          key={`achieve-${i}`}
+                          key={`3123achieve-${i}`}
                           className="text-xs font-light text-slate-800 leading-[18px]"
                         >
                           {/* @ts-ignore */}
@@ -444,7 +456,7 @@ export default function App() {
             <ul className="space-y-4">
               {data?.experiences?.slice(2)?.map((item, i) => (
                 <li
-                  key={`experiences-${item?.company?.name}-${i}`}
+                  key={`experiences-${item?.company?.name}3213-${i}`}
                   className="grid grid-cols-4"
                 >
                   <span className="col-span-1 pt-1 text-sm text-slate-600">
@@ -476,7 +488,7 @@ export default function App() {
                     <ul className="list-disc pl-3 mt-4 space-y-1">
                       {item?.achievements?.map((achieve, i) => (
                         <li
-                          key={`achieve-${i}`}
+                          key={`achieve222-${i}`}
                           className="text-xs font-light text-slate-800 leading-[18px]"
                         >
                           {/* @ts-ignore */}
@@ -535,7 +547,7 @@ export default function App() {
                 </h3>
                 <ul className="list-disc pl-3 text-sm text-slate-500">
                   {(data?.skills?.main || [])?.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li key={`12-${item}`}>{item}</li>
                   ))}
                 </ul>
               </div>
@@ -545,7 +557,7 @@ export default function App() {
                 </h3>
                 <ul className="list-disc pl-3 text-sm text-slate-500">
                   {(data?.skills?.frontend || [])?.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li key={`123123-${item}`}>{item}</li>
                   ))}
                 </ul>
               </div>
@@ -555,7 +567,7 @@ export default function App() {
                 </h3>
                 <ul className="list-disc pl-3 text-sm text-slate-500">
                   {(data?.skills?.backend || [])?.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li key={`dsadsad-${item}`}>{item}</li>
                   ))}
                 </ul>
               </div>
@@ -565,7 +577,7 @@ export default function App() {
                 </h3>
                 <ul className="list-disc pl-3 text-sm text-slate-500">
                   {(data?.skills?.general_skills || [])?.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li key={`3213213-${item}`}>{item}</li>
                   ))}
                 </ul>
               </div>
@@ -591,7 +603,7 @@ export default function App() {
             <ul className="space-y-6">
               {data?.educations?.map((item, i) => (
                 <li
-                  key={`experiences-${item?.location}-${i}`}
+                  key={`experiences321-${item?.location}-${i}`}
                   className="grid grid-cols-4"
                 >
                   <span className="col-span-1 pt-1 text-sm text-slate-600">
@@ -626,7 +638,7 @@ export default function App() {
             <ul className="space-y-6">
               {data?.knowledgeAndIntrest?.map((item, i) => (
                 <li
-                  key={`experiences-${item?.title}-${i}`}
+                  key={`experiences22-${item?.title}-${i}`}
                   className="grid grid-cols-4"
                 >
                   <span className="col-span-1 pt-1 text-sm text-slate-600">
@@ -634,7 +646,7 @@ export default function App() {
                   </span>
                   <ul className="col-span-3">
                     {item?.list?.map((itemList) => (
-                      <li key={item?.title} className="flex gap-6 items-center">
+                      <li key={`321312-${item?.title}`} className="flex gap-6 items-center">
                         <h2 className={"font-bold w-fit text-slate-600"}>
                           {itemList?.title}
                         </h2>
@@ -654,25 +666,11 @@ export default function App() {
       </div>
 
       {/* Select Lang */}
-      {/* <button
-        onClick={() => {
-          setCurrentLang((prevLang) => {
-            console.log("prevLang", prevLang);
-            if (prevLang === "de") {
-              setData(data_en);
-              setLang(english);
-              return "en";
-            } else {
-              setData(data_de);
-              setLang(deutsch);
-              return "de";
-            }
-          });
-        }}
-        className="print:hidden border-slate-700 hover:bg-slate-700 hover:text-white rounded-full uppercase border p-4 aspect-square fixed bottom-4 left-4"
-      >
-        {currentLang}
-      </button> */}
+      <Link href={params?.lang === "en" ? "de" : "en"}>
+        <button className="print:hidden border-slate-700 hover:bg-slate-700 hover:text-white rounded-full uppercase border p-4 aspect-square fixed bottom-4 left-4">
+          {params?.lang}
+        </button>
+      </Link>
     </main>
   );
 }
