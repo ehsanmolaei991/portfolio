@@ -12,27 +12,17 @@ import {
   SquareArrowOutUpRight,
   User,
 } from "lucide-react";
-import data_en from "@data/data_en.json";
-import data_de from "@data/data_de.json";
-import deutsch from "@data/deutsch.json";
-import english from "@data/english.json";
+// import data_en from "@data/data_en.json";
+// import data_de from "@data/data_de.json";
+// import deutsch from "@data/deutsch.json";
+// import english from "@data/english.json";
 import classNames from "classnames";
 import Highlighter from "react-highlight-words";
 import Link from "next/link";
-
-const currentLang = "en";
-const lang = english;
+import { promises as fs } from "fs";
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "de" }];
-}
-
-export async function getData(language: "en" | "de") {
-  if (language === "en") {
-    return { data: data_en, lang: english };
-  } else {
-    return { data: data_de, lang: deutsch };
-  }
 }
 
 interface AppProps {
@@ -40,7 +30,20 @@ interface AppProps {
 }
 
 export default async function Resume({ params }: AppProps) {
-  const { data, lang }: any = await getData(params?.lang || "en");
+  const dataFile = await fs.readFile(
+    process.cwd() + `/src/data/data_${params?.lang}.json`,
+    "utf8"
+  );
+  const data: IData = JSON.parse(dataFile);
+
+  const langFile = await fs.readFile(
+    process.cwd() +
+      `/src/data/${params?.lang === "en" ? "english" : "deutsch"}.json`,
+    "utf8"
+  );
+  const lang: ILang = JSON.parse(langFile);
+
+  if (!data || !lang) return <></>;
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -631,12 +634,12 @@ export default async function Resume({ params }: AppProps) {
                 <BookOpenCheck className="text-white size-5" />
               </div>
               <h1 className="font-bold text-xl text-slate-700">
-                {lang?.knowledgeAndIntrest}
+                {lang?.knowledgeAndInterest}
               </h1>
             </div>
 
             <ul className="space-y-6">
-              {data?.knowledgeAndIntrest?.map((item, i) => (
+              {data?.knowledgeAndInterest?.map((item, i) => (
                 <li
                   key={`experiences22-${item?.title}-${i}`}
                   className="grid grid-cols-4"
@@ -646,7 +649,10 @@ export default async function Resume({ params }: AppProps) {
                   </span>
                   <ul className="col-span-3">
                     {item?.list?.map((itemList) => (
-                      <li key={`321312-${item?.title}`} className="flex gap-6 items-center">
+                      <li
+                        key={`321312-${item?.title}`}
+                        className="flex gap-6 items-center"
+                      >
                         <h2 className={"font-bold w-fit text-slate-600"}>
                           {itemList?.title}
                         </h2>
