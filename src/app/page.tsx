@@ -350,7 +350,7 @@ export default function App() {
                 >
                   <span className="col-span-1 pt-1 text-sm text-slate-600">
                     {!item?.endDate
-                      ? `Seit ${item?.startDate} `
+                      ? `${lang?.since} ${item?.startDate} `
                       : `${item?.startDate} - ${item?.endDate}`}
                   </span>
                   <div className="col-span-3">
