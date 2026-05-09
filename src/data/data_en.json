@@ -43,7 +43,7 @@
     }
   ],
   "summary": {
-    "value": "This is Ehsan Molaei, a graduate student of Computer Science with 6+ years of experience in web and mobile application development using React, NextJS, and React Native technologies. I've been known as a extroverted, responsible, passionate and committed person. Furthermore, I enjoy challenging myself and developing my skills. One of my most interesting hobbies is searching and learning new technologies also I enjoy sharing my knowledge and helping others, and that’s what makes me happy. I'm enthusiastic about implementing details like micro-animations and smooth UI. In addition, I'm always trying to improve the performance of my code and follow a clean code structure. Finally, I look forward to gaining new experiences as a Frontend Developer on your team.",
+    "value": "This is Ehsan Molaei, a Computer Science graduate and Frontend Team Lead with 9+ years of experience architecting and shipping web and mobile applications across fintech, automotive, and SaaS domains. At Balinex, I led the refactor of the trading platform into a TypeScript monorepo and built an in-house Design System that streamlined developer workflow across the team. My core stack — React, Next.js, React Native, and TypeScript — is paired with a strong focus on performance through Lighthouse, Web Vitals, code splitting, and WebSocket integrations that have measurably reduced data-fetch times and boosted engagement. I also enjoy mentoring engineers and bootcamp students, fostering teams that ship clean, scalable, and accessible interfaces. I'm a curious problem-solver who thrives in Agile environments and cares about micro-animations, polished UI, and the details that make products feel right. I'm committed to continuous learning and look forward to bringing this experience to your team.",
     "options": [
       {
         "type": "bold",
@@ -55,11 +55,27 @@
       },
       {
         "type": "bold",
+        "search": "Frontend Team Lead"
+      },
+      {
+        "type": "bold",
+        "search": "9+ years"
+      },
+      {
+        "type": "bold",
+        "search": "Design System"
+      },
+      {
+        "type": "bold",
+        "search": "monorepo"
+      },
+      {
+        "type": "bold",
         "search": "React"
       },
       {
         "type": "bold",
-        "search": "NextJS"
+        "search": "Next.js"
       },
       {
         "type": "bold",
@@ -67,11 +83,23 @@
       },
       {
         "type": "bold",
-        "search": "teamwork"
+        "search": "TypeScript"
+      },
+      {
+        "type": "bold",
+        "search": "Web Vitals"
+      },
+      {
+        "type": "bold",
+        "search": "WebSocket"
       },
       {
         "type": "bold",
         "search": "Agile"
+      },
+      {
+        "type": "bold",
+        "search": "continuous learning"
       }
     ]
   },
