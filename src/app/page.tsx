@@ -332,6 +332,45 @@ export default function App() {
               />
             </p>
           </section>
+          {/* Skills */}
+          <section className="space-y-3">
+            <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
+              <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
+                <Brain className="text-white size-5" />
+              </div>
+              <h1 className="font-bold text-xl text-slate-700">
+                {lang?.skills}
+              </h1>
+            </div>
+
+            <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+              <div>
+                <h3 className="font-semibold text-slate-600 mb-1 text-sm">
+                  {lang?.frontend}
+                </h3>
+                <p className="text-xs text-slate-500 leading-snug">
+                  {(data?.skills?.frontend || []).join(", ")}
+                </p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-600 mb-1 text-sm">
+                  {lang?.tools}
+                </h3>
+                <p className="text-xs text-slate-500 leading-snug">
+                  {(data?.skills?.tools || []).join(", ")}
+                </p>
+              </div>
+              <div className="col-span-2">
+                <h3 className="font-semibold text-slate-600 mb-1 text-sm">
+                  {lang?.soft}
+                </h3>
+                <p className="text-xs text-slate-500 leading-snug">
+                  {(data?.skills?.soft || []).join(", ")}
+                </p>
+              </div>
+            </div>
+          </section>
+
           <section className="space-y-3">
             <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
               <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
@@ -343,7 +382,7 @@ export default function App() {
             </div>
 
             <ul className="space-y-6">
-              {data?.experiences?.slice(0, 2)?.map((item, i) => (
+              {data?.experiences?.slice(0, 3)?.map((item, i) => (
                 <li
                   key={`experiences-${item?.company?.name}-${i}`}
                   className="grid grid-cols-4"
@@ -420,7 +459,7 @@ export default function App() {
         </div>
       </div>
 
-      {/* Lebenslauf - (Experiences, Skills) */}
+      {/* Lebenslauf - (Experiences) */}
       <div id="Lebenslauf" className="page relative overflow-hidden">
         <span className="block triangle-bottom absolute top-0 right-0 size-full bg-gray-500/5" />
         <div className="flex flex-col h-full gap-2">
@@ -435,7 +474,7 @@ export default function App() {
             </div>
 
             <ul className="space-y-4">
-              {data?.experiences?.slice(2)?.map((item, i) => (
+              {data?.experiences?.slice(3)?.map((item, i) => (
                 <li
                   key={`experiences-${item?.company?.name}-${i}`}
                   className="grid grid-cols-4"
@@ -510,60 +549,6 @@ export default function App() {
             </ul>
           </section>
 
-          {/* Skills */}
-          <section className="space-y-3">
-            <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
-              <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
-                <Brain className="text-white size-5" />
-              </div>
-              <h1 className="font-bold text-xl text-slate-700">
-                {lang?.skills}
-              </h1>
-            </div>
-
-            <div className="grid grid-cols-4">
-              <div>
-                <h3 className="font-semibold text-slate-600 mb-1">
-                  {lang?.main}
-                </h3>
-                <ul className="list-disc pl-3 text-sm text-slate-500">
-                  {(data?.skills?.main || [])?.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-600 mb-1">
-                  {lang?.frontend}
-                </h3>
-                <ul className="list-disc pl-3 text-sm text-slate-500">
-                  {(data?.skills?.frontend || [])?.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-600 mb-1">
-                  {lang?.backend}
-                </h3>
-                <ul className="list-disc pl-3 text-sm text-slate-500">
-                  {(data?.skills?.backend || [])?.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-600 mb-1">
-                  {lang?.general_skills}
-                </h3>
-                <ul className="list-disc pl-3 text-sm text-slate-500">
-                  {(data?.skills?.general_skills || [])?.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
         </div>
       </div>
 

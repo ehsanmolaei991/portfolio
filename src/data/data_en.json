@@ -77,8 +77,75 @@
   },
   "experiences": [
     {
-      "startDate": "05/2023",
+      "startDate": "03/2025",
       "endDate": "",
+      "company": {
+        "name": "Balinex",
+        "href": "https://balinex.com/"
+      },
+      "position": "Frontend Team Lead",
+      "achievements": [
+        {
+          "value": "Led the development and refactoring of Balinex's trading platform, implementing new features and collaborating with the design and product team to enhance user experience.",
+          "options": [
+            {
+              "type": "link",
+              "search": "Balinex's trading platform",
+              "href": "https://app.balinex.com/"
+            },
+            {
+              "type": "bold",
+              "search": "design and product team"
+            }
+          ]
+        },
+        {
+          "value": "Developed a Design System, improving developer experience and reducing the development cost.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "Design System"
+            }
+          ]
+        },
+        {
+          "value": "Orchestrated the architecture, folder structure, and technology stack for Balinex within a monorepo using React.js, Next.js, TypeScript, Jest, Redux, and websockets, ensuring scalability and efficiency in development.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "monorepo"
+            },
+            {
+              "type": "bold",
+              "search": "React.js"
+            },
+            {
+              "type": "bold",
+              "search": "Next.js"
+            },
+            {
+              "type": "bold",
+              "search": "TypeScript"
+            },
+            {
+              "type": "bold",
+              "search": "Jest"
+            },
+            {
+              "type": "bold",
+              "search": "Redux"
+            },
+            {
+              "type": "bold",
+              "search": "websockets"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "startDate": "01/2024",
+      "endDate": "03/2025",
       "company": {
         "name": "Balinex",
         "href": "https://balinex.com/"
@@ -114,6 +181,58 @@
             {
               "type": "bold",
               "search": "video submissions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "startDate": "05/2023",
+      "endDate": "01/2024",
+      "company": {
+        "name": "Tafarda Studio",
+        "href": "https://tafarda.com"
+      },
+      "position": "Senior Frontend Developer",
+      "achievements": [
+        {
+          "value": "Led the development of Mdotcar, an online tow car rescuer platform with dedicated sections for clients and expert tow services.",
+          "options": [
+            {
+              "type": "link",
+              "search": "Mdotcar",
+              "href": "https://mdotcar.com/"
+            }
+          ]
+        },
+        {
+          "value": "Optimized the iAuth joint authentication system at Tafarda Studio, boosting efficiency by 20% and reducing response time by 25% through refactoring with Next.js.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "iAuth"
+            },
+            {
+              "type": "bold",
+              "search": "20%"
+            },
+            {
+              "type": "bold",
+              "search": "25%"
+            },
+            {
+              "type": "bold",
+              "search": "Next.js"
+            }
+          ]
+        },
+        {
+          "value": "Contributed as a key developer to the implementation of the Rsoon+ Platform, assisting users as an investment analyst consult.",
+          "options": [
+            {
+              "type": "link",
+              "search": "Rsoon+ Platform",
+              "href": "http://rsoon.ir/"
             }
           ]
         }
@@ -335,35 +454,56 @@
     }
   ],
   "skills": {
-    "main": [
-      "JavaScript",
-      "Typescript",
-      "GIT",
-      "Github",
-      "Gitlab",
-      "Jira",
-      "Unit Testing",
-      "E2E Testing",
-      "Web Development",
-      "Mobile Development"
-    ],
     "frontend": [
+      "TypeScript",
       "React.js",
+      "React Native",
       "Next.js",
-      "ReactNative",
-      "Redux, Zustand",
-      "RTKQuery",
-      "ReactQuery",
-      "JQuery",
-      "MaterialDesign (MUI)",
-      "Tailwindcss",
+      "Redux",
+      "Zustand",
+      "RTK Query",
+      "React Query",
+      "HTML5",
+      "CSS3 (SASS, SCSS)",
+      "JavaScript (ES6+)",
+      "Storybook",
+      "Styled-components",
+      "Emotion",
+      "CSS-in-JS",
+      "Tailwind CSS",
       "Bootstrap",
-      "CSS, Sass, GSAP",
-      "Jest, Playwright",
-      "Storybook"
+      "Material-UI"
     ],
-    "backend": ["Node.js", "Prisma", "Express", "MongoDB", "Docker"],
-    "general_skills": ["Scrum", "Agile", "Teamwork", "Jira", "Confluence", "Trello"]
+    "tools": [
+      "Webpack",
+      "Vite",
+      "NPM",
+      "Yarn",
+      "Git",
+      "GitHub",
+      "GitLab",
+      "Bitbucket",
+      "Docker",
+      "GitHub Actions",
+      "Unit Testing (Jest)",
+      "E2E Testing (Playwright)",
+      "React Testing Library",
+      "Code Splitting",
+      "Lazy Loading",
+      "Lighthouse",
+      "Web Vitals"
+    ],
+    "soft": [
+      "Communication",
+      "Problem-Solving",
+      "Attention to Detail",
+      "Teamwork",
+      "Adaptability",
+      "Design Tools (Figma, XD)",
+      "Management Tools (Jira, Trello, Kanban)",
+      "Basic Node.js & Express",
+      "Optimize SEO"
+    ]
   },
   "educations": [
     {
