@@ -6,15 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pdf": "node scripts/generate-pdf.mjs",
+    "pdf:all": "node scripts/generate-pdf.mjs all"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.1",
     "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
     "lucide-react": "^0.373.0",
     "next": "14.1.3",
+    "next-themes": "^0.4.6",
     "react": "^18",
     "react-dom": "^18",
-    "react-highlight-words": "^0.20.0"
+    "react-highlight-words": "^0.20.0",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -22,6 +29,7 @@
     "@types/react-dom": "^18",
     "@types/react-highlight-words": "^0.16.7",
     "autoprefixer": "^10.0.1",
+    "playwright": "^1.48.0",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"

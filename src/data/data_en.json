@@ -1,21 +1,24 @@
 {
   "firstName": "Ehsan",
   "lastName": "Molaei",
-  "applicationAs": "Frontend Developer",
+  "applicationAs": "Senior Frontend Engineer",
   "imagesSrc": "/avatar.jpg",
   "city": "Tehran",
   "country": "Iran",
+  "openToRelocation": true,
+  "relocationNote": "Open to relocation & visa sponsorship (EU / Blue Card)",
+  "tagline": "9+ years leading frontend for fintech, automotive, and SaaS — from trading platforms and design systems to cross-platform React Native apps.",
   "birthday": "15.03.1998",
-  "bornIn": "Qom",
+  "bornIn": "",
   "companyName": "Die Firma GmbH",
   "currentData": "29.03.2024",
   "companyLocation": "Berlin",
   "contacts": [
     {
       "id": "MOBILE",
-      "title": "Tell",
-      "value": "+989376594526",
-      "link": "tell:+989376594526"
+      "title": "Phone",
+      "value": "+98 937 659 4526",
+      "link": "tel:+989376594526"
     },
     {
       "id": "MAIL",
@@ -24,16 +27,16 @@
       "link": "mailto:ehsanmolaeiinbox@gmail.com"
     },
     {
-      "id": "GITHUB",
-      "title": "Github",
-      "value": "github.com/ehsanmolaei991",
-      "link": "https://github.com/ehsanmolaei991"
-    },
-    {
       "id": "LINKEDIN",
-      "title": "Linkedin",
+      "title": "LinkedIn",
       "value": "linkedin.com/in/ehsanmolaei991",
       "link": "https://www.linkedin.com/in/ehsanmolaei991"
+    },
+    {
+      "id": "GITHUB",
+      "title": "GitHub",
+      "value": "github.com/ehsanmolaei991",
+      "link": "https://github.com/ehsanmolaei991"
     },
     {
       "id": "WEBSITE",
@@ -43,64 +46,19 @@
     }
   ],
   "summary": {
-    "value": "This is Ehsan Molaei, a Computer Science graduate and Frontend Team Lead with 9+ years of experience architecting and shipping web and mobile applications across fintech, automotive, and SaaS domains. At Balinex, I led the refactor of the trading platform into a TypeScript monorepo and built an in-house Design System that streamlined developer workflow across the team. My core stack — React, Next.js, React Native, and TypeScript — is paired with a strong focus on performance through Lighthouse, Web Vitals, code splitting, and WebSocket integrations that have measurably reduced data-fetch times and boosted engagement. I also enjoy mentoring engineers and bootcamp students, fostering teams that ship clean, scalable, and accessible interfaces. I'm a curious problem-solver who thrives in Agile environments and cares about micro-animations, polished UI, and the details that make products feel right. I'm committed to continuous learning and look forward to bringing this experience to your team.",
+    "value": "Senior Frontend Engineer with 9+ years building web and mobile products across fintech, automotive, and SaaS — now leading a frontend team. Specialized in React, Next.js, React Native, and TypeScript, with a strong focus on performance (Web Vitals, code splitting, WebSockets), design systems, and scalable architecture in monorepos. Proven at mentoring engineers and shipping accessible, high-performance interfaces in Agile teams. Open to relocation and visa sponsorship.",
     "options": [
-      {
-        "type": "bold",
-        "search": "Ehsan Molaei"
-      },
-      {
-        "type": "bold",
-        "search": "Computer Science"
-      },
-      {
-        "type": "bold",
-        "search": "Frontend Team Lead"
-      },
-      {
-        "type": "bold",
-        "search": "9+ years"
-      },
-      {
-        "type": "bold",
-        "search": "Design System"
-      },
-      {
-        "type": "bold",
-        "search": "monorepo"
-      },
-      {
-        "type": "bold",
-        "search": "React"
-      },
-      {
-        "type": "bold",
-        "search": "Next.js"
-      },
-      {
-        "type": "bold",
-        "search": "React Native"
-      },
-      {
-        "type": "bold",
-        "search": "TypeScript"
-      },
-      {
-        "type": "bold",
-        "search": "Web Vitals"
-      },
-      {
-        "type": "bold",
-        "search": "WebSocket"
-      },
-      {
-        "type": "bold",
-        "search": "Agile"
-      },
-      {
-        "type": "bold",
-        "search": "continuous learning"
-      }
+      { "type": "bold", "search": "Senior Frontend Engineer" },
+      { "type": "bold", "search": "9+ years" },
+      { "type": "bold", "search": "React" },
+      { "type": "bold", "search": "Next.js" },
+      { "type": "bold", "search": "React Native" },
+      { "type": "bold", "search": "TypeScript" },
+      { "type": "bold", "search": "Web Vitals" },
+      { "type": "bold", "search": "design systems" },
+      { "type": "bold", "search": "monorepos" },
+      { "type": "bold", "search": "Agile" },
+      { "type": "bold", "search": "relocation and visa sponsorship" }
     ]
   },
   "experiences": [
@@ -111,6 +69,7 @@
         "name": "Balinex",
         "href": "https://balinex.com/"
       },
+      "location": "Qom, Iran",
       "position": "Frontend Team Lead",
       "achievements": [
         {
@@ -128,7 +87,7 @@
           ]
         },
         {
-          "value": "Developed a Design System, improving developer experience and reducing the development cost.",
+          "value": "Developed an in-house Design System, improving developer experience and reducing development cost across the team.",
           "options": [
             {
               "type": "bold",
@@ -137,36 +96,15 @@
           ]
         },
         {
-          "value": "Orchestrated the architecture, folder structure, and technology stack for Balinex within a monorepo using React.js, Next.js, TypeScript, Jest, Redux, and websockets, ensuring scalability and efficiency in development.",
+          "value": "Orchestrated the architecture, folder structure, and technology stack for Balinex within a monorepo using React.js, Next.js, TypeScript, Jest, Redux, and WebSockets, ensuring scalability and efficiency in development.",
           "options": [
-            {
-              "type": "bold",
-              "search": "monorepo"
-            },
-            {
-              "type": "bold",
-              "search": "React.js"
-            },
-            {
-              "type": "bold",
-              "search": "Next.js"
-            },
-            {
-              "type": "bold",
-              "search": "TypeScript"
-            },
-            {
-              "type": "bold",
-              "search": "Jest"
-            },
-            {
-              "type": "bold",
-              "search": "Redux"
-            },
-            {
-              "type": "bold",
-              "search": "websockets"
-            }
+            { "type": "bold", "search": "monorepo" },
+            { "type": "bold", "search": "React.js" },
+            { "type": "bold", "search": "Next.js" },
+            { "type": "bold", "search": "TypeScript" },
+            { "type": "bold", "search": "Jest" },
+            { "type": "bold", "search": "Redux" },
+            { "type": "bold", "search": "WebSockets" }
           ]
         }
       ]
@@ -178,7 +116,8 @@
         "name": "Balinex",
         "href": "https://balinex.com/"
       },
-      "position": "Senior Frontend Developer",
+      "location": "Qom, Iran",
+      "position": "Senior Frontend Engineer",
       "achievements": [
         {
           "value": "Led the redesign and optimization of the user interface for Balinex's trading platform, resulting in a 30% increase in user engagement.",
@@ -188,28 +127,20 @@
               "search": "Balinex's trading platform",
               "href": "https://app.balinex.com/"
             },
-            {
-              "type": "bold",
-              "search": "30%"
-            }
+            { "type": "bold", "search": "30%" }
           ]
         },
         {
           "value": "Collaborated with backend engineers to integrate WebSocket technology, resulting in a 40% reduction in data fetching times and significantly improved overall application responsiveness.",
           "options": [
-            {
-              "type": "bold",
-              "search": "WebSocket"
-            }
+            { "type": "bold", "search": "WebSocket" },
+            { "type": "bold", "search": "40%" }
           ]
         },
         {
           "value": "Enhanced the video recording functionality with real-time guidance and quality checks, ensuring clear and usable video submissions for identity verification.",
           "options": [
-            {
-              "type": "bold",
-              "search": "video submissions"
-            }
+            { "type": "bold", "search": "video submissions" }
           ]
         }
       ]
@@ -221,7 +152,8 @@
         "name": "Tafarda Studio",
         "href": "https://tafarda.com"
       },
-      "position": "Senior Frontend Developer",
+      "location": "Tehran, Iran",
+      "position": "Senior Frontend Engineer",
       "achievements": [
         {
           "value": "Led the development of Mdotcar, an online tow car rescuer platform with dedicated sections for clients and expert tow services.",
@@ -236,22 +168,10 @@
         {
           "value": "Optimized the iAuth joint authentication system at Tafarda Studio, boosting efficiency by 20% and reducing response time by 25% through refactoring with Next.js.",
           "options": [
-            {
-              "type": "bold",
-              "search": "iAuth"
-            },
-            {
-              "type": "bold",
-              "search": "20%"
-            },
-            {
-              "type": "bold",
-              "search": "25%"
-            },
-            {
-              "type": "bold",
-              "search": "Next.js"
-            }
+            { "type": "bold", "search": "iAuth" },
+            { "type": "bold", "search": "20%" },
+            { "type": "bold", "search": "25%" },
+            { "type": "bold", "search": "Next.js" }
           ]
         },
         {
@@ -273,43 +193,21 @@
         "name": "Quera",
         "href": "https://quera.org"
       },
+      "location": "Qom, Iran",
       "position": "Frontend Mentor",
       "achievements": [
         {
-          "value": "Guided students in basic web development skills, covering HTML, CSS, JavaScript, and React.",
+          "value": "Guided and mentored 15+ students in web development (HTML, CSS, JavaScript, React) throughout a 6-month bootcamp.",
           "options": [
-            {
-              "type": "bold",
-              "search": "HTML"
-            },
-            {
-              "type": "bold",
-              "search": "CSS"
-            },
-            {
-              "type": "bold",
-              "search": "JavaScript"
-            },
-            {
-              "type": "bold",
-              "search": "React"
-            }
+            { "type": "bold", "search": "15+ students" },
+            { "type": "bold", "search": "HTML" },
+            { "type": "bold", "search": "CSS" },
+            { "type": "bold", "search": "JavaScript" },
+            { "type": "bold", "search": "React" }
           ]
         },
         {
-          "value": "Successfully mentored and taught +15 students throughout the 6-month bootcamp.",
-          "options": [
-            {
-              "type": "bold",
-              "search": "+15 students"
-            }
-          ]
-        },
-        {
-          "value": "Managed and planned the implementation of final projects for each group, providing guidance and feedback."
-        },
-        {
-          "value": "Evaluated and rated final projects, ensuring quality and assessing student performance."
+          "value": "Managed and planned the implementation of final projects for each group, then evaluated and rated them to ensure quality and assess performance."
         }
       ]
     },
@@ -320,38 +218,31 @@
         "name": "Rah Agency",
         "href": ""
       },
-      "position": "Frontend Developer",
+      "location": "Qom, Iran",
+      "position": "Frontend Developer (Freelance)",
       "achievements": [
         {
-          "value": "Revamped the Rah Agency site, achieving a 15% increase in page loading speed by implementing a clean and customized user interface with efficient page caching.",
+          "value": "Revamped the Rah Agency site, achieving a 15% increase in page loading speed by implementing a clean, customized UI with efficient page caching.",
           "options": [
-            {
-              "type": "bold",
-              "search": "Rah"
-            }
+            { "type": "bold", "search": "15%" }
           ]
         },
         {
-          "value": "Implemented the Madomotor web application as a fully responsive site and store., resulting in a 12% increase in online sales and boosting the Mado brand's online presence.",
+          "value": "Implemented the Madomotor web application as a fully responsive site and store, resulting in a 12% increase in online sales and boosting the Mado brand's online presence.",
           "options": [
             {
               "type": "link",
               "search": "Madomotor",
               "href": "http://madomotor.ir"
-            }
+            },
+            { "type": "bold", "search": "12%" }
           ]
         },
         {
-          "value": "Led the full development and implementation of the Retone web application, achieving improved user engagement through a customized design and GSAP library animations.",
+          "value": "Led the full development of the Retone web application, improving user engagement through a customized design and GSAP animations.",
           "options": [
-            {
-              "type": "bold",
-              "search": "Retone"
-            },
-            {
-              "type": "bold",
-              "search": "GSAP"
-            }
+            { "type": "bold", "search": "Retone" },
+            { "type": "bold", "search": "GSAP" }
           ]
         }
       ]
@@ -363,42 +254,28 @@
         "name": "Dijlah",
         "href": ""
       },
+      "location": "Qom, Iran",
       "position": "Frontend Developer",
       "achievements": [
         {
-          "value": "Successfully redesigned and deployed a new management dashboard, reducing support and training tickets by approximately 50%."
-        },
-        {
-          "value": "Conducted research and development to transition from B4A to ReactNative for mobile applications, reducing development time by an impressive 40% and ensuring cross-platform compatibility.",
+          "value": "Redesigned and deployed a new management dashboard, reducing support and training tickets by approximately 50%.",
           "options": [
-            {
-              "type": "bold",
-              "search": "B4A"
-            },
-            {
-              "type": "bold",
-              "search": "ReactNative"
-            }
+            { "type": "bold", "search": "50%" }
           ]
         },
         {
-          "value": "Mentored and trained two interns, fostering collaboration within the frontend team for Dijlah's product."
+          "value": "Led R&D to transition from B4A to React Native for mobile applications, reducing development time by 40% and ensuring cross-platform compatibility.",
+          "options": [
+            { "type": "bold", "search": "B4A" },
+            { "type": "bold", "search": "React Native" },
+            { "type": "bold", "search": "40%" }
+          ]
         },
         {
-          "value": "Implemented over 6 cross-platform (Android, IOS) apps for multi-language projects with ReactNative, earning +500 positive reviews on the Apple Store and Google App.",
+          "value": "Shipped 6+ cross-platform (Android, iOS) apps for multi-language projects with React Native, earning 500+ positive reviews on the Apple Store and Google Play.",
           "options": [
-            {
-              "type": "bold",
-              "search": "Android"
-            },
-            {
-              "type": "bold",
-              "search": "IOS"
-            },
-            {
-              "type": "bold",
-              "search": "ReactNative"
-            },
+            { "type": "bold", "search": "6+" },
+            { "type": "bold", "search": "React Native" },
             {
               "type": "link",
               "search": "Apple Store",
@@ -406,7 +283,7 @@
             },
             {
               "type": "link",
-              "search": "Google App",
+              "search": "Google Play",
               "href": "https://play.google.com/store/apps/developer?id=Dijlah+it"
             }
           ]
@@ -420,62 +297,26 @@
         "name": "Unierr Agency",
         "href": "http://www.unierr.ir"
       },
+      "location": "Mazandaran, Iran",
       "position": "Frontend Developer",
       "achievements": [
         {
-          "value": "Contributed to the virtual tour project at Mazandaran University in partnership with Unitour, helping students and visitors experience the environment of the University of Mazandaran closely.",
+          "value": "Built the Verna application, an online game with 1K+ users, using React Native for Android and iOS.",
           "options": [
-            {
-              "type": "bold",
-              "search": "Mazandaran University"
-            },
+            { "type": "bold", "search": "Verna" },
+            { "type": "bold", "search": "React Native" },
+            { "type": "bold", "search": "1K+" }
+          ]
+        },
+        {
+          "value": "Contributed to Unitour, a virtual tour of Mazandaran University helping students and visitors explore the campus remotely.",
+          "options": [
             {
               "type": "link",
               "search": "Unitour",
               "href": "https://tour.unierr.ir"
-            }
-          ]
-        },
-        {
-          "value": "Developed the Verna application, an online game with +1K clients, showcasing proficiency in ReactNative for Android and IOS applications.",
-          "options": [
-            {
-              "type": "bold",
-              "search": "Verna"
             },
-            {
-              "type": "bold",
-              "search": "ReactNative"
-            },
-            {
-              "type": "bold",
-              "search": "Android"
-            },
-            {
-              "type": "bold",
-              "search": "IOS"
-            }
-          ]
-        },
-        {
-          "value": "Collaboration on the Penside project, which is a web application powered by the React library. It aims to create a place to write the content and knowledge of Unierr team and others, similar to the Medium site.",
-          "options": [
-            {
-              "type": "bold",
-              "search": "Penside"
-            },
-            {
-              "type": "bold",
-              "search": "React"
-            },
-            {
-              "type": "bold",
-              "search": "Unierr"
-            },
-            {
-              "type": "bold",
-              "search": "Medium"
-            }
+            { "type": "bold", "search": "Mazandaran University" }
           ]
         }
       ]
@@ -500,7 +341,9 @@
       "CSS-in-JS",
       "Tailwind CSS",
       "Bootstrap",
-      "Material-UI"
+      "Material-UI",
+      "Accessibility (WCAG)",
+      "REST APIs"
     ],
     "tools": [
       "Webpack",
@@ -512,14 +355,16 @@
       "GitLab",
       "Bitbucket",
       "Docker",
-      "GitHub Actions",
-      "Unit Testing (Jest)",
-      "E2E Testing (Playwright)",
+      "GitHub Actions (CI/CD)",
+      "Jest",
+      "Playwright",
       "React Testing Library",
       "Code Splitting",
       "Lazy Loading",
       "Lighthouse",
-      "Web Vitals"
+      "Web Vitals",
+      "Node.js",
+      "Express"
     ],
     "soft": [
       "Communication",
@@ -528,9 +373,9 @@
       "Teamwork",
       "Adaptability",
       "Design Tools (Figma, XD)",
+      "Agile / Scrum",
       "Management Tools (Jira, Trello, Kanban)",
-      "Basic Node.js & Express",
-      "Optimize SEO"
+      "SEO Optimization"
     ]
   },
   "educations": [
@@ -538,7 +383,7 @@
       "startDate": "09/2016",
       "endDate": "06/2021",
       "degree": "Bachelor of Computer Science",
-      "location": "Mazandaran University"
+      "location": "Mazandaran University, Iran"
     }
   ],
   "knowledgeAndIntrest": [
@@ -547,16 +392,16 @@
       "title": "Languages",
       "list": [
         { "title": "Persian", "level": "Native" },
-        { "title": "English", "level": "Upper Intermediate" },
-        { "title": "Deutsch", "level": "A2" }
+        { "title": "English", "level": "Upper-Intermediate (B2)" },
+        { "title": "German", "level": "A2" }
       ]
     },
     {
       "id": "HOBBY",
-      "title": "Hobbies",
+      "title": "Interests",
       "list": [
-        { "title": "Youtube" },
-        { "title": "Sport (Football und Jogging)" }
+        { "title": "Football & Jogging" },
+        { "title": "Tech content on YouTube" }
       ]
     }
   ]

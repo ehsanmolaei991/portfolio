@@ -1,0 +1,19 @@
+{
+  "applicationAs": "Senior Frontend Engineer",
+  "relocationNote": "Available to relocate to Romania — eligible for EU Blue Card sponsorship",
+  "summary": {
+    "value": "Senior Frontend Engineer with 9+ years building and leading React, Next.js, and TypeScript products for fintech and SaaS. I architect scalable frontends in monorepos, build design systems, and obsess over performance (Web Vitals, code splitting, WebSockets). Eligible for the EU Blue Card and ready to relocate to Romania and contribute to your team on-site.",
+    "options": [
+      { "type": "bold", "search": "Senior Frontend Engineer" },
+      { "type": "bold", "search": "9+ years" },
+      { "type": "bold", "search": "React" },
+      { "type": "bold", "search": "Next.js" },
+      { "type": "bold", "search": "TypeScript" },
+      { "type": "bold", "search": "monorepos" },
+      { "type": "bold", "search": "design systems" },
+      { "type": "bold", "search": "Web Vitals" },
+      { "type": "bold", "search": "EU Blue Card" },
+      { "type": "bold", "search": "relocate to Romania" }
+    ]
+  }
+}

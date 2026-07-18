@@ -2,54 +2,525 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------- Resume document palette ----------------
+   Namespaced with `--resume-*` so they never collide with the
+   shadcn semantic tokens (--accent / --muted) defined below. */
+:root {
+  --resume-accent: #109cad;
+  --ink: #1f2937;
+  --body: #333a44;
+  --resume-muted: #5b6470;
+  --rule: #e4e7eb;
+  --page: #ffffff;
+  --screen-bg: #eef0f3;
+
+  /* A4 content box; overridden to Letter via ?format=letter on <html> */
+  --page-w: 210mm;
+}
+
+/* ---------------- shadcn/ui semantic tokens ----------------
+   Consumed by Tailwind color utilities (bg-background, text-foreground,
+   text-muted-foreground, bg-primary, border, …). `.dark` is toggled on
+   <html> by next-themes. Values mirror the landing palette below. */
+@layer base {
+  :root {
+    --background: 210 20% 97%;
+    --foreground: 218 22% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 218 22% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 218 22% 10%;
+    --primary: 187 84% 36%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 200 21% 95%;
+    --secondary-foreground: 218 22% 10%;
+    --muted: 200 21% 95%;
+    --muted-foreground: 216 10% 40%;
+    --accent: 200 21% 95%;
+    --accent-foreground: 218 22% 10%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 216 19% 92%;
+    --input: 216 19% 92%;
+    --ring: 187 84% 36%;
+    --radius: 0.6rem;
+  }
+
+  .dark {
+    --background: 214 21% 6%;
+    --foreground: 210 22% 93%;
+    --card: 213 20% 11%;
+    --card-foreground: 210 22% 93%;
+    --popover: 213 20% 11%;
+    --popover-foreground: 210 22% 93%;
+    --primary: 186 66% 50%;
+    --primary-foreground: 214 21% 6%;
+    --secondary: 212 22% 14%;
+    --secondary-foreground: 210 22% 93%;
+    --muted: 212 22% 14%;
+    --muted-foreground: 215 13% 65%;
+    --accent: 212 22% 14%;
+    --accent-foreground: 210 22% 93%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 214 18% 17%;
+    --input: 214 18% 17%;
+    --ring: 186 66% 50%;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   scroll-behavior: smooth;
 }
 
-.page {
-  width: 210mm;
-  min-height: 297mm;
-  padding: 15mm;
-  margin: 10mm auto;
-  border: 1px #d3d3d3 solid;
-  border-radius: 5px;
-  background: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+body {
+  background: var(--screen-bg);
+  color: var(--body);
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, "Noto Sans", sans-serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
-.shape {
-  clip-path: polygon(100% 0, 100% 65%, 0 25%, 0 0);
+/* ---------------- Layout shell ---------------- */
+.resume-page {
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px 64px;
 }
 
-.triangle {
-  clip-path: polygon(100% 0, 100% 30%, 40% 0);
+.resume {
+  width: var(--page-w);
+  max-width: 100%;
+  background: var(--page);
+  color: var(--body);
+  padding: 16mm 16mm 14mm;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+  font-size: 10.6pt;
+  line-height: 1.42;
 }
 
-.triangle-bottom {
-  clip-path: polygon(100% 100%, 100% 70%, 40% 100%);
+/* ---------------- Header ---------------- */
+.resume-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
 }
 
-@page {
-  size: A4;
+.resume-name {
+  font-size: 25pt;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.05;
+}
+
+.resume-name strong {
+  font-weight: 800;
+}
+
+.resume-title {
+  margin: 4px 0 0;
+  font-size: 12pt;
+  color: var(--resume-muted);
+  letter-spacing: 0.01em;
+}
+
+.resume-contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-style: normal;
+  text-align: right;
+  font-size: 9.6pt;
+  white-space: nowrap;
+}
+
+.resume-availability {
+  margin: 8px 0 0;
+  font-size: 9.6pt;
+}
+
+.resume-rule {
+  border: none;
+  border-top: 2px solid var(--rule);
+  margin: 12px 0 14px;
+}
+
+/* ---------------- Sections ---------------- */
+.resume-section {
+  margin-bottom: 12px;
+}
+
+.resume-section--tight {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 12.5pt;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--rule);
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.section-title::after {
+  content: ":";
+}
+
+.resume-body {
+  margin: 0;
+  text-align: justify;
+}
+
+/* ---------------- Skills ---------------- */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 28px;
+}
+
+.skills-full {
+  grid-column: 1 / -1;
+}
+
+.skills-label {
+  font-size: 10.2pt;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 2px 0;
+}
+
+.skills-list {
+  margin: 0 0 2px;
+  font-size: 9.8pt;
+  color: var(--resume-muted);
+  line-height: 1.4;
+}
+
+/* ---------------- Experience ---------------- */
+.exp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.exp-item {
+  margin-bottom: 10px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.exp-position {
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--ink);
   margin: 0;
 }
+
+.exp-meta {
+  margin: 1px 0 4px;
+  font-size: 9.6pt;
+}
+
+.exp-bullets {
+  margin: 0;
+  padding-left: 16px;
+  list-style: disc;
+}
+
+.exp-bullets li {
+  margin-bottom: 2px;
+  font-size: 9.9pt;
+  line-height: 1.4;
+}
+
+.exp-bullets li::marker {
+  color: var(--resume-accent);
+}
+
+/* ---------------- Education / misc ---------------- */
+.edu-list,
+.misc-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.edu-item {
+  font-size: 10pt;
+  margin-bottom: 4px;
+}
+
+.misc-line {
+  margin: 2px 0;
+  font-size: 9.8pt;
+}
+
+/* ---------------- Inline helpers ---------------- */
+.rlink {
+  color: var(--resume-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+}
+
+.rlink:hover {
+  color: #0b7c8a;
+}
+
+.contact-plain {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.accent {
+  color: var(--resume-accent);
+}
+
+.text-ink {
+  color: var(--ink);
+}
+
+.text-muted {
+  color: var(--resume-muted);
+}
+
+/* ---------------- Print / PDF ---------------- */
+@page {
+  size: A4;
+  margin: 13mm 15mm;
+}
+
+/* ---------------- Compact (1-page) variant ---------------- */
+.resume-page--compact .resume {
+  font-size: 10pt;
+  padding: 12mm 14mm;
+}
+.resume-page--compact .resume-name {
+  font-size: 22pt;
+}
+.resume-page--compact .section-title {
+  font-size: 11.5pt;
+  margin-bottom: 4px;
+}
+.resume-page--compact .resume-section {
+  margin-bottom: 8px;
+}
+.resume-page--compact .exp-item {
+  margin-bottom: 7px;
+}
+.resume-page--compact .exp-bullets li {
+  font-size: 9.3pt;
+  line-height: 1.34;
+}
+
 @media print {
-  html,
   body {
-    width: 210mm;
-    height: 297mm;
+    background: #fff;
   }
-  .page {
-    margin: 0;
-    border: initial;
-    border-radius: initial;
-    width: initial;
-    min-height: initial;
-    box-shadow: initial;
-    background: initial;
-    page-break-after: avoid;
-    page-break-inside: avoid;
-    overflow: hidden;
+
+  .resume-page {
+    padding: 0;
+    display: block;
+  }
+
+  .resume {
+    width: auto;
+    max-width: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    font-size: 10.2pt;
+  }
+
+  .rlink,
+  .contact-plain {
+    /* keep links readable but avoid heavy underlines eating space in print */
+    text-decoration: none;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .rlink {
+    color: var(--resume-accent);
+  }
+}
+
+/* ================= Global custom cursor ================= */
+/* Hide the native cursor everywhere while the custom one is active. */
+.cursor-none-all,
+.cursor-none-all * {
+  cursor: none !important;
+}
+
+.cursor-ring-layer,
+.cursor-dot-layer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+  transition: opacity 0.25s ease;
+}
+.cursor-ring-layer[data-show="1"],
+.cursor-dot-layer[data-show="1"] {
+  opacity: 1;
+}
+.cursor-ring-layer[data-state="hidden"],
+.cursor-dot-layer[data-state="hidden"] {
+  opacity: 0;
+}
+
+/* The shapes — centered on the layer origin, blended so they invert on
+   any background. Only the inner element transforms (scale), so the layer's
+   position transform (set in JS) is never clobbered. */
+/* Colors come from the theme tokens, so the cursor is intentional in both
+   light and dark: a foreground-colored ring (dark on light, light on dark)
+   with a teal (primary) dot; the ring turns teal on interactive targets. */
+.cursor-ring-layer > i {
+  display: block;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1.5px solid hsl(var(--foreground) / 0.55);
+  border-radius: 9999px;
+  transition: transform 0.2s ease-out, background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+.cursor-dot-layer > i {
+  display: block;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: hsl(var(--primary));
+  border-radius: 9999px;
+  box-shadow: 0 0 12px hsl(var(--primary) / 0.6);
+}
+.cursor-ring-layer[data-state="hover"] > i {
+  transform: scale(1.7);
+  border-color: hsl(var(--primary));
+  background: hsl(var(--primary) / 0.14);
+}
+.cursor-ring-layer[data-down="1"] > i {
+  transform: scale(0.85);
+}
+
+/* Belt-and-suspenders: never show the custom cursor on coarse pointers. */
+@media (hover: none), (pointer: coarse) {
+  .cursor-ring-layer,
+  .cursor-dot-layer {
+    display: none;
+  }
+}
+
+/* ================= Hover memes ================= */
+.meme-layer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10000;
+  pointer-events: none;
+  will-change: transform;
+}
+.meme-bubble {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  background: hsl(var(--popover));
+  color: hsl(var(--popover-foreground));
+  box-shadow: 0 14px 40px -12px hsl(var(--primary) / 0.5);
+  white-space: nowrap;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transform-origin: bottom center;
+  transform: translate(-50%, calc(-100% - 16px)) scale(0.5);
+  opacity: 0;
+  transition: opacity 0.18s ease,
+    transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.meme-bubble[data-show="1"] {
+  opacity: 1;
+  transform: translate(-50%, calc(-100% - 16px)) scale(1);
+}
+.meme-emoji {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+@media (hover: none), (pointer: coarse) {
+  .meme-layer {
+    display: none;
+  }
+}
+
+/* ================= Spotlight cards (interactive grid) ================= */
+.spotlight-card__grid,
+.spotlight-card__glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.spotlight-card:hover .spotlight-card__grid,
+.spotlight-card:hover .spotlight-card__glow {
+  opacity: 1;
+}
+.spotlight-card__grid {
+  background-image: linear-gradient(
+      to right,
+      hsl(var(--primary) / 0.3) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, hsl(var(--primary) / 0.3) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(
+    170px circle at var(--mx, 50%) var(--my, 50%),
+    #000 0%,
+    transparent 68%
+  );
+  mask-image: radial-gradient(
+    170px circle at var(--mx, 50%) var(--my, 50%),
+    #000 0%,
+    transparent 68%
+  );
+}
+.spotlight-card__glow {
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    hsl(var(--primary) / 0.14),
+    transparent 65%
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-card__grid,
+  .spotlight-card__glow {
+    transition: none;
   }
 }

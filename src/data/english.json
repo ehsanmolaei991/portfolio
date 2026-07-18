@@ -1,18 +1,20 @@
 {
   "summary": "Summary",
-  "experience": "Experiences",
+  "experience": "Work Experience",
   "applicationAs": "APPLICATION AS",
   "contact": "Contact",
   "birthday": "Birthday",
   "address": "Address",
   "cv": "Resume",
-  "cover_letter": "CoverLetter",
+  "cover_letter": "Cover Letter",
   "hierarchy": "Hierarchy",
   "skills": "Professional Skills",
   "frontend": "Front End Development",
-  "tools": "Tools, Testing & Performance Optimization",
+  "tools": "Tools, Testing & Performance",
   "soft": "Soft Skills & Additional",
   "education": "Education",
-  "knowledgeAndIntrest": "Knowledge And Intrest",
-  "since": "Since"
+  "languages": "Languages",
+  "knowledgeAndIntrest": "Languages & Interests",
+  "since": "Since",
+  "present": "Present"
 }

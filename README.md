@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ehsan Molaei — Resume / CV
 
-## Getting Started
+A data-driven, ATS-friendly résumé built with Next.js + Tailwind. One source of
+truth (`src/data/data_en.json`) renders to **web** and to a **selectable-text PDF**,
+and can be **tailored per job** in seconds via variant overlays.
 
-First, run the development server:
+## Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev            # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Editing your content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Everything lives in **`src/data/data_en.json`** — contacts, summary, experience,
+skills, education, languages. Inline emphasis (bold / teal link) is data-driven via
+each block's `options` array:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```jsonc
+{
+  "value": "Optimized the iAuth system, boosting efficiency by 20%.",
+  "options": [
+    { "type": "bold", "search": "iAuth" },
+    { "type": "bold", "search": "20%" },
+    { "type": "link", "search": "iAuth", "href": "https://example.com" }
+  ]
+}
+```
 
-## Learn More
+## Tailoring per job (variants)
 
-To learn more about Next.js, take a look at the following resources:
+A **variant** overrides only what changes for a target (a country, a company, a role).
+Ready-made variants: **`romania`**, **`netherlands`**, **`germany`**, **`remote`**, and
+**`short`** (a 1-page `compact` version). View any at **`/resume?variant=<name>`**.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To add your own:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Copy `src/data/variants/romania.json` → `src/data/variants/<name>.json`.
+2. Override `applicationAs`, `summary`, `relocationNote` (and `compact` / `limitExperiences` for a 1-pager).
+3. Register it in `src/lib/resume.ts` (`variants` map).
+4. View it at **`/resume?variant=<name>`**.
 
-## Deploy on Vercel
+## Generating the PDF (ATS-safe, selectable text)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npx playwright install chromium   # one time
+npm run build
+npm run pdf                 # base résumé, A4  -> public/Ehsan-Molaei-Frontend.pdf
+npm run pdf -- romania      # the romania variant, A4
+npm run pdf -- romania letter   # US Letter (for US-style roles)
+npm run pdf:all             # base + every variant
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The PDF has **real, selectable text** (not an image) so Applicant Tracking Systems
+parse it correctly. No network is required at build time (system font stack).
+
+> No Playwright? You can also open the résumé in a browser and use
+> **Cmd/Ctrl + P → Save as PDF** — the print stylesheet produces a clean A4 page.
+
+## Application kit & strategy
+
+- **[`docs/JOB-STRATEGY.md`](docs/JOB-STRATEGY.md)** — Romania Blue Card, EU/remote routes, the sanctions/payment reality, and a 30/60/90-day plan.
+- **[`docs/COVER-LETTER.md`](docs/COVER-LETTER.md)** — reusable cover-letter template + a filled example.
+- **[`docs/LINKEDIN.md`](docs/LINKEDIN.md)** — headline, About, and top-skills text to paste into LinkedIn.
+
+## Structure
+
+```
+src/
+  app/page.tsx         # the résumé (server component, reads ?variant=)
+  app/layout.tsx       # metadata / SEO
+  data/data_en.json    # ← single source of truth
+  data/variants/*.json # tailored overlays
+  lib/resume.ts        # base + variant merge, types
+  styles/globals.css   # design + print/PDF stylesheet
+scripts/generate-pdf.mjs
+docs/JOB-STRATEGY.md
+```

@@ -1,646 +1,230 @@
-import {
-  BookOpenCheck,
-  Brain,
-  BriefcaseBusiness,
-  CalendarDays,
-  Github,
-  GraduationCap,
-  Linkedin,
-  Mail,
-  MapPin,
-  Phone,
-  SquareArrowOutUpRight,
-  User,
-} from "lucide-react";
-import data from "@data/data_en.json";
-// import deutsch from "@data/deutsch.json";
-import english from "@data/english.json";
-import classNames from "classnames";
-import Highlighter from "react-highlight-words";
+import { getResume } from "@lib/resume";
+import { HeroShowcase, type HeroCta } from "@/components/hero-showcase";
+import { ScrambleText } from "@/components/ui/scramble-text";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
 
-const currentLang = "en";
-const lang = english;
+const iconFor: Record<string, string> = {
+  MAIL: "Email",
+  LINKEDIN: "LinkedIn",
+  GITHUB: "GitHub",
+  WEBSITE: "Website",
+  MOBILE: "Phone",
+};
 
-export default function App() {
-  // const [lang, setLang] = useState(deutsch);
+// Hover memes — "<emoji>|<caption>". Consumed by <MemeLayer /> via data-meme.
+const skillMemes: Record<string, string> = {
+  "TypeScript": "🦕|any? I hardly know her",
+  "React.js": "⚛️|hooks go brrr",
+  "React Native": "📱|write once, debug everywhere",
+  "Next.js": "▲|'use client' (again)",
+  "Redux": "🌀|boilerplate as a lifestyle",
+  "Zustand": "🐻|state, but chill",
+  "RTK Query": "🎣|caching so you don't have to",
+  "React Query": "🔁|refetch go brrr",
+  "HTML5": "📄|technically a programming language",
+  "CSS3 (SASS, SCSS)": "🎨|wait, why is it centered now",
+  "Webpack": "📦|it compiles, ship it",
+  "Vite": "⚡|npm run dev at ludicrous speed",
+  "NPM": "🧶|node_modules has entered the chat",
+  "Yarn": "🧵|same thing, fewer bugs (allegedly)",
+  "Git": "🌳|git commit -m 'fix'",
+  "GitHub": "🐙|merge conflicts build character",
+  "JavaScript (ES6+)": "🃏|NaN === NaN // false",
+  "Storybook": "📚|it works in isolation",
+  "Jest": "🃏|expect(bugs).toBe(0)",
+  "Playwright": "🎭|flaky? never heard of her",
+  "Docker": "🐳|but it works in the container",
+  "Node.js": "💚|callback hell survivor",
+};
+const memeFallbacks = [
+  "🚀|ship it",
+  "💾|works on my machine",
+  "🔥|this is fine",
+  "🧠|big brain time",
+  "☕|powered by coffee",
+];
+function memeFor(skill: string): string {
+  if (skillMemes[skill]) return skillMemes[skill];
+  let sum = 0;
+  for (let i = 0; i < skill.length; i++) sum += skill.charCodeAt(i);
+  return memeFallbacks[sum % memeFallbacks.length];
+}
+const statMemes: Record<string, string> = {
+  "years of experience": "🧓|senior since before hooks",
+  "companies shipped for": "🚢|ship it 🚀",
+  "cross-platform apps": "📲|works on my machine",
+  "app-store reviews": "⭐|please rate 5 stars",
+};
+
+/** Section eyebrow — same visual vocabulary as the hero (teal tick + tracked label). */
+function SectionLabel({ children }: { children: string }) {
   return (
-    <main className="flex min-h-screen flex-col">
-      {/* Main Info */}
-      {/* <div className="page relative overflow-hidden">
-        <span className="shape block absolute top-0 right-0 size-full bg-gray-500/5" />
-        <div className="flex h-full w-full justify-center">
-          <div className="flex flex-col items-center h-full justify-between py-20">
-            <section className="space-y-4">
-              <h1 className="uppercase text-slate-700 font-bold text-center text-5xl">
-                {data?.firstName} {data?.lastName}
-              </h1>
-              <h2 className="uppercase text-slate-500 text-center text-3xl">
-                {lang?.applicationAs}{" "}
-                <span className="text-slate-700">{data?.applicationAs}</span>
-              </h2>
-            </section>
+    <div className="group mb-8 flex items-center gap-3">
+      <span className="h-px w-8 origin-left bg-primary transition-transform duration-300 group-hover:scale-x-150" />
+      <ScrambleText
+        text={children}
+        className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground transition-colors group-hover:text-primary"
+      />
+    </div>
+  );
+}
 
-            <section>
-              <img
-                src={data?.imagesSrc}
-                alt="Ehsan Molaei"
-                className="size-80 z-20 rounded-full border-[1rem] border-slate-700"
-              />
-            </section>
+export default function Landing() {
+  const data = getResume();
+  const featured = data.experiences.slice(0, 4);
 
-            <section className="flex justify-between w-full mt-20 px-14">
-              <div>
-                <h3 className="text-xl font-bold text-slate-700">
-                  {lang?.contact}:
-                </h3>
-                <h5 className="mt-1 text-md font-semibold text-slate-500">
-                  {data?.city}, {data?.country}
-                </h5>
+  const chips = [
+    ...data.skills.frontend.slice(0, 10),
+    ...data.skills.tools.slice(0, 6),
+  ];
 
-                <ul className="mt-6 space-y-1">
-                  {data?.contacts?.map((item) => (
-                    <li key={item?.title}>
-                      <span className="font-medium text-base text-slate-500">
-                        {item?.title}:{" "}
-                      </span>
-                      <a
-                        href={item?.link}
-                        className="font-semibold text-slate-600 hover:text-slate-900"
-                      >
-                        {item?.value}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+  const stats = [
+    { n: "9+", label: "years of experience" },
+    { n: "7", label: "companies shipped for" },
+    { n: "6+", label: "cross-platform apps" },
+    { n: "500+", label: "app-store reviews" },
+  ];
+
+  const links = data.contacts.filter((c) => c.id !== "MOBILE");
+  const mail = data.contacts.find((c) => c.id === "MAIL")?.link;
+
+  // Rotating hero taglines — derived from the resume data so they stay in sync.
+  const taglines = [
+    data.applicationAs,
+    data.skills.frontend.slice(0, 3).join("  ·  "),
+    data.skills.frontend.slice(3, 6).join("  ·  "),
+    data.skills.tools.slice(0, 3).join("  ·  "),
+  ].filter((t) => t && t.trim().length > 0);
+
+  const ctas: HeroCta[] = [
+    { label: "View résumé", href: "/resume", primary: true, meme: "📄|no cap, just skills" },
+    { label: "Download PDF", href: "/Ehsan-Molaei-Frontend.pdf", meme: "⬇️|not a virus, promise" },
+    ...(mail ? [{ label: "Email me", href: mail, meme: "📧|replies within 24h (usually)" }] : []),
+  ];
+
+  return (
+    <>
+      <HeroShowcase
+        brand={`${data.firstName} ${data.lastName}`}
+        name={`${data.firstName} ${data.lastName}`.toUpperCase()}
+        hoverText="LET'S TALK"
+        eyebrow={data.applicationAs}
+        taglines={taglines}
+        relocationNote={data.relocationNote}
+        ctas={ctas}
+      />
+
+      <main className="relative isolate overflow-hidden bg-background text-foreground">
+        {/* Grid motif carried down from the hero, fading out */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-0 opacity-40 [background-image:linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_70%_45%_at_50%_0%,#000_35%,transparent_100%)]"
+        />
+        {/* Teal bridge glow connecting to the hero above */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-64 [background:radial-gradient(ellipse_at_top,hsl(var(--primary)/0.10),transparent_60%)]"
+        />
+
+        <div className="relative z-10 mx-auto w-full max-w-5xl space-y-24 px-6 pb-28 pt-16">
+          {/* Stats */}
+          <section className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            {stats.map((s) => (
+              <div
+                key={s.label}
+                data-meme={statMemes[s.label]}
+                className="rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_16px_44px_-24px_hsl(var(--primary)/0.5)]"
+              >
+                <div className="text-3xl font-bold tracking-tight text-primary">
+                  {s.n}
+                </div>
+                <div className="mt-1 text-sm text-muted-foreground">
+                  {s.label}
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-slate-700">
-                  {lang?.hierarchy}:
-                </h3>
-
-                <ul className="mt-1 list-disc ml-3">
-                  <li className="text-md font-semibold text-slate-500">
-                    <a href="#Anschreiben">{lang?.cover_letter}</a>
-                  </li>
-                  <li className="text-md font-semibold text-slate-500">
-                    <a href="#Lebenslauf">{lang?.cv}</a>
-                  </li>
-                </ul>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div> */}
-
-      {/* Anschreiben */}
-      {/* <div id="Anschreiben" className="page relative overflow-hidden">
-        <span className="block absolute top-0 right-0 w-0 h-0 border-[200px] border-t-0 border-l-0 border-transparent border-r-gray-500/5" />
-        <div className="flex flex-col h-full gap-10">
-          <div className="flex justify-between w-full">
-            <div>
-              <h3 className="text-3xl font-semibold text-slate-600/10 mb-7">
-                {lang?.cover_letter}
-              </h3>
-              <h3 className="text-lg font-bold text-slate-700">
-                {data?.companyName}
-              </h3>
-              <h5 className="mt-1 text-sm font-semibold text-slate-500">
-                {data?.companyLocation}
-              </h5>
-            </div>
-            <div className="-mt-6">
-              <h3 className="text-lg font-bold text-slate-700">
-                {data?.firstName} {data?.lastName}
-              </h3>
-              <h5 className="mt-1 text-sm font-semibold text-slate-500">
-                {data?.city}, {data?.country}
-              </h5>
-
-              <ul className="mt-6 space-y-1">
-                {data?.contacts?.map((item) => (
-                  <li key={item?.title}>
-                    <span className="font-medium text-sm text-slate-500">
-                      {item?.title}:{" "}
-                    </span>
-                    <a
-                      href={item?.link}
-                      className="font-semibold text-sm text-slate-600 hover:text-slate-900"
-                    >
-                      {item?.value}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <span className="text-right text-sm text-slate-800">
-            {data?.currentData}
-          </span>
-          <div className="space-y-3 divide-y-2">
-            <h1 className="uppercase text-slate-700 font-semibold text-xl">
-              {lang?.applicationAs} {data?.applicationAs}
-            </h1>
-            <p className="leading-6 pt-3 text-md space-y-4 *:block">
-              <span>Sehr geehrte Damen und Herren,</span>
-              <span>
-                suchen Sie einen kompetenten, motivierten Projektmanager mit
-                Erfahrung in der Leitung und Durchführung anspruchsvoller und
-                komplexer Projekte? Sie suchen nach einem Mitarbeiter, der
-                Problemen nicht aus dem Weg geht, sondern sie löst? Dann ist
-                meine Bewerbung sicher von Interesse für Sie.
-              </span>
-              <span>
-                Durch meine Ausbildung und auch während meines Studiums an der
-                Universität Musterstadt sammelte ich Erfahrung durch diverse
-                Praktika. Nach dem sehr erfolgreichen Abschluss als Bürokaufmann
-                stieg ich bei der Erste Beispiel GmbH als Junior Projektmanager
-                ein (...)
-              </span>
-              <span>
-                Gerne möchte ich meine persönlichen Fähigkeiten und Erfahrungen
-                in Ihr Unternehmen einbringen. Meine Gehaltsvorstellungen liegen
-                bei 60.000 € im Jahr und ich stehe Ihnen ab sofort zur
-                Verfügung.
-              </span>
-              <span>
-                Ich freue mich sehr auf ein persönliches Vorstellungsgespräch.
-              </span>
-              <span>Mit freundlichen Grüßen</span>
-
-              <span>
-                {data?.firstName} {data?.lastName}
-              </span>
-            </p>
-          </div>
-        </div>
-      </div> */}
-
-      {/* Lebenslauf - (Experiences) */}
-      <div id="Lebenslauf" className="page relative overflow-hidden">
-        <span className="block triangle absolute top-0 right-0 size-full bg-gray-500/5" />
-        <div className="flex flex-col h-full gap-10">
-          <div className="flex justify-between w-full">
-            <div>
-              <h3 className="text-3xl font-semibold text-slate-500">
-                {lang?.cv}
-              </h3>
-              <h5 className="mt-1 text-5xl font-bold text-slate-700">
-                {data?.firstName} {data?.lastName}
-              </h5>
-
-              <ul className="space-y-1 mt-6">
-                {/* Birthday */}
-                <li className="grid grid-cols-2 text-slate-600">
-                  <span className="flex items-center gap-1">
-                    <CalendarDays className="size-4" />
-                    <span>{lang?.birthday}</span>
-                  </span>
-                  <span>
-                    {data?.birthday} in {data?.bornIn}
-                  </span>
-                </li>
-                {/* Address */}
-                <li className="grid grid-cols-2 text-slate-600">
-                  <span className="flex items-center gap-1">
-                    <MapPin className="size-4" />
-                    <span>{lang?.address}</span>
-                  </span>
-                  <span>
-                    {data?.city}, {data?.country}
-                  </span>
-                </li>
-                {/* Tell */}
-                {!!data?.contacts?.find((e) => e.id === "MOBILE") && (
-                  <li className="grid grid-cols-2 text-slate-600">
-                    <span className="flex items-center gap-1">
-                      <Phone className="size-4" />
-                      <span>
-                        {data?.contacts?.find((e) => e.id === "MOBILE")?.title}
-                      </span>
-                    </span>
-                    <a
-                      href={
-                        data?.contacts?.find((e) => e.id === "MOBILE")?.link
-                      }
-                    >
-                      {data?.contacts?.find((e) => e.id === "MOBILE")?.value}
-                    </a>
-                  </li>
-                )}
-                {/* Mail */}
-                {!!data?.contacts?.find((e) => e.id === "MAIL") && (
-                  <li className="grid grid-cols-2 text-slate-600">
-                    <span className="flex items-center gap-1">
-                      <Mail className="size-4" />
-                      <span>
-                        {data?.contacts?.find((e) => e.id === "MAIL")?.title}
-                      </span>
-                    </span>
-                    <a
-                      href={data?.contacts?.find((e) => e.id === "MAIL")?.link}
-                    >
-                      {data?.contacts?.find((e) => e.id === "MAIL")?.value}
-                    </a>
-                  </li>
-                )}
-                {/* GITHUB */}
-                {!!data?.contacts?.find((e) => e.id === "GITHUB") && (
-                  <li className="grid grid-cols-2 text-slate-600">
-                    <span className="flex items-center gap-1">
-                      <Github className="size-4" />
-                      <span>
-                        {data?.contacts?.find((e) => e.id === "GITHUB")?.title}
-                      </span>
-                    </span>
-                    <a
-                      href={
-                        data?.contacts?.find((e) => e.id === "GITHUB")?.link
-                      }
-                    >
-                      {data?.contacts?.find((e) => e.id === "GITHUB")?.value}
-                    </a>
-                  </li>
-                )}
-                {/* LINKEDIN */}
-                {!!data?.contacts?.find((e) => e.id === "LINKEDIN") && (
-                  <li className="grid grid-cols-2 text-slate-600">
-                    <span className="flex items-center gap-1">
-                      <Linkedin className="size-4" />
-                      <span>
-                        {
-                          data?.contacts?.find((e) => e.id === "LINKEDIN")
-                            ?.title
-                        }
-                      </span>
-                    </span>
-                    <a
-                      href={
-                        data?.contacts?.find((e) => e.id === "LINKEDIN")?.link
-                      }
-                    >
-                      {data?.contacts?.find((e) => e.id === "LINKEDIN")?.value}
-                    </a>
-                  </li>
-                )}
-              </ul>
-            </div>
-            <div className="-mt-6">
-              <img
-                src={data?.imagesSrc}
-                alt="Ehsan Molaei"
-                className="size-56 z-20 rounded-full border-[1rem] border-slate-700"
-              />
-            </div>
-          </div>
-          <section className="space-y-3">
-            <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
-              <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
-                <User className="text-white size-5" />
-              </div>
-              <h1 className="font-bold text-xl text-slate-700">
-                {lang?.summary}
-              </h1>
-            </div>
-            <p className="text-sm text-slate-700">
-              <Highlighter
-                searchWords={(data?.summary?.options || [])
-                  ?.map((e) => e.search)
-                  .filter((e) => e)}
-                autoEscape={true}
-                textToHighlight={data?.summary?.value}
-                highlightTag={(word: any) => {
-                  const option: any = data?.summary?.options?.find(
-                    (e) => e?.search === word?.children
-                  );
-
-                  if (option?.type === "link")
-                    return (
-                      <a
-                        className="underline font-bold text-slate-700 hover:text-slate-900"
-                        href={option?.href}
-                      >
-                        {option?.search}
-                      </a>
-                    );
-
-                  return (
-                    <span className="font-bold text-slate-800">
-                      {option?.search}
-                    </span>
-                  );
-                }}
-              />
-            </p>
+            ))}
           </section>
+
+          {/* Selected work */}
+          <section>
+            <SectionLabel>Selected experience</SectionLabel>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {featured.map((exp, i) => (
+                <SpotlightCard
+                  key={`${exp.company.name}-${i}`}
+                  className="rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_18px_50px_-24px_hsl(var(--primary)/0.5)]"
+                >
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h3 className="text-lg font-semibold text-foreground">
+                      {exp.position}
+                    </h3>
+                    <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
+                      {exp.endDate ? exp.endDate.split("/")[1] : "Now"}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm font-medium text-primary">
+                    {exp.company.href ? (
+                      <a className="hover:underline" href={exp.company.href}>
+                        {exp.company.name}
+                      </a>
+                    ) : (
+                      exp.company.name
+                    )}
+                    {exp.location ? (
+                      <span className="text-muted-foreground">{` · ${exp.location}`}</span>
+                    ) : null}
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {exp.achievements[0]?.value}
+                  </p>
+                </SpotlightCard>
+              ))}
+            </div>
+          </section>
+
           {/* Skills */}
-          <section className="space-y-3">
-            <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
-              <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
-                <Brain className="text-white size-5" />
-              </div>
-              <h1 className="font-bold text-xl text-slate-700">
-                {lang?.skills}
-              </h1>
-            </div>
-
-            <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-              <div>
-                <h3 className="font-semibold text-slate-600 mb-1 text-sm">
-                  {lang?.frontend}
-                </h3>
-                <p className="text-xs text-slate-500 leading-snug">
-                  {(data?.skills?.frontend || []).join(", ")}
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-600 mb-1 text-sm">
-                  {lang?.tools}
-                </h3>
-                <p className="text-xs text-slate-500 leading-snug">
-                  {(data?.skills?.tools || []).join(", ")}
-                </p>
-              </div>
-              <div className="col-span-2">
-                <h3 className="font-semibold text-slate-600 mb-1 text-sm">
-                  {lang?.soft}
-                </h3>
-                <p className="text-xs text-slate-500 leading-snug">
-                  {(data?.skills?.soft || []).join(", ")}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="space-y-3">
-            <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
-              <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
-                <BriefcaseBusiness className="text-white size-5" />
-              </div>
-              <h1 className="font-bold text-xl text-slate-700">
-                {lang?.experience}
-              </h1>
-            </div>
-
-            <ul className="space-y-6">
-              {data?.experiences?.slice(0, 3)?.map((item, i) => (
+          <section>
+            <SectionLabel>Core stack</SectionLabel>
+            <ul className="flex flex-wrap gap-2.5">
+              {chips.map((c) => (
                 <li
-                  key={`experiences-${item?.company?.name}-${i}`}
-                  className="grid grid-cols-4"
+                  key={c}
+                  data-meme={memeFor(c)}
+                  className="rounded-full border border-border bg-secondary/60 px-4 py-2 text-sm font-medium text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:text-primary"
                 >
-                  <span className="col-span-1 pt-1 text-sm text-slate-600">
-                    {!item?.endDate
-                      ? `${lang?.since} ${item?.startDate} `
-                      : `${item?.startDate} - ${item?.endDate}`}
-                  </span>
-                  <div className="col-span-3">
-                    <h2
-                      className={classNames("font-black w-fit text-slate-600", {
-                        "underline hover:text-slate-800": !!item?.company?.href,
-                      })}
-                    >
-                      {!!item?.company?.href ? (
-                        <a
-                          className="flex gap-1 items-center"
-                          href={item?.company?.href || "#"}
-                        >
-                          {item?.company?.name}
-                          <SquareArrowOutUpRight className="size-3" />
-                        </a>
-                      ) : (
-                        item?.company?.name
-                      )}
-                    </h2>
-                    <h3 className="text-slate-500 text-sm font-semibold">
-                      {item?.position}
-                    </h3>
-                    <ul className="list-disc pl-3 mt-4 space-y-1">
-                      {item?.achievements?.map((achieve, i) => (
-                        <li
-                          key={`achieve-${i}`}
-                          className="text-xs font-light text-slate-800 leading-[18px]"
-                        >
-                          {/* @ts-ignore */}
-                          <Highlighter
-                            searchWords={(achieve?.options || [])
-                              ?.map((e) => e.search)
-                              .filter((e) => e)}
-                            autoEscape={true}
-                            textToHighlight={achieve?.value}
-                            highlightTag={(word: any) => {
-                              const option: any = achieve?.options?.find(
-                                (e) => e?.search === word?.children
-                              );
-
-                              if (option?.type === "link")
-                                return (
-                                  <a
-                                    className="underline font-bold text-slate-700 hover:text-slate-900"
-                                    href={option?.href}
-                                  >
-                                    {option?.search}
-                                  </a>
-                                );
-
-                              return (
-                                <span className="font-bold text-slate-800">
-                                  {option?.search}
-                                </span>
-                              );
-                            }}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <ScrambleText text={c} />
                 </li>
               ))}
             </ul>
           </section>
+
+          {/* Contact / footer */}
+          <footer className="border-t border-border pt-12">
+            <SectionLabel>Let&apos;s talk</SectionLabel>
+            <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
+              Open to relocation &amp; visa sponsorship. The fastest way to reach
+              me:
+            </p>
+            <div className="mt-6 flex flex-wrap gap-x-7 gap-y-3">
+              {links.map((c) => (
+                <a
+                  key={c.id}
+                  href={c.link}
+                  className="group inline-flex items-center gap-1.5 text-[15px] font-semibold text-foreground transition-colors hover:text-primary"
+                >
+                  <ScrambleText text={iconFor[c.id] ?? c.title} />
+                  <span className="text-primary transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                    ↗
+                  </span>
+                </a>
+              ))}
+            </div>
+            <p className="mt-10 text-sm text-muted-foreground">
+              © {data.firstName} {data.lastName} · Built with Next.js
+            </p>
+          </footer>
         </div>
-      </div>
-
-      {/* Lebenslauf - (Experiences) */}
-      <div id="Lebenslauf" className="page relative overflow-hidden">
-        <span className="block triangle-bottom absolute top-0 right-0 size-full bg-gray-500/5" />
-        <div className="flex flex-col h-full gap-2">
-          <section className="space-y-2">
-            <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
-              <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
-                <BriefcaseBusiness className="text-white size-5" />
-              </div>
-              <h1 className="font-bold text-xl text-slate-700">
-                {lang?.experience}
-              </h1>
-            </div>
-
-            <ul className="space-y-4">
-              {data?.experiences?.slice(3)?.map((item, i) => (
-                <li
-                  key={`experiences-${item?.company?.name}-${i}`}
-                  className="grid grid-cols-4"
-                >
-                  <span className="col-span-1 pt-1 text-sm text-slate-600">
-                    {!item?.endDate
-                      ? `Seit ${item?.startDate} `
-                      : `${item?.startDate} - ${item?.endDate}`}
-                  </span>
-                  <div className="col-span-3">
-                    <h2
-                      className={classNames("font-black w-fit text-slate-600", {
-                        "underline hover:text-slate-800": !!item?.company?.href,
-                      })}
-                    >
-                      {!!item?.company?.href ? (
-                        <a
-                          className="flex gap-1 items-center"
-                          href={item?.company?.href || "#"}
-                        >
-                          {item?.company?.name}
-                          <SquareArrowOutUpRight className="size-3" />
-                        </a>
-                      ) : (
-                        item?.company?.name
-                      )}
-                    </h2>
-                    <h3 className="text-slate-500 text-sm font-semibold">
-                      {item?.position}
-                    </h3>
-                    <ul className="list-disc pl-3 mt-4 space-y-1">
-                      {item?.achievements?.map((achieve, i) => (
-                        <li
-                          key={`achieve-${i}`}
-                          className="text-xs font-light text-slate-800 leading-[18px]"
-                        >
-                          {/* @ts-ignore */}
-                          <Highlighter
-                            searchWords={(achieve?.options || [])
-                              ?.map((e) => e.search)
-                              .filter((e) => e)}
-                            autoEscape={true}
-                            textToHighlight={achieve?.value}
-                            highlightTag={(word: any) => {
-                              const option: any = achieve?.options?.find(
-                                (e) => e?.search === word?.children
-                              );
-
-                              if (option?.type === "link")
-                                return (
-                                  <a
-                                    className="underline font-bold text-slate-700 hover:text-slate-900"
-                                    href={option?.href}
-                                  >
-                                    {option?.search}
-                                  </a>
-                                );
-
-                              return (
-                                <span className="font-bold text-slate-800">
-                                  {option?.search}
-                                </span>
-                              );
-                            }}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-        </div>
-      </div>
-
-      {/* Lebenslauf - (Education, Languages, Hobby) */}
-      <div id="Lebenslauf" className="page relative overflow-hidden">
-        <span className="block triangle-bottom absolute top-0 right-0 size-full bg-gray-500/5" />
-        <div className="flex flex-col h-full gap-10">
-          <section className="space-y-3">
-            <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
-              <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
-                <GraduationCap className="text-white size-5" />
-              </div>
-              <h1 className="font-bold text-xl text-slate-700">
-                {lang?.education}
-              </h1>
-            </div>
-
-            <ul className="space-y-6">
-              {data?.educations?.map((item, i) => (
-                <li
-                  key={`experiences-${item?.location}-${i}`}
-                  className="grid grid-cols-4"
-                >
-                  <span className="col-span-1 pt-1 text-sm text-slate-600">
-                    {!item?.endDate
-                      ? `Seit ${item?.startDate} `
-                      : `${item?.startDate} - ${item?.endDate}`}
-                  </span>
-                  <div className="col-span-3">
-                    <h2 className={"font-black w-fit text-slate-600"}>
-                      {item?.degree}
-                    </h2>
-                    <h3 className="text-slate-500 text-sm font-semibold">
-                      {item?.location}
-                    </h3>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {/* Languages, Hobby */}
-          <section className="space-y-3">
-            <div className="flex gap-4 border-b-2 border-slate-200 pb-2">
-              <div className="size-8 flex justify-center items-center bg-slate-700 rounded-full">
-                <BookOpenCheck className="text-white size-5" />
-              </div>
-              <h1 className="font-bold text-xl text-slate-700">
-                {lang?.knowledgeAndIntrest}
-              </h1>
-            </div>
-
-            <ul className="space-y-6">
-              {data?.knowledgeAndIntrest?.map((item, i) => (
-                <li
-                  key={`experiences-${item?.title}-${i}`}
-                  className="grid grid-cols-4"
-                >
-                  <span className="col-span-1 pt-1 text-sm text-slate-600">
-                    {item?.title}
-                  </span>
-                  <ul className="col-span-3">
-                    {item?.list?.map((itemList) => (
-                      <li key={item?.title} className="flex gap-6 items-center">
-                        <h2 className={"font-bold w-fit text-slate-600"}>
-                          {itemList?.title}
-                        </h2>
-                        {!!(itemList as any)?.level && (
-                          <h3 className="text-slate-500 text-sm font-semibold">
-                            {(itemList as any)?.level}
-                          </h3>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </div>
-
-      {/* Select Lang */}
-      {/* <button
-        onClick={() => {
-          setCurrentLang(currentLang === "en" ? "de" : "en");
-          setLang(currentLang === "en" ? deutsch : english);
-        }}
-        className="print:hidden border-slate-700 hover:bg-slate-700 hover:text-white rounded-full uppercase border p-4 aspect-square fixed bottom-4 left-4"
-      >
-        {currentLang}
-      </button> */}
-    </main>
+      </main>
+    </>
   );
 }
