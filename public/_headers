@@ -5,6 +5,11 @@
 # page, so adding an external script/font/image host means editing it here.
 
 /*
+  # HTML must revalidate. Without this, Cloudflare applies s-maxage=604800 and
+  # every page sits in the edge cache for a WEEK — a deployment then takes days
+  # to reach anyone, and pages deleted from the build keep serving 200 from
+  # cache. Fingerprinted assets below opt back into long caching.
+  Cache-Control: public, max-age=0, must-revalidate
   # HSTS. Only meaningful once the site is confirmed working over HTTPS —
   # preload is intentionally omitted; add it only when you are sure.
   Strict-Transport-Security: max-age=31536000; includeSubDomains
