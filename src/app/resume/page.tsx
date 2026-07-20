@@ -1,34 +1,22 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import Highlighter from "react-highlight-words";
 import english from "@data/english.json";
 import { getResume, type RichOption } from "@lib/resume";
+import { formatRange } from "@lib/date";
+import { RESUME_PDF } from "@lib/site-config";
 
 const lang = english;
 
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-/** "03/2025" -> "March 2025"; "" -> "Present" */
-function fmtDate(value?: string): string {
-  if (!value) return lang.present;
-  const [mm, yyyy] = value.split("/");
-  const month = MONTHS[Number(mm) - 1];
-  return month ? `${month} ${yyyy}` : value;
-}
+export const metadata: Metadata = {
+  title: "Résumé",
+  description:
+    "The full résumé of Ehsan Molaei, Senior Frontend Engineer — experience, skills, education. Also available as a selectable-text PDF.",
+  alternates: { canonical: "/resume" },
+};
 
 function dateRange(start?: string, end?: string): string {
-  return `${fmtDate(start)} – ${fmtDate(end)}`;
+  return formatRange(start, end, lang.present);
 }
 
 /** Renders text with inline bold / teal-link emphasis driven by the data file. */
@@ -79,6 +67,20 @@ export default function Resume({
 
   return (
     <main className={`resume-page${data.compact ? " resume-page--compact" : ""}`}>
+      {/* Screen-only controls; hidden in print so they never reach the PDF. */}
+      <div className="resume-actions">
+        <Link href="/" className="resume-action">
+          ← Back to site
+        </Link>
+        <a
+          href={RESUME_PDF}
+          download
+          className="resume-action resume-action--primary"
+        >
+          ↓ Download PDF
+        </a>
+      </div>
+
       <article className="resume">
         {/* ---------- Header ---------- */}
         <header className="resume-header">
@@ -103,15 +105,7 @@ export default function Resume({
         </header>
 
         <p className="resume-availability">
-          <span className="text-muted">
-            {data.city}, {data.country}
-          </span>
-          {data.relocationNote ? (
-            <>
-              {"  ·  "}
-              <span className="accent font-semibold">{data.relocationNote}</span>
-            </>
-          ) : null}
+          <span className="text-muted">{data.location}</span>
         </p>
 
         <hr className="resume-rule" />

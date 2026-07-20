@@ -1,17 +1,34 @@
 {
   "applicationAs": "Senior Frontend Engineer",
-  "relocationNote": "Open to relocation & visa sponsorship (EU / Blue Card)",
   "limitExperiences": 4,
   "compact": true,
   "summary": {
     "value": "Senior Frontend Engineer with 9+ years building performant, scalable web and mobile apps in React, Next.js, React Native, and TypeScript. As Frontend Team Lead on a crypto trading platform, I led a TypeScript monorepo refactor, built an in-house design system, and integrated WebSockets to cut data-fetch time 40%. Focused on performance, testing, and reusable component architecture, with a 30% engagement lift from a recent UI redesign.",
     "options": [
-      { "type": "bold", "search": "Senior Frontend Engineer" },
-      { "type": "bold", "search": "React, Next.js, React Native, and TypeScript" },
-      { "type": "bold", "search": "Frontend Team Lead" },
-      { "type": "bold", "search": "TypeScript monorepo" },
-      { "type": "bold", "search": "in-house design system" },
-      { "type": "bold", "search": "WebSockets" }
+      {
+        "type": "bold",
+        "search": "Senior Frontend Engineer"
+      },
+      {
+        "type": "bold",
+        "search": "React, Next.js, React Native, and TypeScript"
+      },
+      {
+        "type": "bold",
+        "search": "Frontend Team Lead"
+      },
+      {
+        "type": "bold",
+        "search": "TypeScript monorepo"
+      },
+      {
+        "type": "bold",
+        "search": "in-house design system"
+      },
+      {
+        "type": "bold",
+        "search": "WebSockets"
+      }
     ]
   }
 }

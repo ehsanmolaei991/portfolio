@@ -2,97 +2,445 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---------------- Resume document palette ----------------
-   Namespaced with `--resume-*` so they never collide with the
-   shadcn semantic tokens (--accent / --muted) defined below. */
-:root {
-  --resume-accent: #109cad;
+/* ============================================================================
+   TOKENS — see design-system/portfolio-master.md §5. No raw hex in components.
+   Light is "paper" (warm, printed). Dark is "ink" (deep slate, never black).
+   Neither theme is an inversion of the other.
+   ========================================================================= */
+@layer base {
+  :root {
+    color-scheme: light;
+
+    /* -- Surfaces & text -- */
+    --background: 40 20% 97%;
+    --surface: 40 24% 99%;
+    --elevated: 0 0% 100%;
+    --foreground: 215 25% 12%;
+    --muted: 40 14% 93%;
+    --muted-foreground: 215 12% 38%;
+    --border: 38 12% 87%;
+    --border-strong: 38 12% 76%;
+
+    /* -- Accent. 4.53:1 on --background (was 3.29:1 — an AA failure). -- */
+    --accent: 187 82% 30%;
+    --accent-foreground: 0 0% 100%;
+    --accent-strong: 187 84% 24%;
+    --focus: 187 82% 30%;
+    --selection: 187 82% 30%;
+
+    /* -- shadcn compatibility aliases (components.json is configured) -- */
+    --card: 40 24% 99%;
+    --card-foreground: 215 25% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 12%;
+    --primary: 187 82% 30%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 14% 93%;
+    --secondary-foreground: 215 25% 12%;
+    --destructive: 0 65% 42%;
+    --destructive-foreground: 0 0% 100%;
+    --input: 38 12% 87%;
+    --ring: 187 82% 30%;
+    --radius: 4px;
+
+    /* -- Radius: deliberately tight. This is a document, not an app shell. -- */
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-lg: 8px;
+
+    /* -- Rhythm -- */
+    --space-section: clamp(4.5rem, 11vh, 8rem);
+    --space-block: clamp(2rem, 4vh, 3rem);
+    --gutter: clamp(1.25rem, 4vw, 2.5rem);
+
+    /* -- Motion. Three easings, five durations. That is the whole system. -- */
+    --dur-instant: 120ms;
+    --dur-fast: 180ms;
+    --dur-normal: 280ms;
+    --dur-slow: 500ms;
+    --dur-cinematic: 900ms;
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+    /* -- Elevation: borders do the work shadows normally would. -- */
+    --shadow-overlay: 0 8px 32px -12px hsl(215 25% 12% / 0.18);
+
+    /* -- Type stacks. No network fonts: builds must work offline. -- */
+    --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino,
+      "Book Antiqua", Georgia, "Times New Roman", serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+      "Liberation Mono", monospace;
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    --background: 216 24% 7%;
+    --surface: 216 20% 10%;
+    --elevated: 215 18% 13%;
+    --foreground: 210 20% 92%;
+    --muted: 215 18% 14%;
+    --muted-foreground: 214 12% 62%;
+    --border: 215 16% 18%;
+    --border-strong: 215 14% 27%;
+
+    --accent: 186 70% 58%;
+    --accent-foreground: 216 24% 7%;
+    --accent-strong: 186 76% 70%;
+    --focus: 186 70% 58%;
+    --selection: 186 70% 58%;
+
+    --card: 216 20% 10%;
+    --card-foreground: 210 20% 92%;
+    --popover: 215 18% 13%;
+    --popover-foreground: 210 20% 92%;
+    --primary: 186 70% 58%;
+    --primary-foreground: 216 24% 7%;
+    --secondary: 215 18% 14%;
+    --secondary-foreground: 210 20% 92%;
+    --destructive: 0 62% 52%;
+    --destructive-foreground: 0 0% 98%;
+    --input: 215 16% 18%;
+    --ring: 186 70% 58%;
+
+    --shadow-overlay: 0 8px 32px -12px hsl(216 40% 2% / 0.6);
+  }
+}
+
+/* ============================================================================
+   BASE
+   ========================================================================= */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Anchored sections clear the sticky header. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: hsl(var(--selection) / 0.24);
+    color: hsl(var(--foreground));
+  }
+
+  /* One focus treatment, everywhere, in both themes. Never removed. */
+  :focus-visible {
+    outline: 2px solid hsl(var(--focus));
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Headings inherit the serif display voice; body copy stays sans. */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  img,
+  svg,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@layer components {
+  /* First element in the tab order; visible only when focused. */
+  .skip-link {
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 70;
+    transform: translateY(-160%);
+    padding: 0.65rem 1rem;
+    border: 1px solid hsl(var(--border-strong));
+    border-radius: var(--radius-md);
+    background: hsl(var(--elevated));
+    color: hsl(var(--foreground));
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+
+  /* Editorial link: the rule grows from the left rather than blinking on. */
+  .link-rule {
+    background-image: linear-gradient(hsl(var(--accent)), hsl(var(--accent)));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size var(--dur-normal) var(--ease-out);
+  }
+  .link-rule:hover,
+  .link-rule:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* ============================================================================
+   THEME REVEAL — View Transitions
+   The toggle animates ::view-transition-new(root) as a clip-path circle growing
+   from the button. Killing the default cross-fade lets that circle be the only
+   thing that reads. Unsupported browsers and reduced-motion users get an
+   instant swap instead (handled in theme-toggle.tsx).
+   ========================================================================= */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* ============================================================================
+   CUSTOM POINTER
+   Only mounted for fine pointers with motion allowed (see pointer.tsx), so the
+   native cursor is never taken away from anyone who needs it.
+   ========================================================================= */
+.has-pointer-fx,
+.has-pointer-fx a,
+.has-pointer-fx button,
+.has-pointer-fx [role="button"] {
+  cursor: none;
+}
+/* Never hide the caret on real text-entry targets. */
+.has-pointer-fx input,
+.has-pointer-fx textarea,
+.has-pointer-fx select,
+.has-pointer-fx [contenteditable="true"] {
+  cursor: auto;
+}
+
+.pointer-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+}
+.pointer-layer[data-visible="1"] {
+  opacity: 1;
+  transition: opacity var(--dur-normal) var(--ease-out);
+}
+
+.pointer-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border: 1px solid hsl(var(--foreground) / 0.45);
+  border-radius: 999px;
+  transition: width var(--dur-normal) var(--ease-out),
+    height var(--dur-normal) var(--ease-out),
+    margin var(--dur-normal) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard);
+}
+.pointer-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 999px;
+  background: hsl(var(--accent));
+  will-change: transform;
+  transition: opacity var(--dur-fast) var(--ease-standard),
+    transform var(--dur-fast) var(--ease-standard);
+}
+
+/* Over an interactive target the ring opens up and takes the accent. */
+.pointer-layer[data-state="link"] .pointer-ring {
+  width: 62px;
+  height: 62px;
+  margin: -31px 0 0 -31px;
+  border-color: hsl(var(--accent));
+  background: hsl(var(--accent) / 0.12);
+}
+.pointer-layer[data-state="link"] .pointer-dot {
+  opacity: 0;
+}
+.pointer-layer[data-pressed="1"] .pointer-ring {
+  background: hsl(var(--accent) / 0.26);
+}
+
+/* Labelled targets turn the ring into a small filled disc with a word in it. */
+.pointer-layer[data-state="label"] .pointer-ring {
+  width: 84px;
+  height: 84px;
+  margin: -42px 0 0 -42px;
+  border-color: transparent;
+  background: hsl(var(--accent));
+}
+.pointer-layer[data-state="label"] .pointer-dot {
+  opacity: 0;
+}
+.pointer-label {
+  max-width: 76px;
+  color: hsl(var(--accent-foreground));
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-standard);
+}
+.pointer-layer[data-state="label"] .pointer-label {
+  opacity: 1;
+}
+
+/* ============================================================================
+   MEME HOVER CARD
+   ========================================================================= */
+.meme-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 55;
+  pointer-events: none;
+  will-change: transform;
+}
+.meme-card {
+  width: 200px;
+  padding: 0.75rem;
+  border: 1px solid hsl(var(--border-strong));
+  border-radius: var(--radius-lg);
+  background: hsl(var(--elevated));
+  box-shadow: var(--shadow-overlay);
+  transform: translate(18px, 18px) scale(0.94);
+  transform-origin: top left;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-standard),
+    transform var(--dur-normal) var(--ease-out);
+}
+.meme-card[data-show="1"] {
+  opacity: 1;
+  transform: translate(18px, 18px) scale(1);
+}
+.meme-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  background: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+  object-fit: cover;
+}
+.meme-caption {
+  margin: 0.6rem 0 0;
+  color: hsl(var(--foreground));
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.45;
+}
+
+/* Entrance choreography is owned by MotionRuntime (GSAP). These elements start
+   hidden so there is no flash between first paint and the timeline taking over.
+   Under reduced motion they are never hidden at all, and <noscript> in the
+   layout restores them when scripting is unavailable. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-hero-step],
+  [data-reveal] {
+    opacity: 0;
+  }
+}
+
+/* Reduced motion: a different presentation, never a degraded site. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   RÉSUMÉ DOCUMENT — /resume only.
+   A print artifact with its own palette and A4 geometry. Preserved verbatim
+   from the pre-redesign build (it is what makes the PDF ATS-parseable); the
+   only edits are the accent contrast fix and dropping justified body text.
+   ========================================================================= */
+.resume-page {
+  --resume-accent: #0e7d8b; /* was #109cad — 3.29:1 on white, an AA failure */
   --ink: #1f2937;
   --body: #333a44;
   --resume-muted: #5b6470;
   --rule: #e4e7eb;
   --page: #ffffff;
   --screen-bg: #eef0f3;
+  --page-w: 210mm; /* overridden to Letter via ?format=letter */
 
-  /* A4 content box; overridden to Letter via ?format=letter on <html> */
-  --page-w: 210mm;
-}
-
-/* ---------------- shadcn/ui semantic tokens ----------------
-   Consumed by Tailwind color utilities (bg-background, text-foreground,
-   text-muted-foreground, bg-primary, border, …). `.dark` is toggled on
-   <html> by next-themes. Values mirror the landing palette below. */
-@layer base {
-  :root {
-    --background: 210 20% 97%;
-    --foreground: 218 22% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 218 22% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 218 22% 10%;
-    --primary: 187 84% 36%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 200 21% 95%;
-    --secondary-foreground: 218 22% 10%;
-    --muted: 200 21% 95%;
-    --muted-foreground: 216 10% 40%;
-    --accent: 200 21% 95%;
-    --accent-foreground: 218 22% 10%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 216 19% 92%;
-    --input: 216 19% 92%;
-    --ring: 187 84% 36%;
-    --radius: 0.6rem;
-  }
-
-  .dark {
-    --background: 214 21% 6%;
-    --foreground: 210 22% 93%;
-    --card: 213 20% 11%;
-    --card-foreground: 210 22% 93%;
-    --popover: 213 20% 11%;
-    --popover-foreground: 210 22% 93%;
-    --primary: 186 66% 50%;
-    --primary-foreground: 214 21% 6%;
-    --secondary: 212 22% 14%;
-    --secondary-foreground: 210 22% 93%;
-    --muted: 212 22% 14%;
-    --muted-foreground: 215 13% 65%;
-    --accent: 212 22% 14%;
-    --accent-foreground: 210 22% 93%;
-    --destructive: 0 62% 45%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 214 18% 17%;
-    --input: 214 18% 17%;
-    --ring: 186 66% 50%;
-  }
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  scroll-behavior: smooth;
-}
-
-body {
-  background: var(--screen-bg);
-  color: var(--body);
-  margin: 0;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Helvetica, Arial, "Noto Sans", sans-serif;
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
-
-/* ---------------- Layout shell ---------------- */
-.resume-page {
+  color-scheme: light;
   display: flex;
   justify-content: center;
+  min-height: 100vh;
   padding: 24px 16px 64px;
+  background: var(--screen-bg);
+  color: var(--body);
+  font-family: var(--font-sans);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 .resume {
@@ -114,9 +462,11 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   gap: 24px;
+  flex-wrap: wrap;
 }
 
 .resume-name {
+  font-family: var(--font-sans);
   font-size: 25pt;
   font-weight: 400;
   letter-spacing: 0.06em;
@@ -169,6 +519,7 @@ body {
 }
 
 .section-title {
+  font-family: var(--font-sans);
   font-size: 12.5pt;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -185,9 +536,11 @@ body {
   content: ":";
 }
 
+/* Ragged right, not justified: justified text opens rivers at this measure
+   and is measurably harder to read for dyslexic readers. */
 .resume-body {
   margin: 0;
-  text-align: justify;
+  text-align: left;
 }
 
 /* ---------------- Skills ---------------- */
@@ -229,6 +582,7 @@ body {
 }
 
 .exp-position {
+  font-family: var(--font-sans);
   font-size: 11pt;
   font-weight: 700;
   color: var(--ink);
@@ -283,7 +637,7 @@ body {
 }
 
 .rlink:hover {
-  color: #0b7c8a;
+  color: #0a5f6a;
 }
 
 .contact-plain {
@@ -301,6 +655,58 @@ body {
 
 .text-muted {
   color: var(--resume-muted);
+}
+
+/* Screen-only controls — never in the PDF. */
+.resume-actions {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.resume-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid #d6dbe1;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.resume-action:hover {
+  border-color: var(--resume-accent);
+  color: var(--resume-accent);
+}
+
+.resume-action--primary {
+  border-color: var(--resume-accent);
+  background: var(--resume-accent);
+  color: #ffffff;
+}
+
+.resume-action--primary:hover {
+  background: #0a5f6a;
+  border-color: #0a5f6a;
+  color: #ffffff;
+}
+
+/* The sheet must clear the fixed controls on narrow screens. */
+@media (max-width: 900px) {
+  .resume-page {
+    padding-top: 76px;
+  }
 }
 
 /* ---------------- Print / PDF ---------------- */
@@ -337,9 +743,15 @@ body {
     background: #fff;
   }
 
+  .resume-actions {
+    display: none;
+  }
+
   .resume-page {
     padding: 0;
     display: block;
+    min-height: 0;
+    background: #fff;
   }
 
   .resume {
@@ -364,163 +776,5 @@ body {
 
   .rlink {
     color: var(--resume-accent);
-  }
-}
-
-/* ================= Global custom cursor ================= */
-/* Hide the native cursor everywhere while the custom one is active. */
-.cursor-none-all,
-.cursor-none-all * {
-  cursor: none !important;
-}
-
-.cursor-ring-layer,
-.cursor-dot-layer {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0;
-  will-change: transform;
-  transition: opacity 0.25s ease;
-}
-.cursor-ring-layer[data-show="1"],
-.cursor-dot-layer[data-show="1"] {
-  opacity: 1;
-}
-.cursor-ring-layer[data-state="hidden"],
-.cursor-dot-layer[data-state="hidden"] {
-  opacity: 0;
-}
-
-/* The shapes — centered on the layer origin, blended so they invert on
-   any background. Only the inner element transforms (scale), so the layer's
-   position transform (set in JS) is never clobbered. */
-/* Colors come from the theme tokens, so the cursor is intentional in both
-   light and dark: a foreground-colored ring (dark on light, light on dark)
-   with a teal (primary) dot; the ring turns teal on interactive targets. */
-.cursor-ring-layer > i {
-  display: block;
-  width: 34px;
-  height: 34px;
-  margin: -17px 0 0 -17px;
-  border: 1.5px solid hsl(var(--foreground) / 0.55);
-  border-radius: 9999px;
-  transition: transform 0.2s ease-out, background-color 0.2s ease,
-    border-color 0.2s ease;
-}
-.cursor-dot-layer > i {
-  display: block;
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
-  background: hsl(var(--primary));
-  border-radius: 9999px;
-  box-shadow: 0 0 12px hsl(var(--primary) / 0.6);
-}
-.cursor-ring-layer[data-state="hover"] > i {
-  transform: scale(1.7);
-  border-color: hsl(var(--primary));
-  background: hsl(var(--primary) / 0.14);
-}
-.cursor-ring-layer[data-down="1"] > i {
-  transform: scale(0.85);
-}
-
-/* Belt-and-suspenders: never show the custom cursor on coarse pointers. */
-@media (hover: none), (pointer: coarse) {
-  .cursor-ring-layer,
-  .cursor-dot-layer {
-    display: none;
-  }
-}
-
-/* ================= Hover memes ================= */
-.meme-layer {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 10000;
-  pointer-events: none;
-  will-change: transform;
-}
-.meme-bubble {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.8rem;
-  border: 1px solid hsl(var(--border));
-  border-radius: 1rem;
-  background: hsl(var(--popover));
-  color: hsl(var(--popover-foreground));
-  box-shadow: 0 14px 40px -12px hsl(var(--primary) / 0.5);
-  white-space: nowrap;
-  font-size: 0.875rem;
-  font-weight: 600;
-  transform-origin: bottom center;
-  transform: translate(-50%, calc(-100% - 16px)) scale(0.5);
-  opacity: 0;
-  transition: opacity 0.18s ease,
-    transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.meme-bubble[data-show="1"] {
-  opacity: 1;
-  transform: translate(-50%, calc(-100% - 16px)) scale(1);
-}
-.meme-emoji {
-  font-size: 1.35rem;
-  line-height: 1;
-}
-@media (hover: none), (pointer: coarse) {
-  .meme-layer {
-    display: none;
-  }
-}
-
-/* ================= Spotlight cards (interactive grid) ================= */
-.spotlight-card__grid,
-.spotlight-card__glow {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.spotlight-card:hover .spotlight-card__grid,
-.spotlight-card:hover .spotlight-card__glow {
-  opacity: 1;
-}
-.spotlight-card__grid {
-  background-image: linear-gradient(
-      to right,
-      hsl(var(--primary) / 0.3) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, hsl(var(--primary) / 0.3) 1px, transparent 1px);
-  background-size: 22px 22px;
-  -webkit-mask-image: radial-gradient(
-    170px circle at var(--mx, 50%) var(--my, 50%),
-    #000 0%,
-    transparent 68%
-  );
-  mask-image: radial-gradient(
-    170px circle at var(--mx, 50%) var(--my, 50%),
-    #000 0%,
-    transparent 68%
-  );
-}
-.spotlight-card__glow {
-  background: radial-gradient(
-    220px circle at var(--mx, 50%) var(--my, 50%),
-    hsl(var(--primary) / 0.14),
-    transparent 65%
-  );
-}
-@media (prefers-reduced-motion: reduce) {
-  .spotlight-card__grid,
-  .spotlight-card__glow {
-    transition: none;
   }
 }

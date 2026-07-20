@@ -24,7 +24,7 @@ Right now I lead frontend at Balinex, where I drove the refactor of a crypto tra
 
 My day-to-day toolkit includes Redux, Zustand, RTK Query and React Query for state, Tailwind, Emotion and styled-components for styling, Storybook for design systems, and Jest, Playwright and React Testing Library for confidence in every release. I obsess over performance with Web Vitals, Lighthouse, and code splitting, and I ship through Docker and GitHub Actions in Agile teams. I've also mentored 15+ students through a 6-month bootcamp, so I know how to raise a team's level, not just my own output.
 
-I'm based in Iran and actively seeking EU relocation with visa sponsorship (Blue Card), open to remote or hybrid roles across European teams. I speak English at B2 and am learning German (A2). If you're hiring a senior or lead frontend engineer who can own architecture, quality, and delivery, let's connect.
+I'm based in Yerevan, Armenia, and open to remote, hybrid, or on-site roles. I speak English at B2 and am learning German (A2). If you're hiring a senior or lead frontend engineer who can own architecture, quality, and delivery, let's connect.
 
 ## Top skills
 _(add in this order — LinkedIn weights the first three most)_

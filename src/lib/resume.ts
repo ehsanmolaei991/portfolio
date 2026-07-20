@@ -78,11 +78,8 @@ export interface Resume {
   firstName: string;
   lastName: string;
   applicationAs: string;
-  imagesSrc?: string;
-  city: string;
-  country: string;
-  openToRelocation?: boolean;
-  relocationNote?: string;
+  /** Personal location, country-level only. Experience entries keep their own. */
+  location: string;
   tagline?: string;
   contacts: Contact[];
   summary: RichBlock;
