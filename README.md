@@ -218,8 +218,10 @@ that ride along in `public/` and land in `out/`:
 - **`public/_headers`** — CSP, HSTS, frame/referrer/permissions policy, and
   cache lifetimes. The CSP allows **no external origin**, because the site
   loads none. Adding any third-party script, font, or image means editing it.
-- **`public/_redirects`** — `www` → apex (the apex is canonical, matching
-  `SITE_URL`), plus 301s from the old `/resume?variant=x` URLs.
+- **`public/_redirects`** — path-only redirects. Note that Pages matches on
+  **path alone**: rules keyed on hostname or query string sit in the file
+  looking correct and never fire. `www` → apex is therefore a dashboard
+  **Redirect Rule**, not a line in this file.
 
 Custom domains (`ehsanmolaei.ir`, and `www` which 301s to it) are attached in
 the Pages dashboard under **Custom domains**.

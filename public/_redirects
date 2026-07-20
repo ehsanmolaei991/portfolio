@@ -1,13 +1,19 @@
-# Cloudflare static-asset redirects. Applied before the asset lookup.
+# Cloudflare Pages redirects. Applied before the asset lookup.
 #
-# The apex-vs-www decision lives here, in the repo, rather than only in the
-# dashboard, so it travels with the project. Canonical host is the apex, which
-# is what src/lib/site-config.ts and every canonical tag point at.
-https://www.ehsanmolaei.ir/* https://ehsanmolaei.ir/:splat 301
-
-# NOTE: the old résumé URLs were /resume?variant=romania. They are deliberately
-# NOT redirected here — `_redirects` matches on path only and silently ignores
-# query strings, so a rule like `/resume?variant=romania` would look correct in
-# the file and do nothing. Those URLs were never indexed (variant pages are
-# noindex) and were only ever used locally, so no redirect is needed. If one is
-# ever wanted, it has to be a dashboard Redirect Rule, which can read the query.
+# Currently empty, and that is deliberate. Two rules that look reasonable here
+# do not work on Pages, and fail *silently* — they sit in the file looking
+# correct while doing nothing:
+#
+#   1. Host-based rules. `_redirects` matches on PATH only. A line like
+#        https://www.ehsanmolaei.ir/* https://ehsanmolaei.ir/:splat 301
+#      is ignored. www -> apex is therefore a dashboard Redirect Rule
+#      (Rules -> Redirect Rules), which can read the hostname.
+#
+#   2. Query-string rules. Same problem: the query is not part of the match, so
+#        /resume?variant=romania  /resume/romania/  301
+#      would never fire. Those old URLs were never indexed (variant pages are
+#      noindex) and were only ever used locally, so no redirect is needed.
+#
+# Path-only redirects DO work here, e.g.:
+#   /old-page/  /new-page/  301
+# Add them below as the site changes.
