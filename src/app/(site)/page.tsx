@@ -16,7 +16,6 @@ import { Contact } from "@/components/sections/contact";
 export default function Landing() {
   const data = getResume();
   const email = data.contacts.find((c) => c.id === "MAIL")?.link;
-  const publicContacts = data.contacts.filter((c) => c.id !== "MOBILE");
 
   return (
     <>
@@ -73,7 +72,7 @@ export default function Landing() {
           title="Contact"
           note={siteCopy.microcopy.contact}
         >
-          <Contact contacts={publicContacts} />
+          <Contact contacts={data.contacts} />
         </Section>
       </div>
     </>

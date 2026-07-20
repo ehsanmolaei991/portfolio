@@ -60,7 +60,6 @@ export default function Resume({
 }) {
   const data = getResume(searchParams?.variant);
 
-  const emailLike = (id: string) => id !== "MOBILE";
   const experiences = data.limitExperiences
     ? data.experiences.slice(0, data.limitExperiences)
     : data.experiences;
@@ -93,11 +92,9 @@ export default function Resume({
 
           <address className="resume-contacts">
             {data.contacts.map((c) => (
-              <a
-                key={c.id}
-                href={c.link}
-                className={emailLike(c.id) ? "rlink" : "contact-plain"}
-              >
+              // Every contact is now a real link — the phone number, which was
+              // the only plain-text entry, has been replaced by Telegram.
+              <a key={c.id} href={c.link} className="rlink">
                 {c.value}
               </a>
             ))}

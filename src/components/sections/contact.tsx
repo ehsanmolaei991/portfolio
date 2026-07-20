@@ -5,10 +5,10 @@ import type { Contact as ContactData } from "@lib/resume";
 /** Human-readable purpose per contact id — the accessible name, not a glyph. */
 const PURPOSE: Record<string, string> = {
   MAIL: "Email",
+  TELEGRAM: "Telegram",
   LINKEDIN: "LinkedIn",
   GITHUB: "GitHub",
   WEBSITE: "Website",
-  MOBILE: "Phone",
 };
 
 export function Contact({ contacts }: { contacts: ContactData[] }) {

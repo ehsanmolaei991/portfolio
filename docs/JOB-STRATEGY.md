@@ -5,6 +5,28 @@ _Senior Frontend Engineer · targeting Romania, wider EU (DE/NL), and remote-fir
 This document is the "why" and "how" behind the resume system in this repo. The
 resume is the tool; this is the plan.
 
+> **⚠️ Status: partly out of date (as of 2026-07-20).**
+>
+> This was written while you were **resident in Iran**. You are now based in
+> **Yerevan, Armenia** — which is *Step 1 of Track B below, already done*.
+>
+> That means the parts of this document about sanctions, payment rails, and
+> "getting out of the Iran-resident bucket" describe a problem you have largely
+> solved. Section 0 in particular no longer describes your situation.
+>
+> Still useful: the EU Blue Card mechanics, the Romania/DE/NL comparison, the
+> interview prep, and the 30/60/90 plan.
+>
+> **This has not been rewritten**, because doing so honestly requires facts only
+> you have: your Armenian residency status, whether you can now be paid through
+> Wise/Deel/Payoneer, your current visa position, and whether the goal is still
+> the EU or now remote-from-Armenia. Bring those and it can be redone properly.
+>
+> Note also that the public site and the base résumé **no longer mention
+> relocation or visa sponsorship at all** — that copy was removed on request.
+> The country-targeted variants (`romania`, `netherlands`, `germany`, `remote`)
+> still carry it, and still assume Iran-residency framing in places.
+
 ---
 
 ## 0. The one idea that changes everything
