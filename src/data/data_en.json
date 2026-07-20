@@ -539,5 +539,7 @@
         }
       ]
     }
-  ]
+  ],
+  "compact": true,
+  "limitExperiences": 3
 }

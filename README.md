@@ -147,11 +147,19 @@ other. Any new foreground/background pair must hold **≥4.5:1** for text under
 
 ### Tailoring the résumé per job (variants)
 
+**The base résumé is the one-pager.** `data_en.json` sets `compact: true` and
+`limitExperiences: 3`, so `/resume/` and the downloadable PDF are a single A4
+page showing the three most recent roles. Experiences are always sorted newest
+first in `lib/resume.ts`, so trimming keeps the recent ones regardless of the
+order they happen to sit in the data file. The full seven-role history still
+lives on the site's Experience section.
+
 A **variant** overrides only what changes for a target. Ready-made:
-`romania`, `netherlands`, `germany`, `remote`, and `short` (a genuinely 1-page
-`compact` version). View any at **`/resume/<name>/`** — these are static routes,
-and they are `noindex`, because they are documents you send to one employer,
-not public pages competing with the canonical résumé.
+`romania`, `netherlands`, `germany`, `remote`, and `full` (the complete
+two-page history: `compact: false`, `limitExperiences: null`). View any at
+**`/resume/<name>/`** — these are static routes, and they are `noindex`,
+because they are documents you send to one employer, not public pages
+competing with the canonical résumé.
 
 1. Copy `src/data/variants/romania.json` → `src/data/variants/<name>.json`.
 2. Override `applicationAs` and `summary` (plus `compact` /
@@ -159,9 +167,11 @@ not public pages competing with the canonical résumé.
 3. Register it in the `variants` map in `src/lib/resume.ts` — that map is also
    what `generateStaticParams` builds the routes from.
 
-> The `short` variant is tuned to land on exactly one A4 page (it currently has
-> ~12px of headroom at the print width of 680px). Add content to it and
-> re-measure, or it silently becomes a two-pager again.
+> The one-page fit has **~12px of headroom** at the print width of 680px.
+> Lengthening the summary, adding a skill line, or raising `limitExperiences`
+> will silently push it onto a second sheet. Re-measure after any content edit:
+> render `/resume/` at a 680×1024 viewport in print media and check that the
+> last section's `bottom` stays under 1024.
 
 ### Generating the PDF (ATS-safe, selectable text)
 
@@ -169,7 +179,7 @@ not public pages competing with the canonical résumé.
 npx playwright install chromium   # one time
 npm run build
 npm run pdf                       # base résumé, A4 -> public/Ehsan-Molaei-Frontend.pdf
-npm run pdf -- romania            # a variant
+npm run pdf -- full               # the complete two-page history
 npm run pdf -- romania letter     # US Letter
 npm run pdf:all                   # base + every variant
 ```

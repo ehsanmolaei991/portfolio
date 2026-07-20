@@ -570,8 +570,9 @@ those are employment facts — where the work happened — not a statement about
 where the author is now.
 
 The country-targeted résumé variants (`romania`, `netherlands`, `germany`,
-`remote`) still carry relocation copy by design: they are opt-in tools reached
-only via `/resume?variant=<name>` and exist precisely to be sent to one employer.
+`remote`) are opt-in documents reached only via `/resume/<name>/`, meant to be
+sent to one employer. The base résumé is deliberately **one A4 page** with the
+three most recent roles; `full` carries the complete history.
 
 Still open, tracked in `needsInput` per project in `src/data/projects.ts`:
 no project imagery of any kind, no team-size or scale figures, no writing
