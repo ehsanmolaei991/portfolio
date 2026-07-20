@@ -69,9 +69,11 @@ export const projects: Project[] = [
     slug: "balinex-trading-platform",
     order: 1,
     featured: true,
-    // The only project with enough written material to be worth a page:
-    // two measured outcomes, three decisions, three implementation notes.
-    caseStudy: true,
+    // Every project currently links straight to the company's own site instead
+    // of an internal page. Uncomment to bring this case study back — the
+    // written material below (problem, decisions, implementation) is intact and
+    // the route regenerates from it.
+    // caseStudy: true,
     name: "Balinex",
     premise:
       "A trading platform where the screen has to stay accurate while the market moves underneath it.",

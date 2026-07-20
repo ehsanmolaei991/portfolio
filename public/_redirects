@@ -17,3 +17,8 @@
 # Path-only redirects DO work here, e.g.:
 #   /old-page/  /new-page/  301
 # Add them below as the site changes.
+
+# The case-study route was live briefly and advertised in the sitemap before
+# every project switched to linking at the company's own site. Path-based, so
+# unlike the host/query traps above this one actually fires.
+/work/*  /  301
