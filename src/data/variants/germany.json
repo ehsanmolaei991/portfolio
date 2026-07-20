@@ -1,22 +1,60 @@
 {
   "applicationAs": "Senior Frontend Engineer",
-  "relocationNote": "Open to relocating to Germany with full visa sponsorship via the EU Blue Card.",
   "summary": {
-    "value": "Senior Frontend Engineer with 9+ years building and scaling web and mobile products across fintech, automotive, and SaaS. Deep expertise in TypeScript, React, and Next.js, backed by disciplined testing (Jest, Playwright, React Testing Library), performance optimization (Web Vitals, code splitting), and scalable architecture in TypeScript monorepos with in-house design systems. Led a crypto trading platform refactor and an internal design system while mentoring engineers and raising review standards and test coverage across an Agile team. German at A2 and actively improving; open to relocating to Germany with visa sponsorship via the EU Blue Card.",
+    "value": "Senior Frontend Engineer with 9+ years building and scaling web and mobile products across fintech, automotive, and SaaS. Deep expertise in TypeScript, React, and Next.js, backed by disciplined testing (Jest, Playwright, React Testing Library), performance optimization (Web Vitals, code splitting), and scalable architecture in TypeScript monorepos with in-house design systems. Led a crypto trading platform refactor and an internal design system while mentoring engineers and raising review standards and test coverage across an Agile team. German at A2 and actively improving.",
     "options": [
-      { "type": "bold", "search": "Senior Frontend Engineer" },
-      { "type": "bold", "search": "9+ years" },
-      { "type": "bold", "search": "TypeScript" },
-      { "type": "bold", "search": "React" },
-      { "type": "bold", "search": "Next.js" },
-      { "type": "bold", "search": "Jest" },
-      { "type": "bold", "search": "Playwright" },
-      { "type": "bold", "search": "React Testing Library" },
-      { "type": "bold", "search": "Web Vitals" },
-      { "type": "bold", "search": "code splitting" },
-      { "type": "bold", "search": "monorepos" },
-      { "type": "bold", "search": "design systems" },
-      { "type": "bold", "search": "EU Blue Card" }
+      {
+        "type": "bold",
+        "search": "Senior Frontend Engineer"
+      },
+      {
+        "type": "bold",
+        "search": "9+ years"
+      },
+      {
+        "type": "bold",
+        "search": "TypeScript"
+      },
+      {
+        "type": "bold",
+        "search": "React"
+      },
+      {
+        "type": "bold",
+        "search": "Next.js"
+      },
+      {
+        "type": "bold",
+        "search": "Jest"
+      },
+      {
+        "type": "bold",
+        "search": "Playwright"
+      },
+      {
+        "type": "bold",
+        "search": "React Testing Library"
+      },
+      {
+        "type": "bold",
+        "search": "Web Vitals"
+      },
+      {
+        "type": "bold",
+        "search": "code splitting"
+      },
+      {
+        "type": "bold",
+        "search": "monorepos"
+      },
+      {
+        "type": "bold",
+        "search": "design systems"
+      },
+      {
+        "type": "bold",
+        "search": "German at A2"
+      }
     ]
   }
 }

@@ -1,20 +1,52 @@
 {
   "applicationAs": "Senior Frontend Engineer",
-  "relocationNote": "Open to fully-remote roles (EU / UK / US time-zone overlap) and relocation.",
   "summary": {
     "value": "Senior Frontend Engineer with 9+ years building — and recently leading — web and mobile products across fintech, automotive, and SaaS, specialized in React, Next.js, React Native, and TypeScript. Strong at end-to-end ownership, async communication, and clear documentation — habits that map directly to fully-remote work across distributed teams with EU / UK / US time-zone overlap. Deep focus on performance (Web Vitals, code splitting, WebSockets), in-house design systems, and scalable monorepo architecture. Led and mentored engineers — including 15+ through a 6-month bootcamp — and partner with design and product from spec to ship.",
     "options": [
-      { "type": "bold", "search": "Senior Frontend Engineer" },
-      { "type": "bold", "search": "9+ years" },
-      { "type": "bold", "search": "React, Next.js, React Native, and TypeScript" },
-      { "type": "bold", "search": "end-to-end ownership" },
-      { "type": "bold", "search": "async communication" },
-      { "type": "bold", "search": "clear documentation" },
-      { "type": "bold", "search": "fully-remote" },
-      { "type": "bold", "search": "distributed teams" },
-      { "type": "bold", "search": "EU / UK / US time-zone overlap" },
-      { "type": "bold", "search": "in-house design systems" },
-      { "type": "bold", "search": "monorepo architecture" }
+      {
+        "type": "bold",
+        "search": "Senior Frontend Engineer"
+      },
+      {
+        "type": "bold",
+        "search": "9+ years"
+      },
+      {
+        "type": "bold",
+        "search": "React, Next.js, React Native, and TypeScript"
+      },
+      {
+        "type": "bold",
+        "search": "end-to-end ownership"
+      },
+      {
+        "type": "bold",
+        "search": "async communication"
+      },
+      {
+        "type": "bold",
+        "search": "clear documentation"
+      },
+      {
+        "type": "bold",
+        "search": "fully-remote"
+      },
+      {
+        "type": "bold",
+        "search": "distributed teams"
+      },
+      {
+        "type": "bold",
+        "search": "EU / UK / US time-zone overlap"
+      },
+      {
+        "type": "bold",
+        "search": "in-house design systems"
+      },
+      {
+        "type": "bold",
+        "search": "monorepo architecture"
+      }
     ]
   }
 }

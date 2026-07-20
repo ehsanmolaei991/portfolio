@@ -715,27 +715,49 @@
   margin: 13mm 15mm;
 }
 
-/* ---------------- Compact (1-page) variant ---------------- */
+/* ---------------- Compact (1-page) variant ----------------
+   Tuned to land `short` on a single A4 page. It previously overflowed by
+   ~43px, which is a second sheet for three lines of text. If you add content
+   to that variant, re-measure before assuming it still fits. */
 .resume-page--compact .resume {
-  font-size: 10pt;
-  padding: 12mm 14mm;
+  font-size: 9.8pt;
+  padding: 11mm 14mm;
+  line-height: 1.34;
 }
 .resume-page--compact .resume-name {
-  font-size: 22pt;
+  font-size: 20pt;
+}
+.resume-page--compact .resume-title {
+  font-size: 11pt;
+}
+.resume-page--compact .resume-availability {
+  margin-top: 6px;
+}
+.resume-page--compact .resume-rule {
+  margin: 7px 0 8px;
 }
 .resume-page--compact .section-title {
-  font-size: 11.5pt;
-  margin-bottom: 4px;
+  font-size: 11pt;
+  margin-bottom: 3px;
+  padding-bottom: 2px;
 }
 .resume-page--compact .resume-section {
-  margin-bottom: 8px;
+  margin-bottom: 5px;
+}
+.resume-page--compact .skills-list {
+  font-size: 9.4pt;
+  line-height: 1.32;
 }
 .resume-page--compact .exp-item {
-  margin-bottom: 7px;
+  margin-bottom: 4px;
+}
+.resume-page--compact .exp-position {
+  font-size: 10.4pt;
 }
 .resume-page--compact .exp-bullets li {
-  font-size: 9.3pt;
-  line-height: 1.34;
+  font-size: 9.1pt;
+  line-height: 1.28;
+  margin-bottom: 0;
 }
 
 @media print {
@@ -754,13 +776,20 @@
     background: #fff;
   }
 
-  .resume {
+  .resume,
+  /* Higher specificity than the compact block above, which would otherwise
+     keep its 11mm screen padding and push ~83px into a second sheet. The
+     @page margin already provides the print margin. */
+  .resume-page--compact .resume {
     width: auto;
     max-width: none;
     border: none;
     border-radius: 0;
     box-shadow: none;
     padding: 0;
+  }
+
+  .resume {
     font-size: 10.2pt;
   }
 

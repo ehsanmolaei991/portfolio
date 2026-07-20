@@ -1,6 +1,6 @@
 {
   "applicationAs": "Senior Frontend Engineer",
-  "limitExperiences": 4,
+  "limitExperiences": 3,
   "compact": true,
   "summary": {
     "value": "Senior Frontend Engineer with 9+ years building performant, scalable web and mobile apps in React, Next.js, React Native, and TypeScript. As Frontend Team Lead on a crypto trading platform, I led a TypeScript monorepo refactor, built an in-house design system, and integrated WebSockets to cut data-fetch time 40%. Focused on performance, testing, and reusable component architecture, with a 30% engagement lift from a recent UI redesign.",

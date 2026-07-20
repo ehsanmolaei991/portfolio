@@ -25,9 +25,12 @@ npm run dev            # http://localhost:3000
 | `npm run build` | Production build |
 | `npm run lint` | ESLint (`next/core-web-vitals`) |
 | `npm run typecheck` | `tsc --noEmit` |
-| `npm run pdf` | Résumé → `public/*.pdf` (Playwright) |
+| `npm run pdf` | Résumé → `public/*.pdf` (Playwright, renders `out/`) |
 | `npm run pdf:all` | Base résumé + every variant |
 | `npm run og` | Regenerate `public/og.png` social card |
+| `npm run ci` | lint + typecheck + build — what Cloudflare runs |
+| `npm run deploy` | Manual deploy to Cloudflare Pages |
+| `npm run preview` | Serve the built site locally via wrangler |
 
 **No network is required at build time.** Fonts are system stacks, not
 `next/font/google` — a deliberate constraint so builds succeed on restricted
@@ -43,7 +46,8 @@ src/
       layout.tsx            #   skip link, header, motion runtime, footer
       page.tsx              #   the landing narrative
       work/[slug]/page.tsx  #   case studies (SSG, one per project)
-    resume/page.tsx         # the print document — deliberately outside (site)
+    resume/page.tsx           # the print document — deliberately outside (site)
+    resume/[variant]/page.tsx #   one static page per tailored résumé
     not-found.tsx  sitemap.ts  robots.ts
   components/
     section.tsx             # the editorial section shell
@@ -53,16 +57,21 @@ src/
     motion-runtime.tsx      # ALL GSAP choreography, in one place
     sound-provider.tsx  sound-toggle.tsx  sound-link.tsx
     theme-provider.tsx  theme-toggle.tsx
+    resume-document.tsx     # the résumé, shared by /resume and /resume/[variant]
+    pointer.tsx  meme-hover.tsx  meme-art.tsx
   data/
     data_en.json            # ← résumé source of truth
     variants/*.json         # per-target overlays
     projects.ts             # ← project / case-study source of truth (typed)
     site.ts                 # ← site copy: hero, about, capabilities, microcopy
+    memes.ts                # ← hover-meme registry
   lib/
     resume.ts               # base + variant merge, types
     projects helpers        # (in data/projects.ts)
     date.ts  site-config.ts  utils.ts
   styles/globals.css        # tokens, base, and the résumé print stylesheet
+public/_headers  public/_redirects   # Cloudflare security headers & redirects
+wrangler.jsonc  .node-version        # Cloudflare Pages project + Node pin
 scripts/generate-pdf.mjs  scripts/generate-og.mjs
 ```
 
@@ -139,13 +148,20 @@ other. Any new foreground/background pair must hold **≥4.5:1** for text under
 ### Tailoring the résumé per job (variants)
 
 A **variant** overrides only what changes for a target. Ready-made:
-`romania`, `netherlands`, `germany`, `remote`, and `short` (a 1-page `compact`
-version). View any at **`/resume?variant=<name>`**.
+`romania`, `netherlands`, `germany`, `remote`, and `short` (a genuinely 1-page
+`compact` version). View any at **`/resume/<name>/`** — these are static routes,
+and they are `noindex`, because they are documents you send to one employer,
+not public pages competing with the canonical résumé.
 
 1. Copy `src/data/variants/romania.json` → `src/data/variants/<name>.json`.
-2. Override `applicationAs`, `summary`, `relocationNote` (plus `compact` /
+2. Override `applicationAs` and `summary` (plus `compact` /
    `limitExperiences` for a 1-pager).
-3. Register it in the `variants` map in `src/lib/resume.ts`.
+3. Register it in the `variants` map in `src/lib/resume.ts` — that map is also
+   what `generateStaticParams` builds the routes from.
+
+> The `short` variant is tuned to land on exactly one A4 page (it currently has
+> ~12px of headroom at the print width of 680px). Add content to it and
+> re-measure, or it silently becomes a two-pager again.
 
 ### Generating the PDF (ATS-safe, selectable text)
 
@@ -176,8 +192,46 @@ Non-negotiable, and checked on every change:
 
 ## Deployment
 
-Deploys to Liara (`output: standalone`, `liara.json`) via
-`.github/workflows/liara.yaml` on push to `main`.
+**Cloudflare Pages, as static files.** `next build` emits `out/`; Pages serves
+it from the edge with no Worker code, no server runtime, and nothing to keep
+patched.
+
+Deploys are **Git-connected**: Pages watches the GitHub repo and rebuilds on
+push. There is deliberately no GitHub Actions workflow and no API token stored
+anywhere — the build command below is the quality gate, so a lint or type error
+fails the deploy rather than shipping.
+
+| Pages setting | Value |
+|---|---|
+| Build command | `npm run ci` (lint → typecheck → build) |
+| Build output directory | `out` |
+| Node version | from `.node-version` (20) |
+
+```bash
+npm run deploy     # manual deploy from your machine (needs `wrangler login`)
+npm run preview    # serve the built out/ locally through wrangler
+```
+
+Config lives in `wrangler.jsonc` (project name, output dir) and in two files
+that ride along in `public/` and land in `out/`:
+
+- **`public/_headers`** — CSP, HSTS, frame/referrer/permissions policy, and
+  cache lifetimes. The CSP allows **no external origin**, because the site
+  loads none. Adding any third-party script, font, or image means editing it.
+- **`public/_redirects`** — `www` → apex (the apex is canonical, matching
+  `SITE_URL`), plus 301s from the old `/resume?variant=x` URLs.
+
+Custom domains (`ehsanmolaei.ir`, and `www` which 301s to it) are attached in
+the Pages dashboard under **Custom domains**.
+
+### Why static, and what would break it
+
+Every route is knowable at build time, so nothing needs a server. The
+constraint that buys: **no `searchParams` in server components, no route
+handlers, no ISR**. Résumé variants used to be `/resume?variant=romania` and
+are now static routes at `/resume/romania/` precisely for this reason. If a
+real dynamic need ever appears, `output: "export"` in `next.config.mjs` is the
+line to change — and the deploy target changes with it.
 
 ## Application kit
 

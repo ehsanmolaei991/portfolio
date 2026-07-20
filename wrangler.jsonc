@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // Cloudflare Pages. The site is a pure static export, so Pages serves `out/`
+  // straight from the edge — no Worker code, no server runtime, nothing to keep
+  // patched.
+  //
+  // Why Pages rather than Workers static assets: Pages connects directly to the
+  // GitHub repo from the dashboard, so deploys need no API token in CI and no
+  // `wrangler login` on any machine. Cloudflare's longer-term direction is
+  // Workers, and moving there later is a config change, not a rewrite — swap
+  // `pages_build_output_dir` for an `assets` block and redeploy.
+  //
+  // Custom domains, build command and environment variables are configured in
+  // the Pages dashboard, not here.
+  "name": "ehsanmolaei",
+  "compatibility_date": "2025-09-23",
+  "pages_build_output_dir": "./out"
+}

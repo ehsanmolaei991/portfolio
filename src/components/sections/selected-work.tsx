@@ -66,9 +66,11 @@ export function SelectedWork() {
                   </span>
                 ) : null}
 
-                {/* Plain text, not anchors: the whole row is already one link,
-                    and nesting <a> inside <a> is invalid. The real links live
-                    in the case study. */}
+                {/* Live URLs are hidden in the preview for now — the section
+                    reads as description only. The links are still rendered on
+                    each case study's "Live" block, and `project.links` still
+                    carries them, so restoring this is uncommenting it.
+
                 {project.links.length > 0 ? (
                   <span className="mt-5 flex flex-wrap items-center gap-x-2 font-mono text-micro text-accent">
                     {project.links.map((link, n) => (
@@ -84,7 +86,9 @@ export function SelectedWork() {
                   </span>
                 ) : null}
 
-                <span className="mt-2.5 block font-mono text-micro text-muted-foreground">
+                */}
+
+                <span className="mt-5 block font-mono text-micro text-muted-foreground">
                   {project.stack.slice(0, 6).join("  ·  ")}
                 </span>
               </span>

@@ -1,0 +1,13 @@
+# Cloudflare static-asset redirects. Applied before the asset lookup.
+#
+# The apex-vs-www decision lives here, in the repo, rather than only in the
+# dashboard, so it travels with the project. Canonical host is the apex, which
+# is what src/lib/site-config.ts and every canonical tag point at.
+https://www.ehsanmolaei.ir/* https://ehsanmolaei.ir/:splat 301
+
+# NOTE: the old résumé URLs were /resume?variant=romania. They are deliberately
+# NOT redirected here — `_redirects` matches on path only and silently ignores
+# query strings, so a rule like `/resume?variant=romania` would look correct in
+# the file and do nothing. Those URLs were never indexed (variant pages are
+# noindex) and were only ever used locally, so no redirect is needed. If one is
+# ever wanted, it has to be a dashboard Redirect Rule, which can read the query.

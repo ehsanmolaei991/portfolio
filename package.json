@@ -5,12 +5,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "pdf": "node scripts/generate-pdf.mjs",
     "pdf:all": "node scripts/generate-pdf.mjs all",
-    "og": "node scripts/generate-og.mjs"
+    "og": "node scripts/generate-og.mjs",
+    "preview": "npx wrangler pages dev out",
+    "deploy": "npm run ci && npx wrangler pages deploy",
+    "ci": "npm run lint && npm run typecheck && npm run build"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

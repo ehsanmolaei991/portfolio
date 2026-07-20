@@ -17,16 +17,62 @@
  *   npx playwright install chromium
  *   npm run build            # produce the production build the server serves
  */
-import { spawn } from "node:child_process";
-import { readdirSync, mkdirSync, existsSync } from "node:fs";
+import { createServer } from "node:http";
+import { readdirSync, mkdirSync, existsSync, createReadStream, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
+import { dirname, join, extname, normalize } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const PORT = Number(process.env.PDF_PORT || 3210);
 const BASE = `http://127.0.0.1:${PORT}`;
 const OUT_DIR = join(ROOT, "public");
+const SITE_DIR = join(ROOT, "out");
+
+const MIME = {
+  ".html": "text/html; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+  ".svg": "image/svg+xml",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".ico": "image/x-icon",
+  ".woff2": "font/woff2",
+  ".txt": "text/plain; charset=utf-8",
+  ".pdf": "application/pdf",
+};
+
+/**
+ * The build is a static export now, so there is no `next start` to boot. This
+ * serves `out/` the way a static host does: a directory maps to its
+ * index.html. It only ever binds to 127.0.0.1 and only lives for the length of
+ * this script.
+ */
+function serveStatic(dir, port) {
+  const server = createServer((req, res) => {
+    const url = decodeURIComponent((req.url || "/").split("?")[0]);
+    // normalize() collapses any ../ before we touch the filesystem.
+    let file = join(dir, normalize(url).replace(/^(\.\.[/\\])+/, ""));
+    try {
+      if (statSync(file).isDirectory()) file = join(file, "index.html");
+    } catch {
+      if (existsSync(`${file}.html`)) file = `${file}.html`;
+    }
+    if (!file.startsWith(dir) || !existsSync(file)) {
+      res.writeHead(404, { "content-type": "text/plain" });
+      res.end("Not found");
+      return;
+    }
+    res.writeHead(200, {
+      "content-type": MIME[extname(file)] || "application/octet-stream",
+    });
+    createReadStream(file).pipe(res);
+  });
+  return new Promise((resolve) => {
+    server.listen(port, "127.0.0.1", () => resolve(server));
+  });
+}
 
 const NAME = "Ehsan-Molaei-Frontend";
 
@@ -62,12 +108,13 @@ async function waitForServer(url, timeoutMs = 60000) {
 
 async function renderOne(browser, variant, format) {
   const suffix = variant ? `-${variant}` : "";
-  const query = variant ? `?variant=${encodeURIComponent(variant)}` : "";
+  // Variants are static routes now, not a query string.
+  const path = variant ? `/resume/${encodeURIComponent(variant)}/` : "/resume/";
   const outFile = join(OUT_DIR, `${NAME}${suffix}.pdf`);
 
   const page = await browser.newPage();
   await page.emulateMedia({ media: "print" });
-  await page.goto(`${BASE}/resume${query}`, { waitUntil: "networkidle" });
+  await page.goto(`${BASE}${path}`, { waitUntil: "networkidle" });
 
   const pdfOpts =
     format === "letter"
@@ -99,18 +146,14 @@ async function main() {
     process.exit(1);
   }
 
-  if (!existsSync(join(ROOT, ".next"))) {
-    console.error('No production build found. Run "npm run build" first.');
+  if (!existsSync(SITE_DIR)) {
+    console.error('No static export found. Run "npm run build" first.');
     process.exit(1);
   }
   mkdirSync(OUT_DIR, { recursive: true });
 
-  console.log(`Starting Next.js server on ${BASE} ...`);
-  const server = spawn("npx", ["next", "start", "-p", String(PORT)], {
-    cwd: ROOT,
-    stdio: "ignore",
-    env: process.env,
-  });
+  console.log(`Serving out/ on ${BASE} ...`);
+  const server = await serveStatic(SITE_DIR, PORT);
 
   let browser;
   try {
@@ -122,7 +165,7 @@ async function main() {
     console.log("Done.");
   } finally {
     if (browser) await browser.close();
-    server.kill("SIGTERM");
+    server.close();
   }
 }
 

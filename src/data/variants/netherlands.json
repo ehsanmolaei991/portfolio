@@ -1,21 +1,48 @@
 {
   "applicationAs": "Senior Frontend Engineer",
-  "relocationNote": "Open to relocating to the Netherlands as a Highly Skilled Migrant with visa sponsorship from a recognized sponsor; available to start within one month.",
   "summary": {
-    "value": "Senior Frontend Engineer with 9+ years building product-minded web and mobile experiences in React, Next.js, React Native, and TypeScript at scale. As Frontend Team Lead at Balinex, I refactored a crypto trading platform into a TypeScript monorepo, built an in-house design system, and integrated WebSockets to cut data-fetch time by 40%, while a UI redesign lifted user engagement by 30%. My work centers on frontend performance (Web Vitals, code splitting, Lighthouse), scalable design systems in Storybook, and reliable testing with Jest, Playwright, and React Testing Library, delivered through Docker and GitHub Actions CI/CD. I bring upper-intermediate (B2) working English and am ready to relocate to the Netherlands with visa sponsorship.",
+    "value": "Senior Frontend Engineer with 9+ years building product-minded web and mobile experiences in React, Next.js, React Native, and TypeScript at scale. As Frontend Team Lead at Balinex, I refactored a crypto trading platform into a TypeScript monorepo, built an in-house design system, and integrated WebSockets to cut data-fetch time by 40%, while a UI redesign lifted user engagement by 30%. My work centers on frontend performance (Web Vitals, code splitting, Lighthouse), scalable design systems in Storybook, and reliable testing with Jest, Playwright, and React Testing Library, delivered through Docker and GitHub Actions CI/CD.",
     "options": [
-      { "type": "bold", "search": "Senior Frontend Engineer" },
-      { "type": "bold", "search": "9+ years" },
-      { "type": "bold", "search": "product-minded" },
-      { "type": "bold", "search": "React, Next.js, React Native, and TypeScript" },
-      { "type": "bold", "search": "at scale" },
-      { "type": "bold", "search": "TypeScript monorepo" },
-      { "type": "bold", "search": "in-house design system" },
-      { "type": "bold", "search": "WebSockets" },
-      { "type": "bold", "search": "frontend performance" },
-      { "type": "bold", "search": "scalable design systems" },
-      { "type": "bold", "search": "working English" },
-      { "type": "bold", "search": "ready to relocate to the Netherlands with visa sponsorship" }
+      {
+        "type": "bold",
+        "search": "Senior Frontend Engineer"
+      },
+      {
+        "type": "bold",
+        "search": "9+ years"
+      },
+      {
+        "type": "bold",
+        "search": "product-minded"
+      },
+      {
+        "type": "bold",
+        "search": "React, Next.js, React Native, and TypeScript"
+      },
+      {
+        "type": "bold",
+        "search": "at scale"
+      },
+      {
+        "type": "bold",
+        "search": "TypeScript monorepo"
+      },
+      {
+        "type": "bold",
+        "search": "in-house design system"
+      },
+      {
+        "type": "bold",
+        "search": "WebSockets"
+      },
+      {
+        "type": "bold",
+        "search": "frontend performance"
+      },
+      {
+        "type": "bold",
+        "search": "scalable design systems"
+      }
     ]
   }
 }
