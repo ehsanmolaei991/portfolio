@@ -33,6 +33,16 @@ export interface Project {
   /** Ordering weight for the landing page; lower comes first. */
   order: number;
   featured: boolean;
+  /**
+   * Does this project have enough written material to justify its own page?
+   *
+   * When false (the default) no case-study route is generated and the entry
+   * links straight to the live site instead. A thin case study — a premise, one
+   * bullet and no numbers — is worse than no case study: it invites a click and
+   * spends it on nothing. Set this to true only once `problem`, `decisions`,
+   * `implementation` and ideally `outcomes` all carry real content.
+   */
+  caseStudy?: boolean;
   name: string;
   /** One line. What this thing is, in plain words. */
   premise: string;
@@ -59,6 +69,9 @@ export const projects: Project[] = [
     slug: "balinex-trading-platform",
     order: 1,
     featured: true,
+    // The only project with enough written material to be worth a page:
+    // two measured outcomes, three decisions, three implementation notes.
+    caseStudy: true,
     name: "Balinex",
     premise:
       "A trading platform where the screen has to stay accurate while the market moves underneath it.",
@@ -290,6 +303,25 @@ export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
 
+/** Only projects with a real case study get a route and a sitemap entry. */
 export function getProjectSlugs(): string[] {
-  return projects.map((p) => p.slug);
+  return projects.filter((p) => p.caseStudy).map((p) => p.slug);
+}
+
+/**
+ * Where a project entry should send the visitor.
+ *
+ * `internal` — its own case study.
+ * `external` — straight to the live site, because there is no page worth
+ *              opening yet.
+ * `none`     — nothing to link to at all; render as plain text rather than a
+ *              link that goes nowhere.
+ */
+export function getProjectTarget(
+  project: Project
+): { kind: "internal"; href: string } | { kind: "external"; href: string; label: string } | { kind: "none" } {
+  if (project.caseStudy) return { kind: "internal", href: `/work/${project.slug}` };
+  const primary = project.links[0];
+  if (primary) return { kind: "external", href: primary.href, label: primary.label };
+  return { kind: "none" };
 }

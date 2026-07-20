@@ -23,7 +23,9 @@ export const siteCopy = {
 
   /** One signpost per section. A signpost, not a performance. */
   microcopy: {
-    work: "Three that are worth the detail.",
+    // Two of the three now open the live product rather than a case study,
+    // so the line promises something you can go and look at, not reading.
+    work: "Three you can open right now.",
     experience: "The rest of the timeline, in order.",
     about: "The part a résumé has no field for.",
     capabilities: "What I reach for, and roughly why.",
