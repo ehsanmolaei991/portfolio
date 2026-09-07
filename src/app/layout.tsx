@@ -107,9 +107,10 @@ export default function RootLayout({
           // Static, build-time value derived from our own data file.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
-        {/* Entrance animations start hidden; restore them without scripting. */}
+        {/* Section reveals start hidden until a script observes them; restore
+            them without scripting. (The hero entrance is pure CSS.) */}
         <noscript>
-          <style>{`[data-hero-step],[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
       </head>
       <body>

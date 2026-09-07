@@ -1,3 +1,5 @@
+import { fileURLToPath } from "node:url";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /**
@@ -23,6 +25,30 @@ const nextConfig = {
    * URLs work on any static host without relying on host-specific rewrites.
    */
   trailingSlash: true,
+
+  webpack(config, { isServer, webpack }) {
+    if (!isServer) {
+      /**
+       * Next's client entry imports a small polyfill module (Array.prototype.at,
+       * flat/flatMap, Object.fromEntries, Object.hasOwn, trimStart/trimEnd) for
+       * browsers that support ES modules but predate those APIs. Every browser
+       * in the `browserslist` floor in package.json has had all of them for
+       * years, so for this site it is dead code — and Lighthouse's "Legacy
+       * JavaScript" audit flags it on every load. Swap it for an empty module.
+       *
+       * If the floor is ever lowered below Chrome 93 / Safari 15.4, remove this.
+       * If Next moves the file, the pattern stops matching and the polyfills
+       * quietly come back, which is the safe direction to fail.
+       */
+      config.plugins.push(
+        new webpack.NormalModuleReplacementPlugin(
+          /[\\/]next[\\/]dist[\\/]build[\\/]polyfills[\\/]polyfill-module\.js$/,
+          fileURLToPath(new URL("./scripts/empty-module.js", import.meta.url))
+        )
+      );
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

@@ -17,33 +17,17 @@ import gsap from "gsap";
  * than one per layer. Everything else is a CSS transition on a data attribute,
  * so state changes cost nothing.
  *
- * Guards: fine pointers only, never under `prefers-reduced-motion`, and both
- * media queries are live so plugging in a mouse (or turning reduced motion on)
- * takes effect immediately. The native cursor is only hidden while this is
- * actually running, and never over text-entry elements.
+ * Mounted by <PointerEffects /> only for fine pointers with motion allowed —
+ * that gate, and the GSAP download, live there. The native cursor is only
+ * hidden while this is actually running, and never over text-entry elements.
  */
 export function Pointer() {
-  const [enabled, setEnabled] = React.useState(false);
   const layerRef = React.useRef<HTMLDivElement>(null);
   const ringRef = React.useRef<HTMLDivElement>(null);
   const dotRef = React.useRef<HTMLDivElement>(null);
   const labelRef = React.useRef<HTMLSpanElement>(null);
 
   React.useEffect(() => {
-    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setEnabled(fine.matches && !reduce.matches);
-    update();
-    fine.addEventListener("change", update);
-    reduce.addEventListener("change", update);
-    return () => {
-      fine.removeEventListener("change", update);
-      reduce.removeEventListener("change", update);
-    };
-  }, []);
-
-  React.useEffect(() => {
-    if (!enabled) return;
     const layer = layerRef.current;
     const ring = ringRef.current;
     const dot = dotRef.current;
@@ -115,9 +99,7 @@ export function Pointer() {
       gsap.killTweensOf([ring, dot]);
       document.documentElement.classList.remove("has-pointer-fx");
     };
-  }, [enabled]);
-
-  if (!enabled) return null;
+  }, []);
 
   return (
     <div ref={layerRef} className="pointer-layer" data-visible="0" aria-hidden>

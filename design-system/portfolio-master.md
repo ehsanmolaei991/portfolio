@@ -286,12 +286,14 @@ answers none of these, it is deleted.
 
 | Concern | Tool |
 |---------|------|
-| Component state, hover/tap feedback, enter/exit, layout, dialogs | **Motion (Framer Motion)** |
-| Multi-step timelines, hero choreography, scroll-linked sequences | **GSAP + `@gsap/react`** |
+| Hero entrance, section reveal on scroll | **CSS** — keyframes and transitions; one IntersectionObserver flips `data-reveal` |
+| Component state, enter/exit, hover/tap feedback | **CSS transitions**, or **WAAPI** where next-themes suppresses transitions |
+| Pointer followers (and any future multi-step timeline) | **GSAP** — lazy-loaded with the pointer layers, so it never reaches a phone |
 
-React/GSAP rules: `useGSAP()` only; every selector scoped to a container ref;
-`contextSafe` for deferred callbacks; `ctx.revert()` in cleanup; never at module
-scope or during SSR; `ScrollTrigger.kill()` on unmount.
+React/GSAP rules: tweens are created in an effect and killed in its cleanup;
+every selector scoped to a container ref; never at module scope or during SSR.
+Framer Motion, `@gsap/react` and ScrollTrigger were dropped in 2026-09: two
+micro-interactions and one batched reveal did not justify ~60 kB on every phone.
 
 **Performance rules:** animate `transform`/`opacity` only — `x`/`y`, never
 `top`/`left`; never animate `width`, `height`, `margin`, or `padding`
@@ -508,12 +510,12 @@ six. Anything added must earn a row here first.
 
 | Interaction | Purpose | Tool | Duration | Reduced mode |
 |---|---|---|---|---|
-| Hero entrance (staggered lines) | Establishes reading order on arrival | GSAP timeline | 620ms, 75ms stagger | Not hidden, no travel — renders in place |
-| Section reveal on scroll | Signals "new section", batched for the whole page | GSAP `ScrollTrigger.batch`, `once: true` | 500ms, 60ms stagger | Disabled; content always visible |
+| Hero entrance (staggered lines) | Establishes reading order on arrival | CSS keyframes, no script | 620ms, 75ms stagger | Not hidden, no travel — renders in place |
+| Section reveal on scroll | Signals "new section", batched for the whole page | IntersectionObserver + CSS transition, once | 500ms, 60ms stagger | Disabled; content always visible |
 | Work-entry hover/focus (rule + arrow) | Confirms the row is a target | CSS `background-size` + `transform` | 280ms / 180ms | Instant (global transition override) |
-| Mobile nav disclosure | Explains where the panel came from | Motion `AnimatePresence` | 180ms | Instant |
+| Mobile nav disclosure | Explains where the panel came from | CSS `grid-template-rows` transition | 180ms | Instant |
 | Theme reveal | New theme comes *from* the button pressed | View Transitions + WAAPI | 620ms | Instant swap |
-| Theme icon swap | Confirms the theme flipped | Motion `AnimatePresence` | 160ms | Instant |
+| Theme icon swap | Confirms the theme flipped | WAAPI | 160ms | Instant |
 | Custom pointer | Confirms what is targetable, and labels large targets | GSAP `quickTo` | 90ms dot / 420ms ring | Not mounted |
 | Hover meme card | Personality, on a handful of marked elements | GSAP `quickTo` + CSS | 180–280ms | Not mounted |
 | Skip-link reveal on focus | Makes the first tab stop visible | CSS `transform` | 180ms | Instant |
@@ -539,6 +541,13 @@ Anti-patterns from §4 — all removed in the 2026-07 refactor:
 Result: four permanent RAF loops → one (GSAP's shared ticker, which idles when
 nothing is tweening). Landing First Load JS 99.1 kB → 92.5 kB, *including* GSAP
 and Motion.
+
+2026-09, after a Lighthouse pass: Framer Motion, `@gsap/react` and ScrollTrigger
+removed, GSAP lazy-loaded with the pointer layers, the stylesheet inlined at
+build time, Next's polyfill module dropped behind an explicit browserslist
+floor. Landing-page script transfer on a phone 209 kB → 117 kB (compressed),
+no render-blocking request, and the hero paints with the stylesheet instead of
+after the JS bundle.
 
 ### Selected work — the three, and why only three
 

@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SoundToggle } from "@/components/sound-toggle";
@@ -17,6 +16,11 @@ const NAV = [
 /**
  * Persistent chrome. The theme control used to live inside the hero and scroll
  * out of reach; it lives here now so it is reachable from anywhere on the page.
+ *
+ * The mobile panel is always in the DOM and opens with a CSS grid-row
+ * transition (`.mobile-nav` in globals.css) — no measuring, no animation
+ * library. While closed it is `visibility: hidden`, so its links are out of the
+ * tab order and the accessibility tree.
  */
 export function SiteHeader({ name }: { name: string }) {
   const [open, setOpen] = React.useState(false);
@@ -103,35 +107,32 @@ export function SiteHeader({ name }: { name: string }) {
         </div>
       </div>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            ref={panelRef}
-            id="mobile-nav"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-border md:hidden"
-          >
-            <nav aria-label="Sections" className="px-gutter py-2">
-              <ul>
-                {NAV.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className="flex min-h-[44px] items-center border-b border-border text-body text-foreground last:border-b-0"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      <div
+        ref={panelRef}
+        id="mobile-nav"
+        data-open={open ? "1" : "0"}
+        className="mobile-nav md:hidden"
+      >
+        {/* The rule sits on the nav, not the clipped wrapper: a border on the
+            wrapper would keep the collapsed row 1px tall. */}
+        <div>
+          <nav aria-label="Sections" className="border-t border-border px-gutter py-2">
+            <ul>
+              {NAV.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="flex min-h-[44px] items-center border-b border-border text-body text-foreground last:border-b-0"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </div>
     </header>
   );
 }

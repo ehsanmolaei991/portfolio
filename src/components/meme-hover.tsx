@@ -13,31 +13,17 @@ import { getMeme, type Meme } from "@/data/memes";
  * Position is driven by `gsap.quickTo` (no re-render per mousemove); React
  * state changes only when the hovered meme actually changes.
  *
- * Purely decorative and purely additive: `aria-hidden`, fine pointers only,
- * off under reduced motion, and nothing in it is content you would miss.
+ * Purely decorative and purely additive: `aria-hidden`, mounted by
+ * <PointerEffects /> only for fine pointers with motion allowed, and nothing
+ * in it is content you would miss.
  */
 export function MemeHover() {
-  const [enabled, setEnabled] = React.useState(false);
   const [meme, setMeme] = React.useState<Meme | null>(null);
 
   const layerRef = React.useRef<HTMLDivElement>(null);
   const cardRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setEnabled(fine.matches && !reduce.matches);
-    update();
-    fine.addEventListener("change", update);
-    reduce.addEventListener("change", update);
-    return () => {
-      fine.removeEventListener("change", update);
-      reduce.removeEventListener("change", update);
-    };
-  }, []);
-
-  React.useEffect(() => {
-    if (!enabled) return;
     const layer = layerRef.current;
     if (!layer) return;
 
@@ -87,9 +73,7 @@ export function MemeHover() {
       window.removeEventListener("blur", clear);
       gsap.killTweensOf(layer);
     };
-  }, [enabled]);
-
-  if (!enabled) return null;
+  }, []);
 
   const Art = meme && !meme.src ? MEME_ART[meme.art] : null;
 

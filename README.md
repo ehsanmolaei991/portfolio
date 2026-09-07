@@ -3,7 +3,7 @@
 Two artifacts from one dataset:
 
 - **`/`** — a narrative portfolio. Editorial layout, first-class light and dark
-  themes, opt-in sound, GSAP-driven entrance and scroll choreography.
+  themes, opt-in sound, CSS-driven entrance and scroll choreography.
 - **`/resume`** — an ATS-parseable résumé document that also renders to a
   **selectable-text PDF**, and can be **tailored per job** in seconds via
   variant overlays.
@@ -54,7 +54,7 @@ src/
     sections/               # hero, selected-work, experience-index,
                             #   about, capabilities, contact
     site-header.tsx  site-footer.tsx
-    motion-runtime.tsx      # ALL GSAP choreography, in one place
+    motion-runtime.tsx      # scroll-reveal observer, in one place
     sound-provider.tsx  sound-toggle.tsx  sound-link.tsx
     theme-provider.tsx  theme-toggle.tsx
     resume-document.tsx     # the résumé, shared by /resume and /resume/[variant]
@@ -72,7 +72,7 @@ src/
   styles/globals.css        # tokens, base, and the résumé print stylesheet
 public/_headers  public/_redirects   # Cloudflare security headers & redirects
 wrangler.jsonc  .node-version        # Cloudflare Pages project + Node pin
-scripts/generate-pdf.mjs  scripts/generate-og.mjs
+scripts/generate-pdf.mjs  scripts/generate-og.mjs  scripts/inline-css.mjs
 ```
 
 **Rendering.** Everything is a server component except four client islands:
@@ -80,14 +80,18 @@ the header, the theme and sound toggles, `SoundLink`, and `MotionRuntime`. The
 hero and all content sections are server-rendered — the first thing a visitor
 reads costs no hydration.
 
-**Motion.** One GSAP context for the whole page, in `motion-runtime.tsx`.
-Sections opt in by marking themselves `data-reveal`; a single
-`ScrollTrigger.batch` animates all of them, so the page runs a handful of
-triggers rather than dozens. Motion (Framer) is used only for component state —
-the mobile menu and the theme icon. Neither library does the other's job.
+**Motion.** The hero entrance is a CSS animation, so the first thing a visitor
+reads paints with the stylesheet rather than after the JS bundle. Sections opt
+in to the scroll reveal by marking themselves `data-reveal`; one
+IntersectionObserver in `motion-runtime.tsx` flips them to `data-reveal="in"`
+in batches and CSS does the motion. Component state — the mobile menu, the
+theme icon — is CSS and WAAPI. No animation library ships to a phone at all:
+GSAP is downloaded only with the pointer layers below.
 
-**Pointer & memes.** `pointer.tsx` replaces the cursor with an accent dot and a
-trailing ring, driven by two `gsap.quickTo` setters. Mark any *large* element
+**Pointer & memes.** Both layers (and GSAP with them) are loaded by
+`pointer-effects.tsx` only on a fine pointer with motion allowed. `pointer.tsx`
+replaces the cursor with an accent dot and a trailing ring, driven by two
+`gsap.quickTo` setters. Mark any *large* element
 with `data-cursor="case study"` to turn the ring into a labelled disc — not
 small buttons, the 84px disc covers them.
 
@@ -202,7 +206,9 @@ Non-negotiable, and checked on every change:
 
 ## Deployment
 
-**Cloudflare Pages, as static files.** `next build` emits `out/`; Pages serves
+**Cloudflare Pages, as static files.** `npm run build` emits `out/` — `next build`,
+then `scripts/inline-css.mjs` folds the stylesheet into every page so nothing
+render-blocking is left to fetch; Pages serves
 it from the edge with no Worker code, no server runtime, and nothing to keep
 patched.
 

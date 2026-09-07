@@ -209,6 +209,44 @@
   .link-rule:focus-visible {
     background-size: 100% 1px;
   }
+
+  /* Mobile nav disclosure: a 0fr → 1fr grid row, so the panel animates to its
+     natural height without a script measuring it. `visibility` follows with a
+     delay so the links leave the tab order once the panel has closed. */
+  .mobile-nav {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: grid-template-rows var(--dur-fast) var(--ease-out),
+      opacity var(--dur-fast) var(--ease-out),
+      visibility 0s var(--dur-fast);
+  }
+  .mobile-nav[data-open="1"] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .mobile-nav > * {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* Theme toggle icons: both are in the markup and the theme class picks one,
+     so the right icon is there at first paint with no script. The swap itself
+     is a WAAPI animation in theme-toggle.tsx. */
+  .theme-icon {
+    position: absolute;
+    inset: 0;
+    display: block;
+    opacity: 0;
+  }
+  .dark .theme-icon--sun,
+  :root:not(.dark) .theme-icon--moon {
+    opacity: 1;
+  }
 }
 
 /* ============================================================================
@@ -390,14 +428,38 @@
   line-height: 1.45;
 }
 
-/* Entrance choreography is owned by MotionRuntime (GSAP). These elements start
-   hidden so there is no flash between first paint and the timeline taking over.
-   Under reduced motion they are never hidden at all, and <noscript> in the
-   layout restores them when scripting is unavailable. */
+/* ============================================================================
+   ENTRANCE & REVEAL
+   The hero entrance is pure CSS: it needs no script, so the LCP text paints as
+   soon as the stylesheet does instead of after the JS bundle. Each step carries
+   `--hero-i`, its slot in the stagger. Section reveals start hidden and
+   MotionRuntime flips them to `data-reveal="in"` as they scroll into view, in
+   batches — the stagger is an inline transition-delay it sets per batch.
+   Under reduced motion nothing is ever hidden, and <noscript> in the layout
+   restores the reveals when scripting is unavailable.
+   ========================================================================= */
 @media (prefers-reduced-motion: no-preference) {
-  [data-hero-step],
+  [data-hero-step] {
+    animation: hero-step 620ms var(--ease-out) both;
+    animation-delay: calc(60ms + var(--hero-i, 0) * 75ms);
+  }
+
   [data-reveal] {
     opacity: 0;
+    transform: translateY(14px);
+    transition: opacity var(--dur-slow) var(--ease-out),
+      transform var(--dur-slow) var(--ease-out);
+  }
+  [data-reveal="in"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-step {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
   }
 }
 

@@ -1,89 +1,51 @@
 "use client";
 
 import * as React from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+
+/** Reveal when an element's top clears the bottom 12% of the viewport. */
+const ROOT_MARGIN = "0px 0px -12% 0px";
+const STAGGER_MS = 60;
 
 /**
- * The page's entire scroll/entrance choreography, in one place.
+ * The page's scroll-reveal choreography, in one place.
  *
- * Deliberately *not* a per-element wrapper component: sections just mark
- * themselves with `data-reveal`, and a single `ScrollTrigger.batch` animates
- * all of them. That keeps the whole page at one GSAP context and a handful of
- * triggers instead of dozens, and it lets every section stay a server
- * component. See design-system/portfolio-master.md §7.
+ * Sections mark themselves `data-reveal`; one IntersectionObserver flips each
+ * to `data-reveal="in"` as it enters, and the CSS in globals.css does the
+ * actual motion. Elements that cross the line in the same observer callback
+ * are one batch and get a staggered transition-delay — which is what
+ * `ScrollTrigger.batch` used to do here, for the price of a 20 kB plugin. It
+ * keeps every section a server component.
  *
- * Motion (Framer) owns component state — menus, the theme icon. GSAP owns
- * timelines and scroll. Neither is used for the other's job.
+ * The hero entrance is pure CSS and is not driven from here at all.
  */
 export function MotionRuntime({ children }: { children: React.ReactNode }) {
   const scope = React.useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      // Registered here, not at module scope: this file is still evaluated on
-      // the server during SSR, and plugins touch the DOM.
-      gsap.registerPlugin(ScrollTrigger);
+  React.useEffect(() => {
+    const root = scope.current;
+    if (!root) return;
 
-      const mm = gsap.matchMedia();
-
-      mm.add(
-        {
-          motion: "(prefers-reduced-motion: no-preference)",
-          reduced: "(prefers-reduced-motion: reduce)",
-        },
-        (context) => {
-          const { reduced } = context.conditions as {
-            motion: boolean;
-            reduced: boolean;
-          };
-
-          const heroSteps = gsap.utils.toArray<HTMLElement>("[data-hero-step]");
-          const reveals = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-
-          // Reduced motion: no travel, no scrub, no stagger choreography —
-          // everything is simply present. Nothing is hidden or lost.
-          if (reduced) {
-            gsap.set([...heroSteps, ...reveals], { opacity: 1, y: 0 });
-            return;
-          }
-
-          // Hero entrance — the one cinematic moment, once per load.
-          gsap.set(heroSteps, { opacity: 0, y: 18 });
-          gsap.to(heroSteps, {
-            opacity: 1,
-            y: 0,
-            duration: 0.62,
-            ease: "power3.out",
-            stagger: 0.075,
-            delay: 0.06,
-          });
-
-          // Section reveals — one batched trigger for the whole document.
-          gsap.set(reveals, { opacity: 0, y: 14 });
-          ScrollTrigger.batch(reveals, {
-            start: "top 88%",
-            once: true,
-            onEnter: (batch) =>
-              gsap.to(batch, {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                ease: "power2.out",
-                stagger: 0.06,
-                overwrite: true,
-              }),
-          });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let slot = 0;
+        for (const entry of entries) {
+          const el = entry.target as HTMLElement;
+          // Already scrolled past (a deep link, a reload mid-page): just show it.
+          const above = entry.boundingClientRect.bottom < 0;
+          if (!entry.isIntersecting && !above) continue;
+          el.style.transitionDelay = above ? "0ms" : `${slot++ * STAGGER_MS}ms`;
+          el.dataset.reveal = "in";
+          observer.unobserve(el);
         }
-      );
+      },
+      { rootMargin: ROOT_MARGIN }
+    );
 
-      // useGSAP reverts the context on unmount, which kills every tween and
-      // ScrollTrigger created inside it.
-      return () => mm.revert();
-    },
-    { scope }
-  );
+    root
+      .querySelectorAll<HTMLElement>("[data-reveal]")
+      .forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   return <div ref={scope}>{children}</div>;
 }

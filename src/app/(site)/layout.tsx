@@ -2,8 +2,7 @@ import { SoundProvider } from "@/components/sound-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { MotionRuntime } from "@/components/motion-runtime";
-import { Pointer } from "@/components/pointer";
-import { MemeHover } from "@/components/meme-hover";
+import { PointerEffects } from "@/components/pointer-effects";
 import { getResume } from "@lib/resume";
 import { RESUME_PDF } from "@lib/site-config";
 
@@ -35,11 +34,9 @@ export default function SiteLayout({
 
       <SiteFooter name={fullName} pdfHref={RESUME_PDF} />
 
-      {/* Decorative pointer layers. Both self-disable on coarse pointers and
-          under reduced motion, so they add nothing for anyone who can't use
-          them. */}
-      <Pointer />
-      <MemeHover />
+      {/* Decorative pointer layers, loaded only for fine pointers with motion
+          allowed — a phone never downloads them, or GSAP. */}
+      <PointerEffects />
     </SoundProvider>
   );
 }

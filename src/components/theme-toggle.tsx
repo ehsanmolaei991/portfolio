@@ -3,7 +3,6 @@
 import * as React from "react";
 import { flushSync } from "react-dom";
 import { useTheme } from "next-themes";
-import { AnimatePresence, motion } from "motion/react";
 import { Moon, Sun } from "lucide-react";
 import { useSound } from "@/components/sound-provider";
 import { cn } from "@/lib/utils";
@@ -11,6 +10,9 @@ import { cn } from "@/lib/utils";
 type ViewTransitionDocument = Document & {
   startViewTransition?: (cb: () => void) => { ready: Promise<void> };
 };
+
+/** Mirrors --ease-out in globals.css; WAAPI cannot read a custom property. */
+const EASE_OUT = "cubic-bezier(0.16, 1, 0.3, 1)";
 
 /**
  * Theme toggle with a circular View Transition reveal expanding from the
@@ -24,12 +26,20 @@ type ViewTransitionDocument = Document & {
  * hand), so persistence, the system preference, and SSR stay consistent —
  * `flushSync` forces React to commit inside the transition callback so the
  * snapshot captures the new theme.
+ *
+ * Both icons are always in the markup and `.theme-icon` in globals.css shows
+ * the one for the current theme class, so the right icon is there at first
+ * paint with no script. The swap is a WAAPI animation rather than a CSS
+ * transition because next-themes suppresses transitions while it flips the
+ * class (`disableTransitionOnChange`).
  */
 export function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
   const { play } = useSound();
   const [mounted, setMounted] = React.useState(false);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const sunRef = React.useRef<HTMLSpanElement>(null);
+  const moonRef = React.useRef<HTMLSpanElement>(null);
 
   React.useEffect(() => setMounted(true), []);
 
@@ -46,13 +56,37 @@ export function ThemeToggle({ className }: { className?: string }) {
     const button = buttonRef.current;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // The old icon turns out one way while the new one turns in from the other.
+    const swapIcons = () => {
+      const [outgoing, incoming] = isDark
+        ? [sunRef.current, moonRef.current]
+        : [moonRef.current, sunRef.current];
+      const timing = { duration: 160, easing: EASE_OUT };
+      outgoing?.animate(
+        [
+          { opacity: 1, transform: "none" },
+          { opacity: 0, transform: "rotate(35deg) scale(0.7)" },
+        ],
+        timing
+      );
+      incoming?.animate(
+        [
+          { opacity: 0, transform: "rotate(-35deg) scale(0.7)" },
+          { opacity: 1, transform: "none" },
+        ],
+        timing
+      );
+    };
+
     if (!doc.startViewTransition || reduced || !button) {
       setTheme(next);
+      if (!reduced) swapIcons();
       return;
     }
 
     const transition = doc.startViewTransition(() => {
       flushSync(() => setTheme(next));
+      swapIcons();
     });
 
     transition.ready
@@ -75,7 +109,7 @@ export function ThemeToggle({ className }: { className?: string }) {
           },
           {
             duration: 620,
-            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            easing: EASE_OUT,
             pseudoElement: "::view-transition-new(root)",
           }
         );
@@ -100,24 +134,12 @@ export function ThemeToggle({ className }: { className?: string }) {
       )}
     >
       <span className="relative block h-[18px] w-[18px]">
-        <AnimatePresence initial={false} mode="wait">
-          {mounted ? (
-            <motion.span
-              key={isDark ? "sun" : "moon"}
-              initial={{ opacity: 0, rotate: -35, scale: 0.7 }}
-              animate={{ opacity: 1, rotate: 0, scale: 1 }}
-              exit={{ opacity: 0, rotate: 35, scale: 0.7 }}
-              transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 block"
-            >
-              {isDark ? (
-                <Sun className="h-[18px] w-[18px]" aria-hidden />
-              ) : (
-                <Moon className="h-[18px] w-[18px]" aria-hidden />
-              )}
-            </motion.span>
-          ) : null}
-        </AnimatePresence>
+        <span ref={moonRef} className="theme-icon theme-icon--moon">
+          <Moon className="h-[18px] w-[18px]" aria-hidden />
+        </span>
+        <span ref={sunRef} className="theme-icon theme-icon--sun">
+          <Sun className="h-[18px] w-[18px]" aria-hidden />
+        </span>
       </span>
     </button>
   );
