@@ -514,7 +514,7 @@ six. Anything added must earn a row here first.
 | Section reveal on scroll | Signals "new section", batched for the whole page | IntersectionObserver + CSS transition, once | 500ms, 60ms stagger | Disabled; content always visible |
 | Work-entry hover/focus (rule + arrow) | Confirms the row is a target | CSS `background-size` + `transform` | 280ms / 180ms | Instant (global transition override) |
 | Mobile nav disclosure | Explains where the panel came from | CSS `grid-template-rows` transition | 180ms | Instant |
-| Theme reveal | New theme comes *from* the button pressed | View Transitions + WAAPI | 620ms | Instant swap |
+| Theme reveal | New theme comes *from* the button pressed | View Transitions + CSS keyframes, `linear` | 500ms | Instant swap |
 | Theme icon swap | Confirms the theme flipped | WAAPI | 160ms | Instant |
 | Custom pointer | Confirms what is targetable, and labels large targets | GSAP `quickTo` | 90ms dot / 420ms ring | Not mounted |
 | Hover meme card | Personality, on a handful of marked elements | GSAP `quickTo` + CSS | 180–280ms | Not mounted |

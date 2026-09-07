@@ -8,7 +8,7 @@ import { useSound } from "@/components/sound-provider";
 import { cn } from "@/lib/utils";
 
 type ViewTransitionDocument = Document & {
-  startViewTransition?: (cb: () => void) => { ready: Promise<void> };
+  startViewTransition?: (cb: () => void) => unknown;
 };
 
 /** Mirrors --ease-out in globals.css; WAAPI cannot read a custom property. */
@@ -21,6 +21,12 @@ const EASE_OUT = "cubic-bezier(0.16, 1, 0.3, 1)";
  * Progressive enhancement, in this order:
  *   1. reduced motion, or no View Transition support → plain instant swap
  *   2. otherwise → clip-path circle wipe over ::view-transition-new(root)
+ *
+ * The circle itself is a CSS animation on ::view-transition-new(root) (see
+ * globals.css); all this does is hand it the geometry first. Driving it from
+ * `transition.ready` instead cost a dropped frame at the start of every toggle,
+ * because the animation could only be attached a frame after the transition had
+ * already begun.
  *
  * The theme is always set through next-themes (never by toggling the class by
  * hand), so persistence, the system preference, and SSR stay consistent —
@@ -84,39 +90,25 @@ export function ThemeToggle({ className }: { className?: string }) {
       return;
     }
 
-    const transition = doc.startViewTransition(() => {
+    const { top, left, width, height } = button.getBoundingClientRect();
+    const x = left + width / 2;
+    const y = top + height / 2;
+    // Farthest viewport corner from the button — the circle must cover it, and
+    // must not overshoot it either, or the reveal finishes before it ends.
+    const radius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    const root = document.documentElement;
+    root.style.setProperty("--reveal-x", `${x}px`);
+    root.style.setProperty("--reveal-y", `${y}px`);
+    root.style.setProperty("--reveal-r", `${radius}px`);
+
+    doc.startViewTransition(() => {
       flushSync(() => setTheme(next));
       swapIcons();
     });
-
-    transition.ready
-      .then(() => {
-        const { top, left, width, height } = button.getBoundingClientRect();
-        const x = left + width / 2;
-        const y = top + height / 2;
-        // Farthest viewport corner from the button — the circle must cover it.
-        const radius = Math.hypot(
-          Math.max(x, window.innerWidth - x),
-          Math.max(y, window.innerHeight - y)
-        );
-
-        document.documentElement.animate(
-          {
-            clipPath: [
-              `circle(0px at ${x}px ${y}px)`,
-              `circle(${radius}px at ${x}px ${y}px)`,
-            ],
-          },
-          {
-            duration: 620,
-            easing: EASE_OUT,
-            pseudoElement: "::view-transition-new(root)",
-          }
-        );
-      })
-      .catch(() => {
-        /* transition was skipped — the theme is already applied */
-      });
   }, [isDark, play, setTheme]);
 
   return (

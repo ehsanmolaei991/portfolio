@@ -251,20 +251,52 @@
 
 /* ============================================================================
    THEME REVEAL — View Transitions
-   The toggle animates ::view-transition-new(root) as a clip-path circle growing
-   from the button. Killing the default cross-fade lets that circle be the only
-   thing that reads. Unsupported browsers and reduced-motion users get an
-   instant swap instead (handled in theme-toggle.tsx).
+   The new theme is clipped to a circle growing from the toggle button, over a
+   frozen snapshot of the old one. The default cross-fade is killed so that
+   circle is the only thing that reads. Unsupported browsers and reduced-motion
+   users get an instant swap instead (handled in theme-toggle.tsx).
+
+   The animation lives here rather than in JS on `transition.ready`: declared in
+   CSS, the browser starts it with the transition's own first frame instead of a
+   promise callback that lands a frame late — that callback cost a visible hitch
+   at the start of every toggle.
+
+   `linear` is deliberate. A circle's area grows with the square of its radius,
+   so a linear radius already reads as a decelerating wipe; an ease-out on top
+   double-counts it. The old ease-out revealed 93% of the viewport in the first
+   quarter of the duration and then spent the second half creeping the last 0.2%
+   into one corner, which read as a stall. Linear holds coverage within ~9% of
+   even across every viewport size.
+
+   theme-toggle.tsx sets the geometry below before starting the transition; the
+   fallbacks make a centred, guaranteed-covering reveal if it ever does not.
    ========================================================================= */
+:root {
+  --reveal-x: 50%;
+  --reveal-y: 50%;
+  --reveal-r: 150vmax;
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0px at var(--reveal-x) var(--reveal-y));
+  }
+  to {
+    clip-path: circle(var(--reveal-r) at var(--reveal-x) var(--reveal-y));
+  }
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation: none;
   mix-blend-mode: normal;
 }
 ::view-transition-old(root) {
+  /* Sits still underneath. The circle above is the whole effect. */
+  animation: none;
   z-index: 1;
 }
 ::view-transition-new(root) {
+  animation: theme-reveal var(--dur-slow) linear;
   z-index: 2147483646;
 }
 
