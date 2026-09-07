@@ -128,7 +128,11 @@ export function ResumeDocument({ variant }: { variant?: string }) {
               <h3 className="skills-label">{lang.tools}</h3>
               <p className="skills-list">{data.skills.tools.join(", ")}</p>
             </div>
-            <div className="skills-full">
+            <div>
+              <h3 className="skills-label">{lang.ai}</h3>
+              <p className="skills-list">{data.skills.ai.join(", ")}</p>
+            </div>
+            <div>
               <h3 className="skills-label">{lang.soft}</h3>
               <p className="skills-list">{data.skills.soft.join(", ")}</p>
             </div>
@@ -172,6 +176,8 @@ export function ResumeDocument({ variant }: { variant?: string }) {
           </ul>
         </section>
 
+        {/* In the compact layout these two share a row (.resume-footer). */}
+        <div className="resume-footer">
         {/* ---------- Education ---------- */}
         <section className="resume-section">
           <SectionTitle>{lang.education}</SectionTitle>
@@ -211,6 +217,7 @@ export function ResumeDocument({ variant }: { variant?: string }) {
             </div>
           </section>
         ) : null}
+        </div>
       </article>
     </main>
   );

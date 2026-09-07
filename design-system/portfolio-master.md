@@ -533,7 +533,7 @@ Anti-patterns from §4 — all removed in the 2026-07 refactor:
 | `scramble-text.tsx` (~30 call sites) | deleted |
 | `morphing-text-reveal.tsx` (stale `aria-label`) | deleted |
 | `morphing-cursor.tsx` (`MagneticText`, animated width/height) | deleted |
-| `meme-layer.tsx` (emoji-on-every-hover) | replaced by `meme-hover.tsx` — original art, 8 marked elements, §7.1 |
+| `meme-layer.tsx` (emoji-on-every-hover) | replaced by `meme-hover.tsx` — original art, 9 marked elements, §7.1 |
 | `custom-cursor.tsx` + `.cursor-none-all` | replaced by `pointer.tsx` — `quickTo`-driven, guarded, §7.1 |
 | `spotlight-card.tsx` (glow cards) | deleted |
 | Hero stat band (`7 companies` was wrong — 6 companies, 7 entries) | deleted; numbers now sit beside the work that earned them |

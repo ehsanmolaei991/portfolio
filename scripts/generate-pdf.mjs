@@ -122,7 +122,7 @@ async function renderOne(browser, variant, format) {
           path: outFile,
           format: "Letter",
           printBackground: true,
-          margin: { top: "13mm", bottom: "13mm", left: "15mm", right: "15mm" },
+          margin: { top: "10mm", bottom: "10mm", left: "15mm", right: "15mm" },
         }
       : { path: outFile, printBackground: true, preferCSSPageSize: true };
 

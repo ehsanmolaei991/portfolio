@@ -37,7 +37,7 @@
     }
   ],
   "summary": {
-    "value": "Senior Frontend Engineer with 9+ years building web and mobile products across fintech, automotive, and SaaS — now leading a frontend team. Specialized in React, Next.js, React Native, and TypeScript, with a strong focus on performance (Web Vitals, code splitting, WebSockets), design systems, and scalable architecture in monorepos. Proven at mentoring engineers and shipping accessible, high-performance interfaces in Agile teams.",
+    "value": "Senior Frontend Engineer with 9+ years building web and mobile products across fintech, automotive, and SaaS, now leading a frontend team. Specialized in React, Next.js, React Native, and TypeScript; focused on performance (Web Vitals, WebSockets), design systems, and monorepo architecture. Works AI-native: agentic coding tools, engineered context and specs, strict review of AI-generated code. Mentors engineers and ships accessible UIs in Agile teams.",
     "options": [
       {
         "type": "bold",
@@ -73,7 +73,15 @@
       },
       {
         "type": "bold",
-        "search": "monorepos"
+        "search": "monorepo"
+      },
+      {
+        "type": "bold",
+        "search": "AI-native"
+      },
+      {
+        "type": "bold",
+        "search": "agentic coding tools"
       },
       {
         "type": "bold",
@@ -145,6 +153,23 @@
             {
               "type": "bold",
               "search": "WebSockets"
+            }
+          ]
+        },
+        {
+          "value": "Introduced an AI-assisted workflow across the team — agentic coding tools with shared context and specs, and a review standard holding AI-generated code to the same bar as hand-written code.",
+          "options": [
+            {
+              "type": "bold",
+              "search": "AI-assisted workflow"
+            },
+            {
+              "type": "bold",
+              "search": "agentic coding tools"
+            },
+            {
+              "type": "bold",
+              "search": "AI-generated code"
             }
           ]
         }
@@ -487,6 +512,16 @@
       "Web Vitals",
       "Node.js",
       "Express"
+    ],
+    "ai": [
+      "AI-Assisted Development",
+      "Agentic Coding (Claude Code)",
+      "Context Engineering",
+      "Prompt Engineering",
+      "Spec-Driven Development",
+      "AI-Generated Code Review",
+      "LLM API Integration",
+      "Model Context Protocol (MCP)"
     ],
     "soft": [
       "Communication",

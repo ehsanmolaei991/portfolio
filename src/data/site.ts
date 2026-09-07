@@ -38,6 +38,7 @@ export const siteCopy = {
       "I'm based in Yerevan and I've been writing frontend since 2016 — agency work first, then product teams, now leading one.",
       "The thread through all of it is a preference for the load-bearing parts: the data layer that decides whether a number on screen can be trusted, the sign-in flow every product depends on and nobody owns, the design system that stops six people from inventing six buttons. That work is rarely the thing in the demo. It is usually the thing that makes the demo possible.",
       "For six months I taught it instead of doing it — 15+ students through a bootcamp at Quera. Explaining a decision to someone with no reason to trust you is the fastest way to find out whether it was a good one.",
+      "These days an agent writes a good share of the first draft. Deciding what it should build, giving it the context to do it well, and reading what comes back is the job now — and the bar for what gets merged has not moved.",
       "Away from the screen: football, jogging, and more tech YouTube than I would defend in court. Persian natively, English comfortably, German at A2 — which is a polite way of saying I can order breakfast.",
     ],
   },
@@ -91,6 +92,18 @@ export const siteCopy = {
         "React Testing Library",
         "GitHub Actions (CI/CD)",
         "Docker",
+      ],
+    },
+    {
+      title: "AI-assisted engineering",
+      note: "Agents write a lot of the first draft now. The review bar did not move.",
+      meme: "agent",
+      items: [
+        "Agentic Coding (Claude Code)",
+        "Context Engineering",
+        "Spec-Driven Development",
+        "AI-Generated Code Review",
+        "Model Context Protocol (MCP)",
       ],
     },
     {

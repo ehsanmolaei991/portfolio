@@ -84,7 +84,7 @@ export interface Resume {
   contacts: Contact[];
   summary: RichBlock;
   experiences: Experience[];
-  skills: { frontend: string[]; tools: string[]; soft: string[] };
+  skills: { frontend: string[]; tools: string[]; ai: string[]; soft: string[] };
   educations: Education[];
   knowledgeAndIntrest?: MiscGroup[];
   /** Variant knobs: trim to a 1-page version. */

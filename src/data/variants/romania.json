@@ -1,7 +1,7 @@
 {
   "applicationAs": "Senior Frontend Engineer",
   "summary": {
-    "value": "Senior Frontend Engineer with 9+ years building and leading React, Next.js, and TypeScript products for fintech and SaaS. I architect scalable frontends in monorepos, build design systems, and obsess over performance (Web Vitals, code splitting, WebSockets).",
+    "value": "Senior Frontend Engineer with 9+ years building and leading React, Next.js, and TypeScript products for fintech and SaaS. I architect scalable frontends in monorepos, build design systems, and obsess over performance (Web Vitals, code splitting, WebSockets). I work AI-native — agentic coding tools, engineered context and specs, and strict review of AI-generated code.",
     "options": [
       {
         "type": "bold",
@@ -34,6 +34,10 @@
       {
         "type": "bold",
         "search": "Web Vitals"
+      },
+      {
+        "type": "bold",
+        "search": "AI-native"
       }
     ]
   }

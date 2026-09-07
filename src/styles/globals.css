@@ -612,10 +612,6 @@
   gap: 4px 28px;
 }
 
-.skills-full {
-  grid-column: 1 / -1;
-}
-
 .skills-label {
   font-size: 10.2pt;
   font-weight: 700;
@@ -774,7 +770,7 @@
 /* ---------------- Print / PDF ---------------- */
 @page {
   size: A4;
-  margin: 13mm 15mm;
+  margin: 10mm 15mm;
 }
 
 /* ---------------- Compact (1-page) variant ----------------
@@ -820,6 +816,37 @@
   font-size: 9.1pt;
   line-height: 1.28;
   margin-bottom: 0;
+}
+/* Skills as labelled lines rather than the two-column grid: the same lists in
+   fewer lines, because each one wraps at full width instead of at half. */
+.resume-page--compact .skills-grid {
+  display: block;
+}
+.resume-page--compact .skills-grid > div {
+  margin-bottom: 2px;
+}
+.resume-page--compact .skills-grid .skills-label,
+.resume-page--compact .skills-grid .skills-list {
+  display: inline;
+  margin: 0;
+}
+.resume-page--compact .skills-grid .skills-label::after {
+  content: ": ";
+}
+/* Contacts as a wrapped row instead of a five-line column, so the header is
+   as tall as the name, not the contact list. */
+.resume-page--compact .resume-contacts {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 2px 12px;
+  max-width: 58%;
+}
+/* Education and languages share one row. */
+.resume-page--compact .resume-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 28px;
 }
 
 @media print {

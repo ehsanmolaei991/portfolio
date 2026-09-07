@@ -1,7 +1,7 @@
 {
   "applicationAs": "Senior Frontend Engineer",
   "summary": {
-    "value": "Senior Frontend Engineer with 9+ years building — and recently leading — web and mobile products across fintech, automotive, and SaaS, specialized in React, Next.js, React Native, and TypeScript. Strong at end-to-end ownership, async communication, and clear documentation — habits that map directly to fully-remote work across distributed teams with EU / UK / US time-zone overlap. Deep focus on performance (Web Vitals, code splitting, WebSockets), in-house design systems, and scalable monorepo architecture. Led and mentored engineers — including 15+ through a 6-month bootcamp — and partner with design and product from spec to ship.",
+    "value": "Senior Frontend Engineer with 9+ years building and leading web and mobile products in React, Next.js, React Native, and TypeScript. Strong at end-to-end ownership, async communication, and clear documentation — habits that map to fully-remote work across distributed teams with EU / UK / US time-zone overlap. Focused on performance (Web Vitals, WebSockets), in-house design systems, and monorepo architecture; mentored 15+ engineers through a bootcamp. AI-native workflow: agentic coding tools, engineered context and specs, strict review of AI-generated code.",
     "options": [
       {
         "type": "bold",
@@ -46,6 +46,10 @@
       {
         "type": "bold",
         "search": "monorepo architecture"
+      },
+      {
+        "type": "bold",
+        "search": "AI-native"
       }
     ]
   }

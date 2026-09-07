@@ -1,7 +1,7 @@
 {
   "applicationAs": "Senior Frontend Engineer",
   "summary": {
-    "value": "Senior Frontend Engineer with 9+ years building product-minded web and mobile experiences in React, Next.js, React Native, and TypeScript at scale. As Frontend Team Lead at Balinex, I refactored a crypto trading platform into a TypeScript monorepo, built an in-house design system, and integrated WebSockets to cut data-fetch time by 40%, while a UI redesign lifted user engagement by 30%. My work centers on frontend performance (Web Vitals, code splitting, Lighthouse), scalable design systems in Storybook, and reliable testing with Jest, Playwright, and React Testing Library, delivered through Docker and GitHub Actions CI/CD.",
+    "value": "Senior Frontend Engineer with 9+ years building product-minded web and mobile products in React, Next.js, React Native, and TypeScript. As Frontend Team Lead at Balinex I refactored a crypto trading platform into a TypeScript monorepo, built an in-house design system, and integrated WebSockets to cut data-fetch time by 40%; a UI redesign lifted engagement by 30%. Focused on frontend performance (Web Vitals), design systems (Storybook), and testing (Jest, Playwright). I work AI-native: agentic coding tools, engineered context and specs, strict review of AI-generated code.",
     "options": [
       {
         "type": "bold",
@@ -21,10 +21,6 @@
       },
       {
         "type": "bold",
-        "search": "at scale"
-      },
-      {
-        "type": "bold",
         "search": "TypeScript monorepo"
       },
       {
@@ -41,7 +37,7 @@
       },
       {
         "type": "bold",
-        "search": "scalable design systems"
+        "search": "AI-native"
       }
     ]
   }

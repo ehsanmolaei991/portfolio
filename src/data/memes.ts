@@ -57,6 +57,11 @@ export const memes: Meme[] = [
     caption: "Standup was ten minutes. That's the win I'm claiming today.",
   },
   {
+    id: "agent",
+    art: "machine",
+    caption: "Prompt: \"make it work\". Diff: 4,000 lines. Review: still my job.",
+  },
+  {
     id: "email",
     art: "ship",
     caption: "No cover letter required. Replies faster than most CI runs.",
